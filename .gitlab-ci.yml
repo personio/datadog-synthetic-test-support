@@ -1,0 +1,64 @@
+stages:
+  - test
+  - e2e
+  - publish
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+lint:
+  image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
+  script:
+    - ./gradlew ktlintCheck
+
+test:unit:
+  image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
+  stage: test
+  tags:
+    - dev
+  script:
+    - ./gradlew test
+
+dd:keys:
+  stage: test
+  tags:
+    - dev
+  script:
+    - |
+      SECRETS_FILE="ops/env/dev/secrets.yaml"
+      echo "DD_API_KEY=$(sops -d --extract '["dd_api_key"]' $SECRETS_FILE)" > dd.env
+      echo "DD_APP_KEY=$(sops -d --extract '["dd_app_key"]' $SECRETS_FILE)" >> dd.env
+  artifacts:
+    reports:
+      dotenv: dd.env
+  variables:
+    AWS_PROFILE: dev
+
+test:e2e:
+  image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
+  stage: e2e
+  script:
+    - ./gradlew e2eTest
+  dependencies:
+    - dd:keys
+
+.publish:
+  stage: publish
+  image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
+  tags:
+    - dev
+
+publishSnapshot:
+  extends:
+    - .publish
+  script:
+    - ./gradlew publish
+
+publishRelease:
+  extends:
+    - .publish
+  only:
+    - master
+  when: manual
+  script:
+    - ./gradlew publish -Prelease
