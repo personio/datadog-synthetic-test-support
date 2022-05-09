@@ -12,14 +12,13 @@ import com.personio.synthetics.BrowserTest
  * @param url the base url for the test
  * @return SyntheticsBrowserTest object with url set
  */
-fun SyntheticsBrowserTest.setUrl(url: String): SyntheticsBrowserTest {
+fun SyntheticsBrowserTest.setUrl(url: String) = apply {
     config
         ?.request(
             SyntheticsTestRequest()
                 .method(HTTPMethod.GET)
                 .url(url)
         )
-    return this
 }
 
 /**
@@ -30,8 +29,8 @@ fun SyntheticsBrowserTest.setUrl(url: String): SyntheticsBrowserTest {
  * {{ numeric(8) }}, {{ alphabetic(15) }}, {{ alphanumeric(15) }}, {{ date(0d, MM-DD-YYYY) }}, {{ timestamp(0, s) }}
  * @return SyntheticsBrowserTest object with this created variable
  */
-fun SyntheticsBrowserTest.addLocalVariable(name: String, type: SyntheticsBrowserVariableType, pattern: String? = null): SyntheticsBrowserTest {
-    this.config
+fun SyntheticsBrowserTest.addLocalVariable(name: String, type: SyntheticsBrowserVariableType, pattern: String? = null) = apply {
+    config
         ?.addVariablesItem(
             SyntheticsBrowserVariable()
                 .name(name)
@@ -39,7 +38,6 @@ fun SyntheticsBrowserTest.addLocalVariable(name: String, type: SyntheticsBrowser
                 .pattern(pattern)
                 .example("")
         )
-    return this
 }
 
 /**
@@ -47,7 +45,7 @@ fun SyntheticsBrowserTest.addLocalVariable(name: String, type: SyntheticsBrowser
  * @param name name of the existing global variable (case sensitive)
  * @return BrowserTest object with this added global variable
  */
-fun BrowserTest.addGlobalVariable(name: String): SyntheticsBrowserTest {
+fun BrowserTest.addGlobalVariable(name: String) = apply {
     val variableId = getGlobalVariableId(name)
     config
         ?.addVariablesItem(
@@ -56,5 +54,4 @@ fun BrowserTest.addGlobalVariable(name: String): SyntheticsBrowserTest {
                 .id(variableId)
                 .type(SyntheticsBrowserVariableType.GLOBAL)
         )
-    return this
 }

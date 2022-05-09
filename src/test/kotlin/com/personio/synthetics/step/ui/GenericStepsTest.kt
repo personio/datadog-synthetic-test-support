@@ -23,7 +23,7 @@ internal class GenericStepsTest {
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
         assertEquals("xpath", params.element!!.userLocator.values?.get(0)?.type)
-        assertEquals("//button", params.element!!.userLocator.values?.get(0)?.value)
+        assertEquals("//button", params.element.userLocator.values?.get(0)?.value)
     }
 
     @Test

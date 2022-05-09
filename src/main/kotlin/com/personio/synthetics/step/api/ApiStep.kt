@@ -21,9 +21,10 @@ import com.personio.synthetics.model.api.RequestParams
  */
 fun SyntheticsBrowserTest.addApiStep(): SyntheticsStep {
     val apiStep = SyntheticsStep().type(SyntheticsStepType.RUN_API_TEST)
-    val requestParams = RequestParams()
-    requestParams.request.config.request(SyntheticsTestRequest().url(config?.request?.url))
-    requestParams.request.subtype = "http"
+    val requestParams = with(RequestParams()) {
+        request.config.request(SyntheticsTestRequest().url(config?.request?.url))
+        copy(request = request.copy(subtype = "http"))
+    }
     apiStep.params = requestParams
     addStepsItem(apiStep)
     return apiStep
@@ -43,7 +44,7 @@ fun SyntheticsStep.addAssertion(
     property: String? = null,
     operator: SyntheticsAssertionOperator,
     expected: Any = Any()
-): SyntheticsStep {
+) = apply {
     val assertion = SyntheticsAssertion(
         SyntheticsAssertionTarget()
             .operator(operator)
@@ -51,9 +52,8 @@ fun SyntheticsStep.addAssertion(
             .target(expected)
             .type(assertionType)
     )
-    val requestParams = params as RequestParams
-    requestParams.request.config.assertions?.add(assertion)
-    return this
+    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use addAssertion on params $params"))
+        .request.config.assertions?.add(assertion)
 }
 
 /**
@@ -61,10 +61,9 @@ fun SyntheticsStep.addAssertion(
  * @param body The body of the request
  * @return SyntheticsStep object with the request body set
  */
-fun SyntheticsStep.requestBody(body: String): SyntheticsStep {
-    val requestParams = params as RequestParams
-    requestParams.request.config.request.body = body
-    return this
+fun SyntheticsStep.requestBody(body: String) = apply {
+    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use requestBody on params $params"))
+        .request.config.request.body = body
 }
 
 /**
@@ -73,10 +72,9 @@ fun SyntheticsStep.requestBody(body: String): SyntheticsStep {
  * eg: mapOf("content-type" to "application/json")
  * @return SyntheticsStep object with the request headers set
  */
-fun SyntheticsStep.requestHeaders(headers: Map<String, String>): SyntheticsStep {
-    val requestParams = params as RequestParams
-    requestParams.request.config.request.headers = headers
-    return this
+fun SyntheticsStep.requestHeaders(headers: Map<String, String>) = apply {
+    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use requestHeaders on params $params"))
+        .request.config.request.headers = headers
 }
 
 /**
@@ -84,10 +82,9 @@ fun SyntheticsStep.requestHeaders(headers: Map<String, String>): SyntheticsStep 
  * @param method The method of the request GET/POST
  * @return SyntheticsStep object with the method set
  */
-fun SyntheticsStep.method(method: HTTPMethod): SyntheticsStep {
-    val requestParams = params as RequestParams
-    requestParams.request.config.request.method = method
-    return this
+fun SyntheticsStep.method(method: HTTPMethod) = apply {
+    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use method on params $params"))
+        .request.config.request.method = method
 }
 
 /**
@@ -96,14 +93,11 @@ fun SyntheticsStep.method(method: HTTPMethod): SyntheticsStep {
  * Use only the location (eg: /test/page) for appending to the base url of the test
  * else pass full url including http(s)://
  */
-fun SyntheticsStep.url(url: String): SyntheticsStep {
-    val requestParams = params as RequestParams
-    var requestUrl = url
-    if (!url.contains("http")) {
-        requestUrl = requestParams.request.config.request.url.plus("/$url")
+fun SyntheticsStep.url(url: String) = apply {
+    with(params as? RequestParams ?: throw IllegalArgumentException("Cannot use url on params $params")) {
+        val requestUrl = if (url.contains("http")) url else request.config.request.url.plus("/$url")
+        request.config.request.url = requestUrl
     }
-    requestParams.request.config.request.url = requestUrl
-    return this
 }
 
 /**
@@ -113,14 +107,10 @@ fun SyntheticsStep.url(url: String): SyntheticsStep {
  * @param regex Regular expression to extract the value in the header field (Optional parameter)
  * @return SyntheticsStep object with the extract variable step added
  */
-fun SyntheticsStep.extractHeaderValue(name: String, field: String, regex: String? = null): SyntheticsStep {
-    val requestParams = params as RequestParams
+fun SyntheticsStep.extractHeaderValue(name: String, field: String, regex: String? = null) = apply {
     val extractValue = ExtractValue(name)
-    var parserType = SyntheticsGlobalVariableParserType.RAW
+    val parserType = if (regex == null) SyntheticsGlobalVariableParserType.RAW else SyntheticsGlobalVariableParserType.REGEX
 
-    if (regex != null) {
-        parserType = SyntheticsGlobalVariableParserType.REGEX
-    }
     extractValue
         .field(field)
         .parser(
@@ -129,13 +119,8 @@ fun SyntheticsStep.extractHeaderValue(name: String, field: String, regex: String
                 .value(regex)
         )
         .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
-
-    if (requestParams.request.options.extract_values.isNullOrEmpty()) {
-        requestParams.request.options.extract_values = mutableListOf(extractValue)
-    } else {
-        requestParams.request.options.extract_values?.add(extractValue)
-    }
-    return this
+    params = (params as? RequestParams ?: throw IllegalArgumentException("Cannot use extractHeaderValue on params $params"))
+        .setExtractValue(extractValue)
 }
 
 /**
@@ -153,21 +138,25 @@ fun SyntheticsStep.extractBodyValue(
     name: String,
     parserType: SyntheticsGlobalVariableParserType,
     parserValue: String? = null
-): SyntheticsStep {
-    val requestParams = params as RequestParams
-
+) = apply {
     val parser = SyntheticsVariableParser()
         .type(parserType)
         .value(parserValue)
 
-    val extractValue = ExtractValue(name)
-    extractValue
+    val newExtractValue = ExtractValue(name)
+    newExtractValue
         .parser(parser)
         .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
-    if (requestParams.request.options.extract_values.isNullOrEmpty()) {
-        requestParams.request.options.extract_values = mutableListOf(extractValue)
-    } else {
-        requestParams.request.options.extract_values?.add(extractValue)
-    }
-    return this
+    params = (params as? RequestParams ?: throw IllegalArgumentException("Cannot use extractBodyValue on params $params"))
+        .setExtractValue(newExtractValue)
+}
+
+/**
+ * Set extract value object
+ * @param extractValue Extract value object that need to be set
+ * @return RequestParams object with the extract value object added
+ */
+private fun RequestParams.setExtractValue(extractValue: ExtractValue): RequestParams {
+    val currentExtractValues = request.options.extract_values.orEmpty()
+    return copy(request = request.copy(options = request.options.copy(extract_values = currentExtractValues + extractValue)))
 }
