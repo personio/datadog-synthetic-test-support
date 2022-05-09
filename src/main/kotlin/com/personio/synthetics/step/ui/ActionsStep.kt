@@ -36,8 +36,7 @@ fun BrowserTest.clickStep(): SyntheticsStep {
  * @param value Text to be sent for the input text step
  * @return SyntheticsStep object with text value set
  */
-fun SyntheticsStep.text(value: String): SyntheticsStep {
-    val textParams = params as ActionsParams
-    textParams.value = value
-    return this
+fun SyntheticsStep.text(value: String) = apply {
+    params = (params as? ActionsParams ?: throw IllegalArgumentException("Cannot use text on params $params"))
+        .copy(value = value)
 }
