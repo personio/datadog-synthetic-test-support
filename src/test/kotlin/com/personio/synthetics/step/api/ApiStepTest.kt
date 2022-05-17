@@ -1,16 +1,15 @@
 package com.personio.synthetics.step.api
 
-import com.datadog.api.v1.client.api.SyntheticsApi
 import com.datadog.api.v1.client.model.HTTPMethod
 import com.datadog.api.v1.client.model.SyntheticsAssertion
 import com.datadog.api.v1.client.model.SyntheticsAssertionOperator
 import com.datadog.api.v1.client.model.SyntheticsAssertionTarget
 import com.datadog.api.v1.client.model.SyntheticsAssertionType
-import com.datadog.api.v1.client.model.SyntheticsBrowserTestConfig
 import com.datadog.api.v1.client.model.SyntheticsGlobalVariableParserType
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.datadog.api.v1.client.model.SyntheticsVariableParser
-import com.personio.synthetics.BrowserTest
+import com.personio.synthetics.client.BrowserTest
+import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.setUrl
 import com.personio.synthetics.model.api.RequestParams
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -18,11 +17,11 @@ import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.mock
 
 internal class ApiStepTest {
-    private val syntheticsApi = Mockito.mock(SyntheticsApi::class.java)
-    private val browserTest = BrowserTest(syntheticsApi).config(SyntheticsBrowserTestConfig())
+    private val syntheticsApi = mock<SyntheticsApiClient>()
+    private val browserTest = BrowserTest("Test", syntheticsApi)
 
     @Test
     fun `addApiStep adds the new step item to the browser test object`() {

@@ -1,7 +1,7 @@
 package com.personio.synthetics.step.ui
 
-import com.datadog.api.v1.client.api.SyntheticsApi
-import com.personio.synthetics.BrowserTest
+import com.personio.synthetics.client.BrowserTest
+import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.LocatorType
 import com.personio.synthetics.model.assertion.AssertionParams
@@ -9,11 +9,11 @@ import com.personio.synthetics.model.assertion.AssertionType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.mock
 
 internal class GenericStepsTest {
-    private val syntheticsApi = Mockito.mock(SyntheticsApi::class.java)
-    private val browserTest = BrowserTest(syntheticsApi)
+    private val syntheticsApi = mock<SyntheticsApiClient>()
+    private val browserTest = BrowserTest("Test", syntheticsApi)
 
     @Test
     fun `targetElement adds Userlocator to the params object`() {

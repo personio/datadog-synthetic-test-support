@@ -2,7 +2,7 @@ package com.personio.synthetics.step.javascript
 
 import com.datadog.api.v1.client.model.SyntheticsStep
 import com.datadog.api.v1.client.model.SyntheticsStepType
-import com.personio.synthetics.BrowserTest
+import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.javascript.JSParams
 import com.personio.synthetics.model.javascript.Variable
 import org.intellij.lang.annotations.Language

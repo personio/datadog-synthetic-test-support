@@ -2,7 +2,7 @@ package com.personio.synthetics.step.ui
 
 import com.datadog.api.v1.client.model.SyntheticsStep
 import com.datadog.api.v1.client.model.SyntheticsStepType
-import com.personio.synthetics.BrowserTest
+import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.actions.ActionsParams
 
 private const val DEFAULT_TEXT_DELAY: Long = 25 // in milliseconds
