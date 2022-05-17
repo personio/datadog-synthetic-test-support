@@ -1,18 +1,19 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.v1.client.api.SyntheticsApi
 import com.datadog.api.v1.client.model.SyntheticsBrowserTestConfig
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariable
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariableType
-import com.personio.synthetics.BrowserTest
+import com.personio.synthetics.client.BrowserTest
+import com.personio.synthetics.client.SyntheticsApiClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 internal class BrowserTestConfigTest {
-    private val syntheticsApi = Mockito.mock(SyntheticsApi::class.java)
-    private val browserTest = BrowserTest(syntheticsApi).config(SyntheticsBrowserTestConfig())
+    private val syntheticsApi = mock<SyntheticsApiClient>()
+    private val browserTest = BrowserTest("Test", syntheticsApi)
 
     @Test
     fun `setUrl sets the base url to the test config`() {
@@ -43,8 +44,8 @@ internal class BrowserTestConfigTest {
         val variableType = SyntheticsBrowserVariableType.GLOBAL
         val variableId = "variable-id"
         val browserTest = Mockito.mock(BrowserTest::class.java)
-        `when`(browserTest.getGlobalVariableId(variableName)).thenReturn(variableId)
-        `when`(browserTest.config).thenReturn(SyntheticsBrowserTestConfig())
+        whenever(browserTest.getGlobalVariableId(variableName)).thenReturn(variableId)
+        whenever(browserTest.config).thenReturn(SyntheticsBrowserTestConfig())
 
         browserTest.addGlobalVariable(variableName)
 

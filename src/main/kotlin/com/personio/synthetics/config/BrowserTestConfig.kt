@@ -5,7 +5,7 @@ import com.datadog.api.v1.client.model.SyntheticsBrowserTest
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariable
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariableType
 import com.datadog.api.v1.client.model.SyntheticsTestRequest
-import com.personio.synthetics.BrowserTest
+import com.personio.synthetics.client.BrowserTest
 
 /**
  * Sets the base url for the synthetic browser test
