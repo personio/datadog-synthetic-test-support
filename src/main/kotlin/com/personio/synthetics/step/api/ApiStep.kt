@@ -14,6 +14,7 @@ import com.datadog.api.v1.client.model.SyntheticsTestRequest
 import com.datadog.api.v1.client.model.SyntheticsVariableParser
 import com.personio.synthetics.model.api.ExtractValue
 import com.personio.synthetics.model.api.RequestParams
+import java.net.URL
 
 /**
  * Adds a new API step to the synthetic browser test
@@ -95,8 +96,10 @@ fun SyntheticsStep.method(method: HTTPMethod) = apply {
  */
 fun SyntheticsStep.url(url: String) = apply {
     with(params as? RequestParams ?: throw IllegalArgumentException("Cannot use url on params $params")) {
-        val requestUrl = if (url.contains("http")) url else request.config.request.url.plus("/$url")
-        request.config.request.url = requestUrl
+        val target = runCatching { URL(url) }
+            .recover { URL(request.config.request.url + url) }
+            .getOrThrow()
+        request.config.request.url = target.toString()
     }
 }
 

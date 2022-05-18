@@ -6,18 +6,19 @@ import com.datadog.api.v1.client.model.SyntheticsBrowserVariable
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariableType
 import com.datadog.api.v1.client.model.SyntheticsTestRequest
 import com.personio.synthetics.client.BrowserTest
+import java.net.URL
 
 /**
  * Sets the base url for the synthetic browser test
  * @param url the base url for the test
  * @return SyntheticsBrowserTest object with url set
  */
-fun SyntheticsBrowserTest.setUrl(url: String) = apply {
+fun SyntheticsBrowserTest.setUrl(url: URL) = apply {
     config
         ?.request(
             SyntheticsTestRequest()
                 .method(HTTPMethod.GET)
-                .url(url)
+                .url(url.toString())
         )
 }
 
