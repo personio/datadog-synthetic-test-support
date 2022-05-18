@@ -4,6 +4,7 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.LocatorType
+import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.model.assertion.AssertionType
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -52,5 +53,23 @@ internal class GenericStepsTest {
             .targetElement("[name]=\"test\"")
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps?.get(0)?.params)
+    }
+
+    @Test
+    fun `targetElement adds params as SpecialActionsParams if scrollStep is added`() {
+        browserTest
+            .scrollStep()
+            .targetElement("[name]=\"test\"")
+
+        assertInstanceOf(SpecialActionsParams::class.java, browserTest.steps?.get(0)?.params)
+    }
+
+    @Test
+    fun `targetElement adds params as SpecialActionsParams if hoverStep is added`() {
+        browserTest
+            .hoverStep()
+            .targetElement("[name]=\"test\"")
+
+        assertInstanceOf(SpecialActionsParams::class.java, browserTest.steps?.get(0)?.params)
     }
 }

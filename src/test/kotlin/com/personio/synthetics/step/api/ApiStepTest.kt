@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
+import java.net.URL
 
 internal class ApiStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -41,7 +42,7 @@ internal class ApiStepTest {
 
     @Test
     fun `addApiStep creates params with request sub type http and url that of browser test`() {
-        browserTest.setUrl("https://synthetic-test.personio.de")
+        browserTest.setUrl(URL("https://synthetic-test.personio.de"))
 
         browserTest.addApiStep()
         val params = browserTest.steps?.get(0)?.params as RequestParams
@@ -125,10 +126,10 @@ internal class ApiStepTest {
 
     @Test
     fun `part url passed to the url method should append to the base url into the request`() {
-        browserTest.setUrl("https://synthetic-test.personio.de")
+        browserTest.setUrl(URL("https://synthetic-test.personio.de"))
         browserTest
             .addApiStep()
-            .url("login")
+            .url("/login")
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("https://synthetic-test.personio.de/login", params.request.config.request.url)
@@ -136,7 +137,7 @@ internal class ApiStepTest {
 
     @Test
     fun `full url passed to the url method should be added into the request`() {
-        browserTest.setUrl("https://synthetic-test.personio.de")
+        browserTest.setUrl(URL("https://synthetic-test.personio.de"))
         browserTest
             .addApiStep()
             .url("https://newurl.personio.de")

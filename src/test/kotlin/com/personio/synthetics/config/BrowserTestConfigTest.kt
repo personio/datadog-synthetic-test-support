@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
+import java.net.URL
 
 internal class BrowserTestConfigTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -18,7 +19,7 @@ internal class BrowserTestConfigTest {
     @Test
     fun `setUrl sets the base url to the test config`() {
         val expectedUrl = "https://synthetic-test.personio.de"
-        browserTest.setUrl(expectedUrl)
+        browserTest.setUrl(URL(expectedUrl))
 
         assertEquals(expectedUrl, browserTest.config!!.request.url)
     }

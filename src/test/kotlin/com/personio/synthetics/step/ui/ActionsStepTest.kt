@@ -54,4 +54,46 @@ internal class ActionsStepTest {
         assertEquals(SyntheticsStepType.CLICK, step?.type)
         assertInstanceOf(ActionsParams::class.java, step?.params)
     }
+
+    @Test
+    fun `navigateStep adds the new step item to the browser test object`() {
+        browserTest.navigateStep()
+
+        assertEquals(1, browserTest.steps?.size)
+    }
+
+    @Test
+    fun `navigateStep adds step with type go to url and params of type ActionsParams`() {
+        browserTest.navigateStep()
+        val step = browserTest.steps?.get(0)
+
+        assertEquals(SyntheticsStepType.GO_TO_URL, step?.type)
+        assertInstanceOf(ActionsParams::class.java, step?.params)
+    }
+
+    @Test
+    fun `navigationUrl adds url value to the step`() {
+        browserTest
+            .navigateStep()
+            .navigationUrl("https://synthetic-test.personio.de")
+        val params = browserTest.steps?.get(0)?.params as ActionsParams
+
+        assertEquals("https://synthetic-test.personio.de", params.value)
+    }
+
+    @Test
+    fun `refreshStep adds the new step item to the browser test object`() {
+        browserTest.refreshStep()
+
+        assertEquals(1, browserTest.steps?.size)
+    }
+
+    @Test
+    fun `refreshStep adds step with type refresh and params of type ActionsParams`() {
+        browserTest.refreshStep()
+        val step = browserTest.steps?.get(0)
+
+        assertEquals(SyntheticsStepType.REFRESH, step?.type)
+        assertInstanceOf(ActionsParams::class.java, step?.params)
+    }
 }

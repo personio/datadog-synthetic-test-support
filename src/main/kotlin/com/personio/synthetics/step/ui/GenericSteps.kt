@@ -3,8 +3,10 @@ package com.personio.synthetics.step.ui
 import com.datadog.api.v1.client.model.SyntheticsStep
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.LocatorType
+import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.model.element.Element
+import com.personio.synthetics.model.element.ElementForSpecialActions
 import com.personio.synthetics.model.element.UserLocator
 import com.personio.synthetics.model.element.Value
 
@@ -22,6 +24,7 @@ fun SyntheticsStep.targetElement(locator: String, locatorType: LocatorType = Loc
     params = when (val p = params) {
         is ActionsParams -> p.copy(element = Element(userLocator = userLocator))
         is AssertionParams -> p.copy(element = Element(userLocator = userLocator))
+        is SpecialActionsParams -> p.copy(element = ElementForSpecialActions(userLocator = userLocator))
         else -> throw IllegalArgumentException("Cannot use targetElement on params $p")
     }
 }
