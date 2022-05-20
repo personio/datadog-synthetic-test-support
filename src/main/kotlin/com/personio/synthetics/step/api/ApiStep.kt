@@ -5,31 +5,31 @@ import com.datadog.api.v1.client.model.SyntheticsAssertion
 import com.datadog.api.v1.client.model.SyntheticsAssertionOperator
 import com.datadog.api.v1.client.model.SyntheticsAssertionTarget
 import com.datadog.api.v1.client.model.SyntheticsAssertionType
-import com.datadog.api.v1.client.model.SyntheticsBrowserTest
 import com.datadog.api.v1.client.model.SyntheticsGlobalVariableParseTestOptionsType
 import com.datadog.api.v1.client.model.SyntheticsGlobalVariableParserType
 import com.datadog.api.v1.client.model.SyntheticsStep
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.datadog.api.v1.client.model.SyntheticsTestRequest
 import com.datadog.api.v1.client.model.SyntheticsVariableParser
+import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.api.ExtractValue
 import com.personio.synthetics.model.api.RequestParams
+import com.personio.synthetics.step.addStep
+import com.personio.synthetics.step.withParamType
 import java.net.URL
 
 /**
  * Adds a new API step to the synthetic browser test
  * @return Synthetic step object with this step added
  */
-fun SyntheticsBrowserTest.addApiStep(): SyntheticsStep {
-    val apiStep = SyntheticsStep().type(SyntheticsStepType.RUN_API_TEST)
-    val requestParams = with(RequestParams()) {
-        request.config.request(SyntheticsTestRequest().url(config?.request?.url))
-        copy(request = request.copy(subtype = "http"))
+fun BrowserTest.addApiStep(): SyntheticsStep =
+    addStep {
+        type = SyntheticsStepType.RUN_API_TEST
+        params = with(RequestParams()) {
+            request.config.request(SyntheticsTestRequest().url(config?.request?.url))
+            copy(request = request.copy(subtype = "http"))
+        }
     }
-    apiStep.params = requestParams
-    addStepsItem(apiStep)
-    return apiStep
-}
 
 /**
  * Adds a new assertion to the API step
@@ -53,8 +53,9 @@ fun SyntheticsStep.addAssertion(
             .target(expected)
             .type(assertionType)
     )
-    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use addAssertion on params $params"))
-        .request.config.assertions?.add(assertion)
+    withParamType<RequestParams> {
+        apply { request.config.assertions?.add(assertion) }
+    }
 }
 
 /**
@@ -63,8 +64,9 @@ fun SyntheticsStep.addAssertion(
  * @return SyntheticsStep object with the request body set
  */
 fun SyntheticsStep.requestBody(body: String) = apply {
-    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use requestBody on params $params"))
-        .request.config.request.body = body
+    withParamType<RequestParams> {
+        apply { request.config.request.body = body }
+    }
 }
 
 /**
@@ -74,8 +76,9 @@ fun SyntheticsStep.requestBody(body: String) = apply {
  * @return SyntheticsStep object with the request headers set
  */
 fun SyntheticsStep.requestHeaders(headers: Map<String, String>) = apply {
-    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use requestHeaders on params $params"))
-        .request.config.request.headers = headers
+    withParamType<RequestParams> {
+        apply { request.config.request.headers = headers }
+    }
 }
 
 /**
@@ -84,8 +87,9 @@ fun SyntheticsStep.requestHeaders(headers: Map<String, String>) = apply {
  * @return SyntheticsStep object with the method set
  */
 fun SyntheticsStep.method(method: HTTPMethod) = apply {
-    (params as? RequestParams ?: throw IllegalArgumentException("Cannot use method on params $params"))
-        .request.config.request.method = method
+    withParamType<RequestParams> {
+        apply { request.config.request.method = method }
+    }
 }
 
 /**
@@ -95,11 +99,13 @@ fun SyntheticsStep.method(method: HTTPMethod) = apply {
  * else pass full url including http(s)://
  */
 fun SyntheticsStep.url(url: String) = apply {
-    with(params as? RequestParams ?: throw IllegalArgumentException("Cannot use url on params $params")) {
-        val target = runCatching { URL(url) }
-            .recover { URL(request.config.request.url + url) }
-            .getOrThrow()
-        request.config.request.url = target.toString()
+    withParamType<RequestParams> {
+        apply {
+            val target = runCatching { URL(url) }
+                .recover { URL(request.config.request.url + url) }
+                .getOrThrow()
+            request.config.request.url = target.toString()
+        }
     }
 }
 
@@ -122,8 +128,9 @@ fun SyntheticsStep.extractHeaderValue(name: String, field: String, regex: String
                 .value(regex)
         )
         .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
-    params = (params as? RequestParams ?: throw IllegalArgumentException("Cannot use extractHeaderValue on params $params"))
-        .setExtractValue(extractValue)
+    params = withParamType<RequestParams> {
+        setExtractValue(extractValue)
+    }
 }
 
 /**
@@ -150,8 +157,9 @@ fun SyntheticsStep.extractBodyValue(
     newExtractValue
         .parser(parser)
         .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
-    params = (params as? RequestParams ?: throw IllegalArgumentException("Cannot use extractBodyValue on params $params"))
-        .setExtractValue(newExtractValue)
+    params = withParamType<RequestParams> {
+        setExtractValue(newExtractValue)
+    }
 }
 
 /**
