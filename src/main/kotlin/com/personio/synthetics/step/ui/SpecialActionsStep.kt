@@ -7,19 +7,19 @@ import com.personio.synthetics.model.actions.Modifier
 import com.personio.synthetics.model.actions.PressKeyParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
+import com.personio.synthetics.step.addStep
+import com.personio.synthetics.step.withParamType
 import kotlin.time.Duration
 
 /**
  * Adds a wait step to the synthetic browser test with a default value as 1 second
  * @return SyntheticsStep object with the wait step added
  */
-fun BrowserTest.waitStep(): SyntheticsStep {
-    val step = SyntheticsStep()
-        .type(SyntheticsStepType.WAIT)
-        .params(WaitParams())
-    addStepsItem(step)
-    return step
-}
+fun BrowserTest.waitStep(): SyntheticsStep =
+    addStep {
+        type = SyntheticsStepType.WAIT
+        params = WaitParams()
+    }
 
 /**
  * Sets the waiting time to be sent for the wait step
@@ -27,7 +27,7 @@ fun BrowserTest.waitStep(): SyntheticsStep {
  * @return SyntheticsStep object with waiting time value set
  */
 fun SyntheticsStep.waitingTime(value: Duration) = apply {
-    params = with(params as? WaitParams ?: throw IllegalArgumentException("Cannot use waiting time on params $params")) {
+    params = withParamType<WaitParams> {
         copy(value = value.inWholeSeconds.toInt())
     }
 }
@@ -36,13 +36,11 @@ fun SyntheticsStep.waitingTime(value: Duration) = apply {
  * Adds a scroll step to the synthetic browser test
  * @return SyntheticsStep object with the scroll step added
  */
-fun BrowserTest.scrollStep(): SyntheticsStep {
-    val step = SyntheticsStep()
-        .type(SyntheticsStepType.SCROLL)
-        .params(SpecialActionsParams())
-    addStepsItem(step)
-    return step
-}
+fun BrowserTest.scrollStep(): SyntheticsStep =
+    addStep {
+        type = SyntheticsStepType.SCROLL
+        params = SpecialActionsParams()
+    }
 
 /**
  * Sets the horizontal scroll value to be sent for the scroll step
@@ -50,8 +48,9 @@ fun BrowserTest.scrollStep(): SyntheticsStep {
  * @return SyntheticsStep object with horizontal scroll value set
  */
 fun SyntheticsStep.horizontalScroll(x: Int) = apply {
-    params = (params as? SpecialActionsParams ?: throw IllegalArgumentException("Cannot use horizontalScroll on params $params"))
-        .copy(x = x)
+    params = withParamType<SpecialActionsParams> {
+        copy(x = x)
+    }
 }
 
 /**
@@ -60,33 +59,30 @@ fun SyntheticsStep.horizontalScroll(x: Int) = apply {
  * @return SyntheticsStep object with vertical scroll value set
  */
 fun SyntheticsStep.verticalScroll(y: Int) = apply {
-    params = (params as? SpecialActionsParams ?: throw IllegalArgumentException("Cannot use verticalScroll on params $params"))
-        .copy(y = y)
+    params = withParamType<SpecialActionsParams> {
+        copy(y = y)
+    }
 }
 
 /**
  * Adds a hover step to the synthetic browser test
  * @return SyntheticsStep object with the hover step added
  */
-fun BrowserTest.hoverStep(): SyntheticsStep {
-    val step = SyntheticsStep()
-        .type(SyntheticsStepType.HOVER)
-        .params(SpecialActionsParams())
-    addStepsItem(step)
-    return step
-}
+fun BrowserTest.hoverStep(): SyntheticsStep =
+    addStep {
+        type = SyntheticsStepType.HOVER
+        params = SpecialActionsParams()
+    }
 
 /**
  * Adds a press key step to the synthetic browser test
  * @return SyntheticsStep object with the press key step added
  */
-fun BrowserTest.pressKeyStep(): SyntheticsStep {
-    val step = SyntheticsStep()
-        .type(SyntheticsStepType.PRESS_KEY)
-        .params(PressKeyParams())
-    addStepsItem(step)
-    return step
-}
+fun BrowserTest.pressKeyStep(): SyntheticsStep =
+    addStep {
+        type = SyntheticsStepType.PRESS_KEY
+        params = PressKeyParams()
+    }
 
 /**
  * Sets the value to be sent for the press key step
@@ -94,8 +90,9 @@ fun BrowserTest.pressKeyStep(): SyntheticsStep {
  * @return SyntheticsStep object with press key value set
  */
 fun SyntheticsStep.key(value: String) = apply {
-    params = (params as? PressKeyParams ?: throw IllegalArgumentException("Cannot use key on params $params"))
-        .copy(value = value)
+    params = withParamType<PressKeyParams> {
+        copy(value = value)
+    }
 }
 
 /**
@@ -104,7 +101,7 @@ fun SyntheticsStep.key(value: String) = apply {
  * @return SyntheticsStep object with press key value set
  */
 fun SyntheticsStep.addModifier(modifier: Modifier) = apply {
-    params = with(params as? PressKeyParams ?: throw IllegalArgumentException("Cannot use addModifier on params $params")) {
+    params = withParamType<PressKeyParams> {
         copy(modifiers = modifiers.plus(modifier.value))
     }
 }
