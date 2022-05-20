@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.20"
-    id("org.jetbrains.dokka") version "1.6.10"
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    id("org.jetbrains.kotlin.jvm") version "1.6.21"
+    id("org.jetbrains.dokka") version "1.6.21"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     `maven-publish`
 }
 
@@ -28,14 +28,14 @@ val e2eTest =
 tasks.check { dependsOn(e2eTest) }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.20")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.21")
     api("javax.activation:activation:1.1.1")
-    api("com.datadoghq:datadog-api-client:1.5.0")
+    api("com.datadoghq:datadog-api-client:1.6.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("org.mockito:mockito-inline:4.4.0")
+    testImplementation("org.mockito:mockito-inline:4.5.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
+    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 }
 
 tasks {
