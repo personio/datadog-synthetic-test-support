@@ -4,6 +4,7 @@ import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.javascript.JSParams
+import com.personio.synthetics.step.code
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
