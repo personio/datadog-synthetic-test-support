@@ -1,4 +1,4 @@
-package com.personio.synthetics.step.ui
+package com.personio.synthetics.step
 
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
@@ -6,7 +6,14 @@ import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.LocatorType
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.assertion.AssertionParams
-import com.personio.synthetics.model.assertion.AssertionType
+import com.personio.synthetics.model.javascript.JSParams
+import com.personio.synthetics.step.assertion.customJavascriptAssertion
+import com.personio.synthetics.step.assertion.elementPresentAssertion
+import com.personio.synthetics.step.javascript.addExtractFromJavascriptStep
+import com.personio.synthetics.step.ui.clickStep
+import com.personio.synthetics.step.ui.hoverStep
+import com.personio.synthetics.step.ui.inputTextStep
+import com.personio.synthetics.step.ui.scrollStep
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
@@ -47,9 +54,9 @@ internal class GenericStepsTest {
     }
 
     @Test
-    fun `targetElement adds params as AssertionParams if assertionStep is added`() {
+    fun `targetElement adds params as AssertionParams if elementPresentAssertion is added`() {
         browserTest
-            .assertionStep(AssertionType.ELEMENT_PRESENT)
+            .elementPresentAssertion()
             .targetElement("[name]=\"test\"")
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps?.get(0)?.params)
@@ -71,5 +78,23 @@ internal class GenericStepsTest {
             .targetElement("[name]=\"test\"")
 
         assertInstanceOf(SpecialActionsParams::class.java, browserTest.steps?.get(0)?.params)
+    }
+
+    @Test
+    fun `code adds params as JSParams if extractFromJavascriptStep is added`() {
+        browserTest
+            .addExtractFromJavascriptStep()
+            .code("return 1")
+
+        assertInstanceOf(JSParams::class.java, browserTest.steps?.get(0)?.params)
+    }
+
+    @Test
+    fun `code adds params as AssertionParams if extractFromJavascriptStep is added`() {
+        browserTest
+            .customJavascriptAssertion()
+            .code("return true;")
+
+        assertInstanceOf(AssertionParams::class.java, browserTest.steps?.get(0)?.params)
     }
 }

@@ -3,12 +3,12 @@ package com.personio.synthetics.e2e
 import com.datadog.api.v1.client.model.HTTPMethod
 import com.datadog.api.v1.client.model.SyntheticsAssertionOperator
 import com.datadog.api.v1.client.model.SyntheticsAssertionType
+import com.datadog.api.v1.client.model.SyntheticsCheckType
 import com.personio.synthetics.client.syntheticBrowserTest
 import com.personio.synthetics.config.addGlobalVariable
 import com.personio.synthetics.config.setUrl
 import com.personio.synthetics.model.actions.LocatorType
 import com.personio.synthetics.model.actions.Modifier
-import com.personio.synthetics.model.assertion.AssertionType
 import com.personio.synthetics.step.api.addApiStep
 import com.personio.synthetics.step.api.addAssertion
 import com.personio.synthetics.step.api.extractHeaderValue
@@ -16,8 +16,19 @@ import com.personio.synthetics.step.api.method
 import com.personio.synthetics.step.api.requestBody
 import com.personio.synthetics.step.api.requestHeaders
 import com.personio.synthetics.step.api.url
+import com.personio.synthetics.step.assertion.attribute
+import com.personio.synthetics.step.assertion.check
+import com.personio.synthetics.step.assertion.currentUrlAssertion
+import com.personio.synthetics.step.assertion.customJavascriptAssertion
+import com.personio.synthetics.step.assertion.elementAttributeAssertion
+import com.personio.synthetics.step.assertion.elementContentAssertion
+import com.personio.synthetics.step.assertion.elementPresentAssertion
+import com.personio.synthetics.step.assertion.expectedValue
+import com.personio.synthetics.step.assertion.pageContainsTextAssertion
+import com.personio.synthetics.step.assertion.pageNotContainsTextAssertion
+import com.personio.synthetics.step.code
+import com.personio.synthetics.step.targetElement
 import com.personio.synthetics.step.ui.addModifier
-import com.personio.synthetics.step.ui.assertionStep
 import com.personio.synthetics.step.ui.clickStep
 import com.personio.synthetics.step.ui.horizontalScroll
 import com.personio.synthetics.step.ui.hoverStep
@@ -28,7 +39,6 @@ import com.personio.synthetics.step.ui.navigationUrl
 import com.personio.synthetics.step.ui.pressKeyStep
 import com.personio.synthetics.step.ui.refreshStep
 import com.personio.synthetics.step.ui.scrollStep
-import com.personio.synthetics.step.ui.targetElement
 import com.personio.synthetics.step.ui.text
 import com.personio.synthetics.step.ui.verticalScroll
 import com.personio.synthetics.step.ui.waitStep
@@ -56,15 +66,39 @@ class E2ETest {
             clickStep()
                 .name("Click login button")
                 .targetElement("[name='login']")
+            currentUrlAssertion()
+                .name("Check current URL")
+                .expectedValue("https://synthetic-test.personio.de")
+                .check(SyntheticsCheckType.CONTAINS)
+            pageContainsTextAssertion()
+                .name("Check that test element is present on the page")
+                .expectedValue("string that should be present")
+            pageNotContainsTextAssertion()
+                .name("Check text is not present on the page")
+                .expectedValue("string that should not be present")
             clickStep()
                 .name("Navigate to test page")
                 .targetElement("[name='test-page']", LocatorType.CSS)
-            assertionStep(AssertionType.ELEMENT_PRESENT)
+            elementPresentAssertion()
                 .name("Check if test link is present")
                 .targetElement("[name='link-name']")
+            elementContentAssertion()
+                .name("Check text of the test link")
+                .targetElement("[name='link-name']")
+                .expectedValue("Test")
+                .check(SyntheticsCheckType.EQUALS)
+            elementAttributeAssertion()
+                .name("Check that href of the test link is not empty")
+                .targetElement("[name='link-name']")
+                .attribute("href")
+                .expectedValue("")
+                .check(SyntheticsCheckType.NOT_IS_EMPTY)
             navigateStep()
                 .name("Navigate to test page by URL")
                 .navigationUrl("https://synthetic-test.personio.de/test")
+            customJavascriptAssertion()
+                .name("Check custom JS")
+                .code("return true;")
             refreshStep()
                 .name("Refresh test page")
             waitStep()
