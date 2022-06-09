@@ -1,9 +1,9 @@
 package com.personio.synthetics.step.ui
 
-import com.datadog.api.v1.client.model.SyntheticsStep
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.actions.ActionsParams
+import com.personio.synthetics.step.Step
 import com.personio.synthetics.step.addStep
 import com.personio.synthetics.step.withParamType
 import java.net.URL
@@ -12,67 +12,71 @@ private const val DEFAULT_TEXT_DELAY: Long = 25 // in milliseconds
 
 /**
  * Adds a new input text step to the synthetic browser test
- * @return SyntheticsStep object with the input text step added
+ * @param stepName Name of the step
+ * @param f Add all the parameters required for this test step
+ * @return ActionsStep object with the input text step added
  */
-fun BrowserTest.inputTextStep(): SyntheticsStep =
-    addStep {
+fun BrowserTest.inputTextStep(stepName: String, f: ActionsStep.() -> Unit): ActionsStep =
+    addStep(stepName, ActionsStep()) {
         type = SyntheticsStepType.TYPE_TEXT
         params = ActionsParams(delay = DEFAULT_TEXT_DELAY)
+        f()
     }
 
 /**
  * Adds a new click step to the synthetic browser test
- * @return SyntheticsStep object with the click step added
+ * @param stepName Name of the step
+ * @param f Add all the parameters required for this test step
+ * @return ActionsStep object with the click step added
  */
-fun BrowserTest.clickStep(): SyntheticsStep =
-    addStep {
+fun BrowserTest.clickStep(stepName: String, f: ActionsStep.() -> Unit): ActionsStep =
+    addStep(stepName, ActionsStep()) {
         type = SyntheticsStepType.CLICK
         params = ActionsParams()
+        f()
     }
-
-/**
- * Sets the text to be sent for the input text step
- * @param value Text to be sent for the input text step
- * @return SyntheticsStep object with text value set
- */
-fun SyntheticsStep.text(value: String) = apply {
-    params = withParamType<ActionsParams> {
-        copy(value = value)
-    }
-}
 
 /**
  * Adds a navigate step with default url to the synthetic browser test
  * But default url value is set to use the base url
  * Url value should be overridden using SyntheticsStep url function
- * @return SyntheticsStep object with the navigate step added
+ * @param stepName Name of the step
+ * @param f Add all the parameters required for this test step
+ * @return ActionsStep object with the navigate step added
  */
-fun BrowserTest.navigateStep(): SyntheticsStep =
-    addStep {
+fun BrowserTest.navigateStep(stepName: String, f: ActionsStep.() -> Unit): ActionsStep =
+    addStep(stepName, ActionsStep()) {
         type = SyntheticsStepType.GO_TO_URL
         params = ActionsParams(value = config?.request?.url)
+        f()
     }
 
 /**
- * Sets the URL to be sent for the navigate step
- * @param url value to be sent for the navigate step
- * @return SyntheticsStep object with URL value set
+ * Configure the Actions step for the synthetic browser test
  */
-fun SyntheticsStep.navigationUrl(url: String) = apply {
-    params = withParamType<ActionsParams> {
-        val target = runCatching { URL(url) }
-            .recover { URL(value + url) }
-            .getOrThrow()
-        copy(value = target.toString())
+class ActionsStep : Step() {
+    /**
+     * Sets the text to be sent for the input text step
+     * @param value Text to be sent for the input text step
+     * @return ActionsStep object with text value set
+     */
+    fun text(value: String) = apply {
+        params = withParamType<ActionsParams> {
+            copy(value = value)
+        }
+    }
+
+    /**
+     * Sets the URL to be sent for the navigate step
+     * @param url value to be sent for the navigate step
+     * @return ActionsStep object with URL value set
+     */
+    fun navigationUrl(url: String) = apply {
+        params = withParamType<ActionsParams> {
+            val target = runCatching { URL(url) }
+                .recover { URL(value + url) }
+                .getOrThrow()
+            copy(value = target.toString())
+        }
     }
 }
-
-/**
- * Adds a refresh step to the synthetic browser test
- * @return SyntheticsStep object with the refresh step added
- */
-fun BrowserTest.refreshStep(): SyntheticsStep =
-    addStep {
-        type = SyntheticsStepType.REFRESH
-        params = ActionsParams()
-    }

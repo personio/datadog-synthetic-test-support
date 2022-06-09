@@ -22,6 +22,9 @@ inline fun syntheticBrowserTest(name: String, steps: BrowserTest.() -> Unit) {
     browserTest.createBrowserTest()
 }
 
+/**
+ * Synthetic browser test client for the API calls with the Datadog
+ */
 class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsApiClient) : SyntheticsBrowserTest() {
     init {
         name = testName
@@ -60,8 +63,8 @@ class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsA
             .find { it.name.equals(name) }
             ?.publicId
 
-    private fun defaultSyntheticsTestOptions(): SyntheticsTestOptions {
-        return SyntheticsTestOptions()
+    private fun defaultSyntheticsTestOptions(): SyntheticsTestOptions =
+        SyntheticsTestOptions()
             .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
             .tickEvery(TestConfig.TEST_FREQUENCY)
             .minFailureDuration(TestConfig.MIN_FAILURE_DURATION)
@@ -72,5 +75,4 @@ class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsA
                 SyntheticsTestOptionsMonitorOptions()
                     .renotifyInterval(TestConfig.RENOTIFY_INTERVAL)
             )
-    }
 }

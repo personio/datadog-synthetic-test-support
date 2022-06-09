@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 
-internal class GenericAssertionStepTest {
+internal class AssertionStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
     private val browserTest = BrowserTest("Test", syntheticsApi)
 
     @Test
     fun `expectedValue adds the passed string value to the AssertionParams object`() {
         browserTest
-            .pageContainsTextAssertion()
+            .pageContainsTextAssertion("Step") {}
             .expectedValue("expected value")
         val params = browserTest.steps?.get(0)?.params as AssertionParams
 
@@ -25,7 +25,7 @@ internal class GenericAssertionStepTest {
     @Test
     fun `check adds the passed check type to the AssertionParams object`() {
         browserTest
-            .currentUrlAssertion()
+            .currentUrlAssertion("Step") {}
             .check(SyntheticsCheckType.EQUALS)
         val params = browserTest.steps?.get(0)?.params as AssertionParams
 

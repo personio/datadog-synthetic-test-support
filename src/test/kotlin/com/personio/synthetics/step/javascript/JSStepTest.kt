@@ -4,7 +4,6 @@ import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.javascript.JSParams
-import com.personio.synthetics.step.code
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
@@ -16,14 +15,14 @@ internal class JSStepTest {
 
     @Test
     fun `addExtractFromJavascriptStep adds new step to the browser test`() {
-        browserTest.addExtractFromJavascriptStep()
+        browserTest.extractFromJavascriptStep("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `addExtractFromJavascriptStep creates step with type Extract From Javascript and params of type JSParams`() {
-        browserTest.addExtractFromJavascriptStep()
+        browserTest.extractFromJavascriptStep("Step") {}
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.EXTRACT_FROM_JAVASCRIPT, step?.type)
@@ -33,8 +32,9 @@ internal class JSStepTest {
     @Test
     fun `code adds the passed javascript code to the JSParams object`() {
         browserTest
-            .addExtractFromJavascriptStep()
-            .code("return 1")
+            .extractFromJavascriptStep("Step") {
+                code("return 1")
+            }
         val params = browserTest.steps?.get(0)?.params as JSParams
 
         assertEquals("return 1", params.code)
@@ -43,8 +43,9 @@ internal class JSStepTest {
     @Test
     fun `variable adds the variable to the JSParams object`() {
         browserTest
-            .addExtractFromJavascriptStep()
-            .variable("VAR1")
+            .extractFromJavascriptStep("Step") {
+                variable("VAR1")
+            }
         val params = browserTest.steps?.get(0)?.params as JSParams
 
         assertEquals("VAR1", params.variable.name)
