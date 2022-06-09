@@ -1,7 +1,6 @@
 package com.personio.synthetics.config
 
 import com.datadog.api.v1.client.model.HTTPMethod
-import com.datadog.api.v1.client.model.SyntheticsBrowserTest
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariable
 import com.datadog.api.v1.client.model.SyntheticsBrowserVariableType
 import com.datadog.api.v1.client.model.SyntheticsTestRequest
@@ -13,7 +12,7 @@ import java.net.URL
  * @param url the base url for the test
  * @return SyntheticsBrowserTest object with url set
  */
-fun SyntheticsBrowserTest.setUrl(url: URL) = apply {
+fun BrowserTest.setBaseUrl(url: URL) = apply {
     config
         ?.request(
             SyntheticsTestRequest()
@@ -30,7 +29,7 @@ fun SyntheticsBrowserTest.setUrl(url: URL) = apply {
  * {{ numeric(8) }}, {{ alphabetic(15) }}, {{ alphanumeric(15) }}, {{ date(0d, MM-DD-YYYY) }}, {{ timestamp(0, s) }}
  * @return SyntheticsBrowserTest object with this created variable
  */
-fun SyntheticsBrowserTest.addLocalVariable(name: String, type: SyntheticsBrowserVariableType, pattern: String? = null) = apply {
+fun BrowserTest.addLocalVariable(name: String, type: SyntheticsBrowserVariableType, pattern: String? = null) = apply {
     config
         ?.addVariablesItem(
             SyntheticsBrowserVariable()

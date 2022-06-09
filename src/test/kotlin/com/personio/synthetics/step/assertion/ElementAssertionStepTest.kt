@@ -15,63 +15,63 @@ internal class ElementAssertionStepTest {
 
     @Test
     fun `elementPresentAssertion adds the new step item to the browser test object`() {
-        browserTest.elementPresentAssertion()
+        browserTest.elementPresentAssertion("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `elementPresentAssertion adds the step item of type Test that an element is present`() {
-        browserTest.elementPresentAssertion()
+        browserTest.elementPresentAssertion("Step") {}
 
         assertEquals(SyntheticsStepType.ASSERT_ELEMENT_PRESENT, browserTest.steps!![0].type)
     }
 
     @Test
     fun `elementPresentAssertion adds AssertionParams to the browser test object`() {
-        browserTest.elementPresentAssertion()
+        browserTest.elementPresentAssertion("Step") {}
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
     }
 
     @Test
     fun `elementContentAssertion adds the new step item to the browser test object`() {
-        browserTest.elementContentAssertion()
+        browserTest.elementContentAssertion("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `elementContentAssertion adds the step item of type Test an element's content`() {
-        browserTest.elementContentAssertion()
+        browserTest.elementContentAssertion("Step") {}
 
         assertEquals(SyntheticsStepType.ASSERT_ELEMENT_CONTENT, browserTest.steps!![0].type)
     }
 
     @Test
     fun `elementContentAssertion adds AssertionParams to the browser test object`() {
-        browserTest.elementContentAssertion()
+        browserTest.elementContentAssertion("Step") {}
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
     }
 
     @Test
     fun `elementAttributeAssertion adds the new step item to the browser test object`() {
-        browserTest.elementAttributeAssertion()
+        browserTest.elementAttributeAssertion("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `elementAttributeAssertion adds the step item of type Test an element's attribute`() {
-        browserTest.elementAttributeAssertion()
+        browserTest.elementAttributeAssertion("Step") {}
 
         assertEquals(SyntheticsStepType.ASSERT_ELEMENT_ATTRIBUTE, browserTest.steps!![0].type)
     }
 
     @Test
     fun `elementAttributeAssertion adds AssertionParams to the browser test object`() {
-        browserTest.elementAttributeAssertion()
+        browserTest.elementAttributeAssertion("Step") {}
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
     }
@@ -79,7 +79,7 @@ internal class ElementAssertionStepTest {
     @Test
     fun `attribute adds the passed attribute name to the AssertionParams object`() {
         browserTest
-            .elementAttributeAssertion()
+            .elementAttributeAssertion("Step") {}
             .attribute("href")
         val params = browserTest.steps?.get(0)?.params as AssertionParams
 

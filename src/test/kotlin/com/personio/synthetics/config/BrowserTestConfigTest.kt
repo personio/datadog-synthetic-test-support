@@ -17,9 +17,9 @@ internal class BrowserTestConfigTest {
     private val browserTest = BrowserTest("Test", syntheticsApi)
 
     @Test
-    fun `setUrl sets the base url to the test config`() {
+    fun `setBaseUrl sets the base url to the test config`() {
         val expectedUrl = "https://synthetic-test.personio.de"
-        browserTest.setUrl(URL(expectedUrl))
+        browserTest.setBaseUrl(URL(expectedUrl))
 
         assertEquals(expectedUrl, browserTest.config!!.request.url)
     }

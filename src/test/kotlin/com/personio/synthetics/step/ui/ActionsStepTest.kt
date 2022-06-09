@@ -15,14 +15,14 @@ internal class ActionsStepTest {
 
     @Test
     fun `inputTextStep adds the new step item to the browser test object`() {
-        browserTest.inputTextStep()
+        browserTest.inputTextStep("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `inputTextStep adds step with type text and params of type ActionsParams`() {
-        browserTest.inputTextStep()
+        browserTest.inputTextStep("Step") {}
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.TYPE_TEXT, step?.type)
@@ -32,8 +32,9 @@ internal class ActionsStepTest {
     @Test
     fun `text adds text value to the step`() {
         browserTest
-            .inputTextStep()
-            .text("SampleText")
+            .inputTextStep("Step") {
+                text("SampleText")
+            }
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
         assertEquals("SampleText", params.value)
@@ -41,14 +42,14 @@ internal class ActionsStepTest {
 
     @Test
     fun `clickStep adds the new step item to the browser test object`() {
-        browserTest.clickStep()
+        browserTest.clickStep("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `clickStep adds step with type click and params of type ActionsParams`() {
-        browserTest.clickStep()
+        browserTest.clickStep("Step") {}
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.CLICK, step?.type)
@@ -57,14 +58,14 @@ internal class ActionsStepTest {
 
     @Test
     fun `navigateStep adds the new step item to the browser test object`() {
-        browserTest.navigateStep()
+        browserTest.navigateStep("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `navigateStep adds step with type go to url and params of type ActionsParams`() {
-        browserTest.navigateStep()
+        browserTest.navigateStep("Step") {}
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.GO_TO_URL, step?.type)
@@ -74,26 +75,11 @@ internal class ActionsStepTest {
     @Test
     fun `navigationUrl adds url value to the step`() {
         browserTest
-            .navigateStep()
-            .navigationUrl("https://synthetic-test.personio.de")
+            .navigateStep("Step") {
+                navigationUrl("https://synthetic-test.personio.de")
+            }
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
         assertEquals("https://synthetic-test.personio.de", params.value)
-    }
-
-    @Test
-    fun `refreshStep adds the new step item to the browser test object`() {
-        browserTest.refreshStep()
-
-        assertEquals(1, browserTest.steps?.size)
-    }
-
-    @Test
-    fun `refreshStep adds step with type refresh and params of type ActionsParams`() {
-        browserTest.refreshStep()
-        val step = browserTest.steps?.get(0)
-
-        assertEquals(SyntheticsStepType.REFRESH, step?.type)
-        assertInstanceOf(ActionsParams::class.java, step?.params)
     }
 }

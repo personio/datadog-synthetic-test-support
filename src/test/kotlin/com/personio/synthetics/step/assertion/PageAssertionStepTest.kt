@@ -15,63 +15,63 @@ internal class PageAssertionStepTest {
 
     @Test
     fun `currentUrlAssertion adds the new step item to the browser test object`() {
-        browserTest.currentUrlAssertion()
+        browserTest.currentUrlAssertion("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `currentUrlAssertion adds the step item of type Test the content of the URL of the active page`() {
-        browserTest.currentUrlAssertion()
+        browserTest.currentUrlAssertion("Step") {}
 
         assertEquals(SyntheticsStepType.ASSERT_CURRENT_URL, browserTest.steps!![0].type)
     }
 
     @Test
     fun `currentUrlAssertion adds AssertionParams to the browser test object`() {
-        browserTest.currentUrlAssertion()
+        browserTest.currentUrlAssertion("Step") {}
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
     }
 
     @Test
     fun `pageContainsTextAssertion adds the new step item to the browser test object`() {
-        browserTest.pageContainsTextAssertion()
+        browserTest.pageContainsTextAssertion("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `pageContainsTextAssertion adds the step item of type Test that some text is present on the active page`() {
-        browserTest.pageContainsTextAssertion()
+        browserTest.pageContainsTextAssertion("Step") {}
 
         assertEquals(SyntheticsStepType.ASSERT_PAGE_CONTAINS, browserTest.steps!![0].type)
     }
 
     @Test
     fun `pageContainsTextAssertion adds AssertionParams to the browser test object`() {
-        browserTest.pageContainsTextAssertion()
+        browserTest.pageContainsTextAssertion("Step") {}
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
     }
 
     @Test
     fun `pageNotContainsTextAssertion adds the new step item to the browser test object`() {
-        browserTest.pageNotContainsTextAssertion()
+        browserTest.pageNotContainsTextAssertion("Step") {}
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `pageNotContainsTextAssertion adds the step item of type Test that some text is not present on the active page`() {
-        browserTest.pageNotContainsTextAssertion()
+        browserTest.pageNotContainsTextAssertion("Step") {}
 
         assertEquals(SyntheticsStepType.ASSERT_PAGE_LACKS, browserTest.steps!![0].type)
     }
 
     @Test
     fun `pageNotContainsTextAssertion adds AssertionParams to the browser test object`() {
-        browserTest.pageNotContainsTextAssertion()
+        browserTest.pageNotContainsTextAssertion("Step") {}
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
     }
