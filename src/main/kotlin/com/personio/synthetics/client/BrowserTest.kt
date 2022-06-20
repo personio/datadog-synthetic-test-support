@@ -70,7 +70,6 @@ class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsA
             .minFailureDuration(TestConfig.MIN_FAILURE_DURATION)
             .minLocationFailed(TestConfig.MIN_LOCATION_FAILED)
             .retry(SyntheticsTestOptionsRetry().count(TestConfig.RETRY_COUNT).interval(TestConfig.RETRY_INTERVAL))
-            .monitorPriority(TestConfig.MONITOR_PRIORITY)
             .monitorOptions(
                 SyntheticsTestOptionsMonitorOptions()
                     .renotifyInterval(TestConfig.RENOTIFY_INTERVAL)

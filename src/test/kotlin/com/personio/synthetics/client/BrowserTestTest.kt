@@ -58,11 +58,6 @@ internal class BrowserTestTest {
     }
 
     @Test
-    fun `initialising a BrowserTest object sets a default monitor priority as in TestConfig`() {
-        assertEquals(TestConfig.MONITOR_PRIORITY, browserTest.options.monitorPriority)
-    }
-
-    @Test
     fun `initialising a BrowserTest object sets a default renotify interval as in TestConfig`() {
         assertEquals(TestConfig.RENOTIFY_INTERVAL, browserTest.options.monitorOptions?.renotifyInterval)
     }

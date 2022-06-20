@@ -7,7 +7,6 @@ object TestConfig {
     const val MIN_LOCATION_FAILED: Long = 1
     const val RETRY_COUNT: Long = 1
     const val RETRY_INTERVAL: Double = 60.0 // in milliseconds
-    const val MONITOR_PRIORITY: Int = 1
     const val RENOTIFY_INTERVAL: Long = 10 // in minutes
     val RUN_LOCATIONS = listOf("aws:eu-central-1")
 }
