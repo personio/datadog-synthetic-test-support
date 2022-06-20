@@ -10,7 +10,7 @@ import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.datadog.api.v1.client.model.SyntheticsVariableParser
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
-import com.personio.synthetics.config.setBaseUrl
+import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.model.api.RequestParams
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
@@ -42,7 +42,7 @@ internal class ApiStepTest {
 
     @Test
     fun `addApiStep creates params with request sub type http and url that of browser test`() {
-        browserTest.setBaseUrl(URL("https://synthetic-test.personio.de"))
+        browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
 
         browserTest.apiStep("Step") {}
         val params = browserTest.steps?.get(0)?.params as RequestParams
@@ -131,7 +131,7 @@ internal class ApiStepTest {
 
     @Test
     fun `part url passed to the url method should append to the base url into the request`() {
-        browserTest.setBaseUrl(URL("https://synthetic-test.personio.de"))
+        browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
         browserTest
             .apiStep("Step") {
                 url("/login")
@@ -143,7 +143,7 @@ internal class ApiStepTest {
 
     @Test
     fun `full url passed to the url method should be added into the request`() {
-        browserTest.setBaseUrl(URL("https://synthetic-test.personio.de"))
+        browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
         browserTest
             .apiStep("Step") {
                 url("https://newurl.personio.de")

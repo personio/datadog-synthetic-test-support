@@ -4,11 +4,24 @@ import com.datadog.api.v1.client.model.HTTPMethod
 import com.datadog.api.v1.client.model.SyntheticsAssertionOperator
 import com.datadog.api.v1.client.model.SyntheticsAssertionType
 import com.datadog.api.v1.client.model.SyntheticsCheckType
+import com.datadog.api.v1.client.model.SyntheticsDeviceID
 import com.personio.synthetics.client.syntheticBrowserTest
 import com.personio.synthetics.config.addGlobalVariable
-import com.personio.synthetics.config.setBaseUrl
+import com.personio.synthetics.config.baseUrl
+import com.personio.synthetics.config.browserAndDevice
+import com.personio.synthetics.config.minFailureDuration
+import com.personio.synthetics.config.minLocationFailed
+import com.personio.synthetics.config.monitorName
+import com.personio.synthetics.config.monitorPriority
+import com.personio.synthetics.config.publicLocation
+import com.personio.synthetics.config.renotifyInterval
+import com.personio.synthetics.config.retry
+import com.personio.synthetics.config.testFrequency
 import com.personio.synthetics.model.actions.Key
 import com.personio.synthetics.model.actions.Modifier
+import com.personio.synthetics.model.config.Location
+import com.personio.synthetics.model.config.MonitorPriority
+import com.personio.synthetics.model.config.RenotifyInterval
 import com.personio.synthetics.step.api.apiStep
 import com.personio.synthetics.step.assertion.currentUrlAssertion
 import com.personio.synthetics.step.assertion.customJavascriptAssertion
@@ -28,6 +41,8 @@ import com.personio.synthetics.step.ui.scrollStep
 import com.personio.synthetics.step.ui.waitStep
 import org.junit.jupiter.api.Test
 import java.net.URL
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 class E2ETest {
@@ -35,8 +50,17 @@ class E2ETest {
     fun `create synthetic test`() {
         syntheticBrowserTest("[Test] Synthetic-Test-As-Code") {
             message = "{{#is_alert}} @slack-test_slack_channel Test Failed {{/is_alert}}"
-            addTagsItem("synthetics-api")
-            setBaseUrl(URL("https://synthetic-test.personio.de"))
+            tags(listOf("env:qa", "synthetics-api"))
+            baseUrl(URL("https://synthetic-test.personio.de"))
+            browserAndDevice(SyntheticsDeviceID.CHROME_MOBILE_SMALL, SyntheticsDeviceID.FIREFOX_LAPTOP_LARGE)
+            publicLocation(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
+            testFrequency(6.minutes)
+            retry(2, 600.milliseconds)
+            minFailureDuration(120.minutes)
+            minLocationFailed(2)
+            monitorName("Test Monitor Name")
+            renotifyInterval(RenotifyInterval.HOURS_2)
+            monitorPriority(MonitorPriority.P3_MEDIUM)
             addGlobalVariable("TEST_PASSWORD")
             inputTextStep("Enter username") {
                 targetElement {
