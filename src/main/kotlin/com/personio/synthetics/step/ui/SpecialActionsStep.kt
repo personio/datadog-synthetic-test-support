@@ -36,6 +36,12 @@ fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): 
         type = SyntheticsStepType.SCROLL
         params = SpecialActionsParams()
         f()
+        with(params as SpecialActionsParams) {
+            check(
+                (x in 0..9999 && y in 0..9999) || (element != null),
+                { "Either set x,y coordinates within(0,9999) pixels or target element for step:'$stepName'" }
+            )
+        }
     }
 
 /**
@@ -49,6 +55,7 @@ fun BrowserTest.hoverStep(stepName: String, f: SpecialActionsStep.() -> Unit): S
         type = SyntheticsStepType.HOVER
         params = SpecialActionsParams()
         f()
+        checkNotNull((params as SpecialActionsParams).element) { "Target element should be set for the step:'$stepName'" }
     }
 
 /**
@@ -62,6 +69,7 @@ fun BrowserTest.pressKeyStep(stepName: String, f: SpecialActionsStep.() -> Unit)
         type = SyntheticsStepType.PRESS_KEY
         params = PressKeyParams()
         f()
+        checkNotNull((params as PressKeyParams).value) { "Key to be  pressed should be set for the step:'$stepName'" }
     }
 
 /**

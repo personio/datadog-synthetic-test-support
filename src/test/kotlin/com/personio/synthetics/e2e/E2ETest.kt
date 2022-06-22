@@ -129,8 +129,10 @@ class E2ETest {
                 targetElement {
                     locator = "[data-action-name='dbv2-kpi-employees-joining']"
                 }
-                horizontalScroll(1)
-                verticalScroll(1)
+            }
+            scrollStep("Scroll to Employees Joining widget with x,y coordinates") {
+                horizontalScroll(10)
+                verticalScroll(10)
             }
             hoverStep("Hover over Employees Joining widget") {
                 targetElement {

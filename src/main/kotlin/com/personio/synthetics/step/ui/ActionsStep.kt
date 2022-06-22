@@ -21,6 +21,10 @@ fun BrowserTest.inputTextStep(stepName: String, f: ActionsStep.() -> Unit): Acti
         type = SyntheticsStepType.TYPE_TEXT
         params = ActionsParams(delay = DEFAULT_TEXT_DELAY)
         f()
+        with(params as ActionsParams) {
+            check(!value.isNullOrBlank()) { "Input text should be set for the step:'$stepName'" }
+            checkNotNull(element) { "Target element should be set for the step:'$stepName'" }
+        }
     }
 
 /**
@@ -34,6 +38,7 @@ fun BrowserTest.clickStep(stepName: String, f: ActionsStep.() -> Unit): ActionsS
         type = SyntheticsStepType.CLICK
         params = ActionsParams()
         f()
+        checkNotNull((params as ActionsParams).element) { "Target element should be set for the step:'$stepName'" }
     }
 
 /**
@@ -49,6 +54,7 @@ fun BrowserTest.navigateStep(stepName: String, f: ActionsStep.() -> Unit): Actio
         type = SyntheticsStepType.GO_TO_URL
         params = ActionsParams(value = config?.request?.url)
         f()
+        check(!(params as ActionsParams).value.isNullOrBlank()) { "URL to navigate should be set for the step:'$stepName'" }
     }
 
 /**
