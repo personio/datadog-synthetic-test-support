@@ -27,6 +27,7 @@ internal class StepTest {
     fun `targetElement adds Userlocator to the params object`() {
         browserTest
             .inputTextStep("Step") {
+                text("SampleText")
                 targetElement {
                     locator = "//button"
                     locatorType = LocatorType.XPATH
@@ -42,6 +43,7 @@ internal class StepTest {
     fun `targetElement without locator type adds Userlocator with default locator type as css`() {
         browserTest
             .inputTextStep("Step") {
+                text("SampleText")
                 targetElement {
                     locator = "[name]='test'"
                 }
@@ -76,12 +78,14 @@ internal class StepTest {
     }
 
     @Test
-    fun `targetElement adds params as SpecialActionsParams if scrollStep is added`() {
+    fun `targetElement and x,y coordinates adds params as SpecialActionsParams if scrollStep is added`() {
         browserTest
             .scrollStep("Step") {
                 targetElement {
                     locator = "[name]='test'"
                 }
+                horizontalScroll(1)
+                verticalScroll(1)
             }
 
         assertInstanceOf(SpecialActionsParams::class.java, browserTest.steps?.get(0)?.params)

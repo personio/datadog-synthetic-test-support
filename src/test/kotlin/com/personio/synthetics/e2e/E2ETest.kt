@@ -129,8 +129,10 @@ class E2ETest {
                 targetElement {
                     locator = "[name='test-element']"
                 }
-                horizontalScroll(1)
-                verticalScroll(1)
+            }
+            scrollStep("Scroll to test element with x,y coordinates") {
+                horizontalScroll(10)
+                verticalScroll(10)
             }
             hoverStep("Hover over test element") {
                 targetElement {
