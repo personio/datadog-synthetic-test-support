@@ -3,10 +3,16 @@ plugins {
     id("org.jetbrains.dokka") version "1.6.21"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     `maven-publish`
+    jacoco
+    id("org.sonarqube") version "3.3"
 }
 
 group = "com.personio"
 version = "1.0"
+
+jacoco {
+    toolVersion = "0.8.7"
+}
 
 apply(plugin = "org.jetbrains.dokka")
 
@@ -43,6 +49,13 @@ tasks {
         useJUnitPlatform()
         filter {
             excludeTestsMatching("*.e2e.*")
+        }
+    }
+    jacocoTestReport {
+        reports {
+            xml.isEnabled = true
+            html.isEnabled = false
+            xml.destination = file("$buildDir/test-results/test/xml/jacocoReport.xml")
         }
     }
 }
