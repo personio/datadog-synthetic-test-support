@@ -8,7 +8,8 @@ import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.model.element.Element
 import com.personio.synthetics.model.element.ElementForSpecialActions
 import com.personio.synthetics.model.element.UserLocator
-import com.personio.synthetics.model.javascript.JSParams
+import com.personio.synthetics.model.extract.ExtractParams
+import com.personio.synthetics.model.file.FileParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.intellij.lang.annotations.Language
 
@@ -36,7 +37,7 @@ open class Step : SyntheticsStep() {
      */
     fun code(@Language("JS") code: String) = apply {
         params = when (val p = params) {
-            is JSParams -> p.copy(code = code)
+            is ExtractParams -> p.copy(code = code)
             is AssertionParams -> p.copy(code = code)
             else -> throw IllegalArgumentException("Cannot use code on params $p")
         }
@@ -48,6 +49,8 @@ open class Step : SyntheticsStep() {
             is ActionsParams -> p.copy(element = Element(userLocator = userLocator))
             is AssertionParams -> p.copy(element = Element(userLocator = userLocator))
             is SpecialActionsParams -> p.copy(element = ElementForSpecialActions(userLocator = userLocator))
+            is FileParams -> p.copy(element = Element(userLocator = userLocator))
+            is ExtractParams -> p.copy(element = Element(userLocator = userLocator))
             else -> throw IllegalArgumentException("Cannot use targetElement on params $p")
         }
     }

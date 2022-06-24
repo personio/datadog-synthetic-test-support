@@ -6,10 +6,11 @@ import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.LocatorType
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.assertion.AssertionParams
-import com.personio.synthetics.model.javascript.JSParams
+import com.personio.synthetics.model.extract.ExtractParams
 import com.personio.synthetics.step.assertion.customJavascriptAssertion
 import com.personio.synthetics.step.assertion.elementPresentAssertion
-import com.personio.synthetics.step.javascript.extractFromJavascriptStep
+import com.personio.synthetics.step.extract.extractFromJavascriptStep
+import com.personio.synthetics.step.extract.extractTextFromElementStep
 import com.personio.synthetics.step.ui.clickStep
 import com.personio.synthetics.step.ui.hoverStep
 import com.personio.synthetics.step.ui.inputTextStep
@@ -104,13 +105,37 @@ internal class StepTest {
     }
 
     @Test
+    fun `targetElement adds params as ExtractParams if extractFromJavascriptStep is added`() {
+        browserTest
+            .extractFromJavascriptStep("Step") {
+                targetElement {
+                    locator = "[name]='test'"
+                }
+            }
+
+        assertInstanceOf(ExtractParams::class.java, browserTest.steps?.get(0)?.params)
+    }
+
+    @Test
+    fun `targetElement adds params as ExtractParams if extractTextFromElementStep is added`() {
+        browserTest
+            .extractTextFromElementStep("Step") {
+                targetElement {
+                    locator = "[name]='test'"
+                }
+            }
+
+        assertInstanceOf(ExtractParams::class.java, browserTest.steps?.get(0)?.params)
+    }
+
+    @Test
     fun `code adds params as JSParams if extractFromJavascriptStep is added`() {
         browserTest
             .extractFromJavascriptStep("Step") {
                 code("return 1")
             }
 
-        assertInstanceOf(JSParams::class.java, browserTest.steps?.get(0)?.params)
+        assertInstanceOf(ExtractParams::class.java, browserTest.steps?.get(0)?.params)
     }
 
     @Test

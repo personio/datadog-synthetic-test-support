@@ -6,17 +6,22 @@ import com.datadog.api.v1.client.model.SyntheticsAssertionType
 import com.datadog.api.v1.client.model.SyntheticsCheckType
 import com.datadog.api.v1.client.model.SyntheticsDeviceID
 import com.personio.synthetics.client.syntheticBrowserTest
-import com.personio.synthetics.config.addGlobalVariable
+import com.personio.synthetics.config.alphabeticPatternVariable
+import com.personio.synthetics.config.alphanumericPatternVariable
 import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.config.browserAndDevice
+import com.personio.synthetics.config.datePatternVariable
 import com.personio.synthetics.config.minFailureDuration
 import com.personio.synthetics.config.minLocationFailed
 import com.personio.synthetics.config.monitorName
 import com.personio.synthetics.config.monitorPriority
+import com.personio.synthetics.config.numericPatternVariable
 import com.personio.synthetics.config.publicLocation
 import com.personio.synthetics.config.renotifyInterval
 import com.personio.synthetics.config.retry
 import com.personio.synthetics.config.testFrequency
+import com.personio.synthetics.config.timestampPatternVariable
+import com.personio.synthetics.config.useGlobalVariable
 import com.personio.synthetics.model.actions.Key
 import com.personio.synthetics.model.actions.Modifier
 import com.personio.synthetics.model.config.Location
@@ -30,7 +35,8 @@ import com.personio.synthetics.step.assertion.elementContentAssertion
 import com.personio.synthetics.step.assertion.elementPresentAssertion
 import com.personio.synthetics.step.assertion.pageContainsTextAssertion
 import com.personio.synthetics.step.assertion.pageNotContainsTextAssertion
-import com.personio.synthetics.step.javascript.extractFromJavascriptStep
+import com.personio.synthetics.step.extract.extractFromJavascriptStep
+import com.personio.synthetics.step.extract.extractTextFromElementStep
 import com.personio.synthetics.step.ui.clickStep
 import com.personio.synthetics.step.ui.hoverStep
 import com.personio.synthetics.step.ui.inputTextStep
@@ -41,6 +47,7 @@ import com.personio.synthetics.step.ui.scrollStep
 import com.personio.synthetics.step.ui.waitStep
 import org.junit.jupiter.api.Test
 import java.net.URL
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -61,7 +68,19 @@ class E2ETest {
             monitorName("Test Monitor Name")
             renotifyInterval(RenotifyInterval.HOURS_2)
             monitorPriority(MonitorPriority.P3_MEDIUM)
-            addGlobalVariable("TEST_PASSWORD")
+            useGlobalVariable("TEST_PASSWORD")
+            numericPatternVariable("NUMERIC_PATTERN", 4)
+            alphabeticPatternVariable("ALPHABETIC_PATTERN", 5)
+            alphanumericPatternVariable("ALPHANUMERIC_PATTERN", 6)
+            datePatternVariable(
+                name = "DATE_PATTERN",
+                duration = (-1).days,
+                format = "MM-DD-YYYY"
+            )
+            timestampPatternVariable(
+                name = "TIMESTAMP_PATTERN",
+                duration = 10.seconds
+            )
             inputTextStep("Enter username") {
                 targetElement {
                     locator = "[name='email']"
@@ -114,6 +133,12 @@ class E2ETest {
                 attribute("href")
                 expectedValue("")
                 check(SyntheticsCheckType.NOT_IS_EMPTY)
+            }
+            extractTextFromElementStep("Extract text from element") {
+                variable("EXTRACT_TEXT")
+                targetElement {
+                    locator = "[name='link-name']"
+                }
             }
             navigateStep("Navigate to test page by URL") {
                 navigationUrl("https://synthetic-test.personio.de/test")
