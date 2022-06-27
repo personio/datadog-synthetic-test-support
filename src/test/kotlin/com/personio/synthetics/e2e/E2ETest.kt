@@ -20,6 +20,7 @@ import com.personio.synthetics.config.publicLocation
 import com.personio.synthetics.config.renotifyInterval
 import com.personio.synthetics.config.retry
 import com.personio.synthetics.config.testFrequency
+import com.personio.synthetics.config.textVariable
 import com.personio.synthetics.config.timestampPatternVariable
 import com.personio.synthetics.config.useGlobalVariable
 import com.personio.synthetics.model.actions.Key
@@ -69,7 +70,12 @@ class E2ETest {
             renotifyInterval(RenotifyInterval.HOURS_2)
             monitorPriority(MonitorPriority.P3_MEDIUM)
             useGlobalVariable("TEST_PASSWORD")
-            numericPatternVariable("NUMERIC_PATTERN", 4)
+            textVariable("TEXT_VARIABLE", "test")
+            numericPatternVariable(
+                name = "NUMERIC_PATTERN",
+                characterLength = 4,
+                prefix = "test"
+            )
             alphabeticPatternVariable("ALPHABETIC_PATTERN", 5)
             alphanumericPatternVariable("ALPHANUMERIC_PATTERN", 6)
             datePatternVariable(

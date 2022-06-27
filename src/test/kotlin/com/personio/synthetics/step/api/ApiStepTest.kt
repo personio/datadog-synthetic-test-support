@@ -11,6 +11,7 @@ import com.datadog.api.v1.client.model.SyntheticsVariableParser
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.baseUrl
+import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.api.RequestParams
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
@@ -138,6 +139,18 @@ internal class ApiStepTest {
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("https://newurl.personio.de", params.request.config.request.url)
+    }
+
+    @Test
+    fun `the url could be passed as a datadog variable and it should be added to the request`() {
+        val variable = "API_ENDPOINT"
+        browserTest
+            .apiStep("Step", HTTPMethod.GET) {
+                url(fromVariable(variable))
+            }
+        val params = browserTest.steps?.get(0)?.params as RequestParams
+
+        assertEquals("{{ $variable }}", params.request.config.request.url)
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.personio.synthetics.step.ui
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.actions.ActionsParams
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
@@ -66,6 +67,19 @@ internal class ActionsStepTest {
     }
 
     @Test
+    fun `text function for inputTextStep sets the passed datadog variable as the text value`() {
+        val variable = "TEXT_VALUE"
+        browserTest
+            .inputTextStep("Step") {
+                text(fromVariable(variable))
+                targetElement { locator = "#locatorId" }
+            }
+        val params = browserTest.steps?.get(0)?.params as ActionsParams
+
+        assertEquals("{{ $variable }}", params.value)
+    }
+
+    @Test
     fun `clickStep without target element throws exception`() {
         assertThrows<IllegalStateException> {
             browserTest.clickStep("Step") {}
@@ -121,5 +135,17 @@ internal class ActionsStepTest {
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
         assertEquals("https://synthetic-test.personio.de", params.value)
+    }
+
+    @Test
+    fun `navigationUrl adds the passed datadog variable as the url`() {
+        val variable = "NAVIGATION_URL"
+        browserTest
+            .navigateStep("Step") {
+                navigationUrl(fromVariable(variable))
+            }
+        val params = browserTest.steps?.get(0)?.params as ActionsParams
+
+        assertEquals("{{ $variable }}", params.value)
     }
 }

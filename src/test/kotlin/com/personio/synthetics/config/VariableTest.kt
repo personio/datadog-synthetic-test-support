@@ -74,6 +74,20 @@ class VariableTest {
     }
 
     @Test
+    fun `textVariable adds a variable with text value`() {
+        val variableName = "VARIABLE1"
+        val value = "variableValue"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern(value)
+
+        browserTest.textVariable(variableName, value)
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
     fun `numericPatternVariable changes the variable name casing to upper case`() {
         val variableName = "variable1"
         val characterLength = 5
@@ -103,6 +117,44 @@ class VariableTest {
     }
 
     @Test
+    fun `numericPatternVariable allows a value to be appended before the pattern`() {
+        val variableName = "VARIABLE1"
+        val characterLength = 5
+        val prefix = "prefix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("$prefix{{ numeric($characterLength) }}")
+
+        browserTest.numericPatternVariable(
+            name = variableName,
+            characterLength = 5,
+            prefix = prefix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `numericPatternVariable allows a value to be appended after the pattern`() {
+        val variableName = "VARIABLE1"
+        val characterLength = 5
+        val suffix = "suffix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("{{ numeric($characterLength) }}$suffix")
+
+        browserTest.numericPatternVariable(
+            name = variableName,
+            characterLength = 5,
+            suffix = suffix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
     fun `alphabeticPatternVariable adds a variable of alphabetic pattern`() {
         val variableName = "VARIABLE1"
         val characterLength = 5
@@ -112,6 +164,44 @@ class VariableTest {
             .pattern("{{ alphabetic($characterLength) }}")
 
         browserTest.alphabeticPatternVariable(variableName, 5)
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `alphabeticPatternVariable allows a value to be appended before the pattern`() {
+        val variableName = "VARIABLE1"
+        val characterLength = 5
+        val prefix = "prefix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("$prefix{{ alphabetic($characterLength) }}")
+
+        browserTest.alphabeticPatternVariable(
+            name = variableName,
+            characterLength = 5,
+            prefix = prefix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `alphabeticPatternVariable allows a value to be appended after the pattern`() {
+        val variableName = "VARIABLE1"
+        val characterLength = 5
+        val suffix = "suffix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("{{ alphabetic($characterLength) }}$suffix")
+
+        browserTest.alphabeticPatternVariable(
+            name = variableName,
+            characterLength = 5,
+            suffix = suffix
+        )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
     }
@@ -131,6 +221,44 @@ class VariableTest {
     }
 
     @Test
+    fun `alphanumericPatternVariable allows a value to be appended before the pattern`() {
+        val variableName = "VARIABLE1"
+        val characterLength = 5
+        val prefix = "prefix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("$prefix{{ alphanumeric($characterLength) }}")
+
+        browserTest.alphanumericPatternVariable(
+            name = variableName,
+            characterLength = 5,
+            prefix = prefix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `alphanumericPatternVariable allows a value to be appended after the pattern`() {
+        val variableName = "VARIABLE1"
+        val characterLength = 5
+        val suffix = "suffix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("{{ alphanumeric($characterLength) }}$suffix")
+
+        browserTest.alphanumericPatternVariable(
+            name = variableName,
+            characterLength = 5,
+            suffix = suffix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
     fun `datePatternVariable adds a variable of date pattern`() {
         val variableName = "VARIABLE1"
         val dateValue = 5.minutes
@@ -144,6 +272,48 @@ class VariableTest {
             name = variableName,
             duration = dateValue,
             format = dateFormat
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `datePatternVariable allows a value to be appended before the pattern`() {
+        val variableName = "VARIABLE1"
+        val dateValue = 5.minutes
+        val dateFormat = "YYYY-MM-DD"
+        val prefix = "prefix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("$prefix{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
+
+        browserTest.datePatternVariable(
+            name = variableName,
+            duration = dateValue,
+            format = dateFormat,
+            prefix = prefix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `datePatternVariable allows a value to be appended after the pattern`() {
+        val variableName = "VARIABLE1"
+        val dateValue = 5.minutes
+        val dateFormat = "YYYY-MM-DD"
+        val suffix = "suffix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}$suffix")
+
+        browserTest.datePatternVariable(
+            name = variableName,
+            duration = dateValue,
+            format = dateFormat,
+            suffix = suffix
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -248,6 +418,44 @@ class VariableTest {
         browserTest.timestampPatternVariable(
             name = variableName,
             duration = timestampValue
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `timestampPatternVariable allows a value to be appended before the pattern`() {
+        val variableName = "VARIABLE1"
+        val timestampValue = 5.seconds
+        val prefix = "prefix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("$prefix{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+
+        browserTest.timestampPatternVariable(
+            name = variableName,
+            duration = timestampValue,
+            prefix = prefix
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `timestampPatternVariable allows a value to be appended after the pattern`() {
+        val variableName = "VARIABLE1"
+        val timestampValue = 5.seconds
+        val suffix = "suffix"
+
+        val expectedResult = syntheticBrowserVariable()
+            .name(variableName)
+            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}$suffix")
+
+        browserTest.timestampPatternVariable(
+            name = variableName,
+            duration = timestampValue,
+            suffix = suffix
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -380,6 +588,26 @@ class VariableTest {
                 duration = 1_000_000_000.seconds
             )
         }
+    }
+
+    @Test
+    fun `fromVariable function returns the variable formatted according to datadog standards`() {
+        val variableName = "TEST_VAR"
+        val expectedVariableFormat = "{{ $variableName }}"
+
+        val actualVariableFormat = fromVariable(variableName)
+
+        assertEquals(expectedVariableFormat, actualVariableFormat)
+    }
+
+    @Test
+    fun `fromVariable function returns the formatted variable after converting variable name to upper case`() {
+        val variableName = "test_var"
+        val expectedVariableFormat = "{{ ${variableName.uppercase()} }}"
+
+        val actualVariableFormat = fromVariable(variableName)
+
+        assertEquals(expectedVariableFormat, actualVariableFormat)
     }
 
     private fun syntheticBrowserVariable(): SyntheticsBrowserVariable =

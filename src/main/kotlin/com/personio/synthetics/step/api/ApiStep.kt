@@ -10,6 +10,7 @@ import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.datadog.api.v1.client.model.SyntheticsTestRequest
 import com.datadog.api.v1.client.model.SyntheticsVariableParser
 import com.personio.synthetics.client.BrowserTest
+import com.personio.synthetics.config.isDatadogVariable
 import com.personio.synthetics.model.api.ExtractValue
 import com.personio.synthetics.model.api.RequestParams
 import com.personio.synthetics.step.addStep
@@ -82,17 +83,22 @@ class ApiStep : SyntheticsStep() {
     /**
      * Set the url used for the API request
      * @param url url to be used for the API request
-     * Use only the location (eg: /test/page) for appending to the base url of the test
-     * else pass full url including http(s)://
+     * Supply the parameter like one of the following
+     * - only the location (eg: /test/page) for appending to the base url of the test
+     * - pass full url including http(s)://
+     * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
      * @return ApiStep object with the method set
      */
     fun url(url: String) = apply {
         withParamType<RequestParams> {
             apply {
-                val target = runCatching { URL(url) }
-                    .recover { URL(request.config.request.url + url) }
-                    .getOrThrow()
-                request.config.request.url = target.toString()
+                val target = if (url.isDatadogVariable()) url else {
+                    runCatching { URL(url) }
+                        .recover { URL(request.config.request.url + url) }
+                        .getOrThrow()
+                        .toString()
+                }
+                request.config.request.url = target
             }
         }
     }
