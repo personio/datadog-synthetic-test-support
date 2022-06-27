@@ -173,10 +173,9 @@ class E2ETest {
                 code("return 'abc'")
                 variable("JS_STEP_VAR")
             }
-            apiStep("API Step") {
+            apiStep("API Step", HTTPMethod.POST) {
                 requestBody("{\"email\": \"abc\"}")
                 requestHeaders(mutableMapOf("content-type" to "application/json"))
-                method(HTTPMethod.POST)
                 url("/login/wizard")
                 assertion {
                     target = 302
