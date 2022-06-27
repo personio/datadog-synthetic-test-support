@@ -2,6 +2,7 @@ package com.personio.synthetics.step.ui
 
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
+import com.personio.synthetics.config.isDatadogVariable
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.step.Step
 import com.personio.synthetics.step.addStep
@@ -64,6 +65,7 @@ class ActionsStep : Step() {
     /**
      * Sets the text to be sent for the input text step
      * @param value Text to be sent for the input text step
+     * For using global or local variable value, supply the parameter using the function "fromVariable(variableName)"
      * @return ActionsStep object with text value set
      */
     fun text(value: String) = apply {
@@ -75,14 +77,18 @@ class ActionsStep : Step() {
     /**
      * Sets the URL to be sent for the navigate step
      * @param url value to be sent for the navigate step
+     * For using global or local variable value, supply the parameter using the function "fromVariable(variableName)"
      * @return ActionsStep object with URL value set
      */
     fun navigationUrl(url: String) = apply {
         params = withParamType<ActionsParams> {
-            val target = runCatching { URL(url) }
-                .recover { URL(value + url) }
-                .getOrThrow()
-            copy(value = target.toString())
+            val target = if (url.isDatadogVariable()) url else {
+                runCatching { URL(url) }
+                    .recover { URL(value + url) }
+                    .getOrThrow()
+                    .toString()
+            }
+            copy(value = target)
         }
     }
 }

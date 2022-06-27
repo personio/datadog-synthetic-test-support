@@ -24,6 +24,7 @@ open class AssertionStep : Step() {
     /**
      * Sets the expected value to be checked for the assertion step
      * @param value String value to be checked against for the assertion step
+     * For using global or local variable value, supply the parameter using the function "fromVariable(variableName)"
      * @return SyntheticsCommonAssertionSteps object with expected value set
      */
     fun expectedValue(value: String) = apply {

@@ -3,6 +3,7 @@ package com.personio.synthetics.step.assertion
 import com.datadog.api.v1.client.model.SyntheticsCheckType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.assertion.AssertionParams
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -20,6 +21,17 @@ internal class AssertionStepTest {
         val params = browserTest.steps?.get(0)?.params as AssertionParams
 
         assertEquals("expected value", params.value)
+    }
+
+    @Test
+    fun `expectedValue adds the passed datadog variable to the AssertionParams object`() {
+        val variable = "EXPECTED_VALUE"
+        browserTest
+            .pageContainsTextAssertion("Step") {}
+            .expectedValue(fromVariable(variable))
+        val params = browserTest.steps?.get(0)?.params as AssertionParams
+
+        assertEquals("{{ $variable }}", params.value)
     }
 
     @Test
