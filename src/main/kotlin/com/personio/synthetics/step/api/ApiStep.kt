@@ -19,14 +19,16 @@ import java.net.URL
 /**
  * Adds a new API step to the synthetic browser test
  * @param stepName Name of the step
+ * @param method The method of the http request GET/POST
  * @param f Add all the parameters required for this test step
  * @return ApiStep object with this step added
  */
-fun BrowserTest.apiStep(stepName: String, f: ApiStep.() -> Unit): ApiStep =
+fun BrowserTest.apiStep(stepName: String, httpMethod: HTTPMethod, f: ApiStep.() -> Unit): ApiStep =
     addStep(stepName, ApiStep()) {
         type = SyntheticsStepType.RUN_API_TEST
         params = with(RequestParams()) {
             request.config.request(SyntheticsTestRequest().url(config?.request?.url))
+            request.config.request.method = httpMethod
             copy(request = request.copy(subtype = "http"))
         }
         f()
@@ -74,17 +76,6 @@ class ApiStep : SyntheticsStep() {
     fun requestHeaders(headers: Map<String, String>) = apply {
         withParamType<RequestParams> {
             apply { request.config.request.headers = headers }
-        }
-    }
-
-    /**
-     * The method of the API request
-     * @param method The method of the request GET/POST
-     * @return ApiStep object with the method set
-     */
-    fun method(method: HTTPMethod) = apply {
-        withParamType<RequestParams> {
-            apply { request.config.request.method = method }
         }
     }
 

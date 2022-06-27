@@ -111,6 +111,8 @@ internal class StepTest {
                 targetElement {
                     locator = "[name]='test'"
                 }
+                code("return 1")
+                variable("EXTRACT_JS_VAR")
             }
 
         assertInstanceOf(ExtractParams::class.java, browserTest.steps?.get(0)?.params)
@@ -123,6 +125,7 @@ internal class StepTest {
                 targetElement {
                     locator = "[name]='test'"
                 }
+                variable("EXTRACT_TEST_VAR")
             }
 
         assertInstanceOf(ExtractParams::class.java, browserTest.steps?.get(0)?.params)
@@ -133,6 +136,7 @@ internal class StepTest {
         browserTest
             .extractFromJavascriptStep("Step") {
                 code("return 1")
+                variable("EXTRACT_JS_VAR")
             }
 
         assertInstanceOf(ExtractParams::class.java, browserTest.steps?.get(0)?.params)

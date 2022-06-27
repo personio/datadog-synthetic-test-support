@@ -19,6 +19,10 @@ fun BrowserTest.extractFromJavascriptStep(stepName: String, f: ExtractStep.() ->
         type = SyntheticsStepType.EXTRACT_FROM_JAVASCRIPT
         params = ExtractParams()
         f()
+        with(params as ExtractParams) {
+            check(!code.isNullOrBlank()) { "JavaScript code should be set for the step: '$stepName'" }
+            check(!variable?.name.isNullOrBlank()) { "JavaScript variable should be set for the step: '$stepName'" }
+        }
     }
 
 /**
@@ -32,6 +36,10 @@ fun BrowserTest.extractTextFromElementStep(stepName: String, f: ExtractStep.() -
         type = SyntheticsStepType.EXTRACT_VARIABLE
         params = ExtractParams()
         f()
+        with(params as ExtractParams) {
+            check(!variable?.name.isNullOrBlank()) { "Variable name should be set for the step: '$stepName'" }
+            checkNotNull(element) { "Target element should be set for the step: '$stepName'" }
+        }
     }
 
 /**

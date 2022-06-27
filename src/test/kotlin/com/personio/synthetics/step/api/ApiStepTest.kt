@@ -26,14 +26,14 @@ internal class ApiStepTest {
 
     @Test
     fun `addApiStep adds the new step item to the browser test object`() {
-        browserTest.apiStep("Step") {}
+        browserTest.apiStep("Step", HTTPMethod.POST) { }
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `addApiStep adds step with type Run API and params of RequestParams`() {
-        browserTest.apiStep("Step") {}
+        browserTest.apiStep("Step", HTTPMethod.POST) { }
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.RUN_API_TEST, step?.type)
@@ -44,7 +44,7 @@ internal class ApiStepTest {
     fun `addApiStep creates params with request sub type http and url that of browser test`() {
         browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
 
-        browserTest.apiStep("Step") {}
+        browserTest.apiStep("Step", HTTPMethod.POST) { }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("http", params.request.subtype)
@@ -53,14 +53,13 @@ internal class ApiStepTest {
 
     @Test
     fun `addAssertion without property should add a new assertion with property as null to the step`() {
-        browserTest
-            .apiStep("Step") {
-                assertion {
-                    type = SyntheticsAssertionType.STATUS_CODE
-                    operator = SyntheticsAssertionOperator.IS
-                    target = 200
-                }
+        browserTest.apiStep("Step", HTTPMethod.GET) {
+            assertion {
+                type = SyntheticsAssertionType.STATUS_CODE
+                operator = SyntheticsAssertionOperator.IS
+                target = 200
             }
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals(1, params.request.config.assertions.size)
@@ -74,33 +73,27 @@ internal class ApiStepTest {
         val operator = SyntheticsAssertionOperator.IS
         val expectedTarget = "cookie"
 
-        browserTest
-            .apiStep("Step") {
-                assertion {
-                    type = assertionType
-                    this.property = property
-                    this.operator = operator
-                    target = expectedTarget
-                }
+        browserTest.apiStep("Step", HTTPMethod.POST) {
+            assertion {
+                type = assertionType
+                this.property = property
+                this.operator = operator
+                target = expectedTarget
             }
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         val expected = SyntheticsAssertion(
-            SyntheticsAssertionTarget()
-                .type(assertionType)
-                .property(property)
-                .operator(operator)
-                .target(expectedTarget)
+            SyntheticsAssertionTarget().type(assertionType).property(property).operator(operator).target(expectedTarget)
         )
         assertEquals(expected, params.request.config.assertions[0])
     }
 
     @Test
     fun `requestBody method should add the body to the request`() {
-        browserTest
-            .apiStep("Step") {
-                requestBody("testbody")
-            }
+        browserTest.apiStep("Step", HTTPMethod.GET) {
+            requestBody("testbody")
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("testbody", params.request.config.request.body)
@@ -108,10 +101,9 @@ internal class ApiStepTest {
 
     @Test
     fun `requestHeaders method should add the headers to the request`() {
-        browserTest
-            .apiStep("Step") {
-                requestHeaders(mutableMapOf("content-type" to "application/json"))
-            }
+        browserTest.apiStep("Step", HTTPMethod.POST) {
+            requestHeaders(mutableMapOf("content-type" to "application/json"))
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertTrue(params.request.config.request.headers!!.containsKey("content-type"))
@@ -120,10 +112,7 @@ internal class ApiStepTest {
 
     @Test
     fun `method should add the method to the request`() {
-        browserTest
-            .apiStep("Step") {
-                method(HTTPMethod.POST)
-            }
+        browserTest.apiStep("Step", HTTPMethod.POST) {}
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals(HTTPMethod.POST, params.request.config.request.method)
@@ -132,10 +121,9 @@ internal class ApiStepTest {
     @Test
     fun `part url passed to the url method should append to the base url into the request`() {
         browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
-        browserTest
-            .apiStep("Step") {
-                url("/login")
-            }
+        browserTest.apiStep("Step", HTTPMethod.GET) {
+            url("/login")
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("https://synthetic-test.personio.de/login", params.request.config.request.url)
@@ -144,10 +132,9 @@ internal class ApiStepTest {
     @Test
     fun `full url passed to the url method should be added into the request`() {
         browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
-        browserTest
-            .apiStep("Step") {
-                url("https://newurl.personio.de")
-            }
+        browserTest.apiStep("Step", HTTPMethod.GET) {
+            url("https://newurl.personio.de")
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("https://newurl.personio.de", params.request.config.request.url)
@@ -155,10 +142,9 @@ internal class ApiStepTest {
 
     @Test
     fun `extractHeaderValue adds the action to the step`() {
-        browserTest
-            .apiStep("Step") {
-                extractHeaderValue("name", "field")
-            }
+        browserTest.apiStep("Step", HTTPMethod.GET) {
+            extractHeaderValue("name", "field")
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals(1, params.request.options.extract_values!!.size)
@@ -168,14 +154,12 @@ internal class ApiStepTest {
     fun `extractHeaderValue adds the RAW parser to the step if no regex is passed`() {
         val parserType = SyntheticsGlobalVariableParserType.RAW
 
-        browserTest
-            .apiStep("Step") {
-                extractHeaderValue("name", "field")
-            }
+        browserTest.apiStep("Step", HTTPMethod.POST) {
+            extractHeaderValue("name", "field")
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        val expectedResult = SyntheticsVariableParser()
-            .type(parserType)
+        val expectedResult = SyntheticsVariableParser().type(parserType)
         assertEquals(expectedResult, params.request.options.extract_values!![0].parser)
     }
 
@@ -184,27 +168,23 @@ internal class ApiStepTest {
         val parserType = SyntheticsGlobalVariableParserType.REGEX
         val regex = "regex"
 
-        browserTest
-            .apiStep("Step") {
-                extractHeaderValue("name", "field", regex)
-            }
+        browserTest.apiStep("Step", HTTPMethod.GET) {
+            extractHeaderValue("name", "field", regex)
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        val expectedResult = SyntheticsVariableParser()
-            .type(parserType)
-            .value(regex)
+        val expectedResult = SyntheticsVariableParser().type(parserType).value(regex)
         assertEquals(expectedResult, params.request.options.extract_values!![0].parser)
     }
 
     @Test
     fun `extractBodyValue adds the action to the step`() {
-        browserTest
-            .apiStep("Step") {
-                extractBodyValue(
-                    name = "name",
-                    parserType = SyntheticsGlobalVariableParserType.RAW,
-                )
-            }
+        browserTest.apiStep("Step", HTTPMethod.POST) {
+            extractBodyValue(
+                name = "name",
+                parserType = SyntheticsGlobalVariableParserType.RAW,
+            )
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals(1, params.request.options.extract_values!!.size)
@@ -216,27 +196,23 @@ internal class ApiStepTest {
         val parserType = SyntheticsGlobalVariableParserType.JSON_PATH
         val parserValue = "value"
 
-        browserTest
-            .apiStep("Step") {
-                extractBodyValue(name, parserType, parserValue)
-            }
+        browserTest.apiStep("Step", HTTPMethod.POST) {
+            extractBodyValue(name, parserType, parserValue)
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        val expectedResult = SyntheticsVariableParser()
-            .type(parserType)
-            .value(parserValue)
+        val expectedResult = SyntheticsVariableParser().type(parserType).value(parserValue)
         assertEquals(expectedResult, params.request.options.extract_values!![0].parser)
     }
 
     @Test
     fun `extractBodyValue without parser value makes the value null`() {
-        browserTest
-            .apiStep("Step") {
-                extractBodyValue(
-                    name = "name",
-                    parserType = SyntheticsGlobalVariableParserType.RAW,
-                )
-            }
+        browserTest.apiStep("Step", HTTPMethod.POST) {
+            extractBodyValue(
+                name = "name",
+                parserType = SyntheticsGlobalVariableParserType.RAW,
+            )
+        }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertNull(params.request.options.extract_values!![0].parser.value)
