@@ -8,12 +8,13 @@ import com.personio.synthetics.model.actions.Modifier
 import com.personio.synthetics.model.actions.PressKeyParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
+import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
+import java.lang.IllegalArgumentException
 import kotlin.time.Duration.Companion.seconds
 
 internal class SpecialActionsStepTest {
@@ -22,14 +23,20 @@ internal class SpecialActionsStepTest {
 
     @Test
     fun `waitStep adds the new step item to the browser test object`() {
-        browserTest.waitStep("Step") {}
+        browserTest.waitStep(
+            stepName = "Step",
+            waitingTime = 1.seconds
+        )
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `waitStep adds step with type wait and params of type WaitParams`() {
-        browserTest.waitStep("Step") {}
+        browserTest.waitStep(
+            stepName = "Step",
+            waitingTime = 1.seconds
+        )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.WAIT, step?.type)
@@ -37,32 +44,43 @@ internal class SpecialActionsStepTest {
     }
 
     @Test
-    fun `waitingTime adds waiting time value to the step`() {
-        browserTest
-            .waitStep("Step") {
-                waitingTime(1.seconds)
-            }
-        val params = browserTest.steps?.get(0)?.params as WaitParams
+    fun `waitSteps adds passed waiting time to the params object`() {
+        browserTest.waitStep(
+            stepName = "Step",
+            waitingTime = 1.seconds
+        )
 
-        assertEquals(1, params.value)
+        assertEquals(1, (browserTest.steps?.get(0)?.params as WaitParams).value)
     }
 
     @Test
-    fun `waitingTime throws exception for value less than 1 second`() {
-        assertThrows(IllegalArgumentException::class.java) {
-            browserTest.waitStep("Step") {
-                waitingTime(0.seconds)
-            }
+    fun `waitStep throws exception for value less than 1 second`() {
+        assertThrows<IllegalArgumentException> {
+            browserTest.waitStep(
+                stepName = "Step",
+                waitingTime = 0.seconds
+            )
         }
     }
 
     @Test
-    fun `waitingTime throws exception for value bigger than 300 seconds`() {
-        assertThrows(IllegalArgumentException::class.java) {
-            browserTest.waitStep("Step") {
-                waitingTime(301.seconds)
-            }
+    fun `waitStep throws exception for value bigger than 300 seconds`() {
+        assertThrows<IllegalArgumentException> {
+            browserTest.waitStep(
+                stepName = "Step",
+                waitingTime = 301.seconds
+            )
         }
+    }
+
+    @Test
+    fun `waitStep accepts additional configuration changes to the test step`() {
+        browserTest.waitStep(
+            stepName = "Step",
+            waitingTime = 1.seconds
+        ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     @Test
@@ -87,7 +105,7 @@ internal class SpecialActionsStepTest {
     @Test
     fun `scrollStep with target element adds step of type scroll and params of type SpecialActionsParams`() {
         browserTest.scrollStep("Step") {
-            targetElement { locator = "#locatorId" }
+            targetElement(locator = "#locatorId")
         }
         val step = browserTest.steps?.get(0)
 
@@ -111,7 +129,7 @@ internal class SpecialActionsStepTest {
     fun `scrollStep with target element adds new step to the browser test object`() {
         browserTest
             .scrollStep("Step") {
-                targetElement { locator = "#locatorId" }
+                targetElement(locator = "#locatorId")
             }
         val params = browserTest.steps?.get(0)?.params as SpecialActionsParams
 
@@ -177,15 +195,22 @@ internal class SpecialActionsStepTest {
     }
 
     @Test
-    fun `hoverStep without element throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.hoverStep("Step") {}
+    fun `scrollStep accepts additional configuration changes to the test step`() {
+        browserTest.scrollStep("Step") {
+            horizontalScroll(1)
+            verticalScroll(1)
+            timeout = 10
         }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     @Test
     fun `hoverStep adds step with type hover and params of type SpecialActionsParams`() {
-        browserTest.hoverStep("Step") { targetElement { locator = "#locatorId" } }
+        browserTest.hoverStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locatorId")
+        )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.HOVER, step?.type)
@@ -193,27 +218,35 @@ internal class SpecialActionsStepTest {
     }
 
     @Test
-    fun `hoverStep adds the new step item to the browser test object`() {
-        browserTest.hoverStep("Step") { targetElement { locator = "#locatorId" } }
+    fun `hoverStep adds the passed target element to the params object`() {
+        val locator = "#locatorId"
+        browserTest.hoverStep(
+            stepName = "Step",
+            targetElement = TargetElement(locator)
+        )
 
         val params = browserTest.steps?.get(0)?.params as SpecialActionsParams
 
-        assertEquals("#locatorId", params.element?.userLocator?.values?.get(0)?.value)
+        assertEquals(locator, params.element?.userLocator?.values?.get(0)?.value)
     }
 
     @Test
-    fun `pressKeyStep without key to be pressed throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.pressKeyStep("Step") {}
-        }
+    fun `hoverStep accepts additional configuration changes to the test step`() {
+        browserTest.hoverStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locatorId")
+        ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     @Test
     fun `pressKeyStep adds step with type press key and params of type PressKeyParams`() {
         browserTest
-            .pressKeyStep("Step") {
-                key(Key.ENTER)
-            }
+            .pressKeyStep(
+                stepName = "Step",
+                key = Key.ENTER
+            )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.PRESS_KEY, step?.type)
@@ -221,23 +254,25 @@ internal class SpecialActionsStepTest {
     }
 
     @Test
-    fun `pressKeyStep adds the new step item to the browser test object`() {
+    fun `pressKeyStep adds the passed key to the params object`() {
+        val key = Key.ENTER
         browserTest
-            .pressKeyStep("Step") {
-                key(Key.ENTER)
-            }
+            .pressKeyStep(
+                stepName = "Step",
+                key = key
+            )
         val params = browserTest.steps?.get(0)?.params as PressKeyParams
 
-        assertEquals("Enter", params.value)
+        assertEquals(key.value, params.value)
     }
 
     @Test
     fun `modifier adds the modifier value to the step`() {
         browserTest
-            .pressKeyStep("Step") {
-                key(Key.ENTER)
-                modifiers(Modifier.OPT)
-            }
+            .pressKeyStep(
+                stepName = "Step",
+                key = Key.ENTER
+            ) { modifiers(Modifier.OPT) }
         val params = browserTest.steps?.get(0)?.params as PressKeyParams
 
         assertEquals(listOf(Modifier.OPT.value), params.modifiers)
@@ -246,12 +281,24 @@ internal class SpecialActionsStepTest {
     @Test
     fun `modifier adds multiple modifier values to the step`() {
         browserTest
-            .pressKeyStep("Step") {
-                key(Key.ENTER)
-                modifiers(Modifier.OPT, Modifier.SHIFT)
-            }
+            .pressKeyStep(
+                stepName = "Step",
+                key = Key.ENTER
+            ) { modifiers(Modifier.OPT, Modifier.SHIFT) }
+
         val params = browserTest.steps?.get(0)?.params as PressKeyParams
 
         assertEquals(listOf(Modifier.OPT.value, Modifier.SHIFT.value), params.modifiers)
+    }
+
+    @Test
+    fun `pressKeyStep accepts additional configuration changes to the test step`() {
+        browserTest
+            .pressKeyStep(
+                stepName = "Step",
+                key = Key.ENTER
+            ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 }

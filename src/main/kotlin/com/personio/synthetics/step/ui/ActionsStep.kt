@@ -1,12 +1,12 @@
 package com.personio.synthetics.step.ui
 
+import com.datadog.api.v1.client.model.SyntheticsStep
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.config.isDatadogVariable
 import com.personio.synthetics.model.actions.ActionsParams
-import com.personio.synthetics.step.Step
 import com.personio.synthetics.step.addStep
-import com.personio.synthetics.step.withParamType
+import com.personio.synthetics.step.ui.model.TargetElement
 import java.net.URL
 
 private const val DEFAULT_TEXT_DELAY: Long = 25 // in milliseconds
@@ -14,81 +14,67 @@ private const val DEFAULT_TEXT_DELAY: Long = 25 // in milliseconds
 /**
  * Adds a new input text step to the synthetic browser test
  * @param stepName Name of the step
- * @param f Add all the parameters required for this test step
- * @return ActionsStep object with the input text step added
+ * @param targetElement The web element where the text need to be set
+ * @param text The text value that need to be set
+ * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @return Input text type synthetic step object
  */
-fun BrowserTest.inputTextStep(stepName: String, f: ActionsStep.() -> Unit): ActionsStep =
-    addStep(stepName, ActionsStep()) {
-        type = SyntheticsStepType.TYPE_TEXT
-        params = ActionsParams(delay = DEFAULT_TEXT_DELAY)
-        f()
-        with(params as ActionsParams) {
-            check(!value.isNullOrBlank()) { "Input text should be set for the step:'$stepName'" }
-            checkNotNull(element) { "Target element should be set for the step:'$stepName'" }
-        }
-    }
+fun BrowserTest.inputTextStep(
+    stepName: String,
+    targetElement: TargetElement,
+    text: String,
+    f: (SyntheticsStep.() -> Unit)? = null
+) = addStep(stepName) {
+    type = SyntheticsStepType.TYPE_TEXT
+    params = ActionsParams(
+        element = targetElement.getElementObject(),
+        value = text,
+        delay = DEFAULT_TEXT_DELAY
+    )
+    if (f != null) f()
+}
 
 /**
  * Adds a new click step to the synthetic browser test
  * @param stepName Name of the step
- * @param f Add all the parameters required for this test step
- * @return ActionsStep object with the click step added
+ * @param targetElement The web element where the click is to be performed
+ * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @return Click type synthetic step object
  */
-fun BrowserTest.clickStep(stepName: String, f: ActionsStep.() -> Unit): ActionsStep =
-    addStep(stepName, ActionsStep()) {
-        type = SyntheticsStepType.CLICK
-        params = ActionsParams()
-        f()
-        checkNotNull((params as ActionsParams).element) { "Target element should be set for the step:'$stepName'" }
-    }
+fun BrowserTest.clickStep(
+    stepName: String,
+    targetElement: TargetElement,
+    f: (SyntheticsStep.() -> Unit)? = null
+) = addStep(stepName) {
+    type = SyntheticsStepType.CLICK
+    params = ActionsParams(
+        element = targetElement.getElementObject()
+    )
+    if (f != null) f()
+}
 
 /**
- * Adds a navigate step with default url to the synthetic browser test
- * But default url value is set to use the base url
- * Url value should be overridden using SyntheticsStep url function
+ * Adds a navigate step to the synthetic browser test
  * @param stepName Name of the step
- * @param f Add all the parameters required for this test step
- * @return ActionsStep object with the navigate step added
+ * @param url The navigation url. You can pass url like the following
+ * - only the location (eg: /test/page) for appending to the base url of the test
+ * - pass full url including http(s)://
+ * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
+ * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @return Navigate type synthetic step object
  */
-fun BrowserTest.navigateStep(stepName: String, f: ActionsStep.() -> Unit): ActionsStep =
-    addStep(stepName, ActionsStep()) {
-        type = SyntheticsStepType.GO_TO_URL
-        params = ActionsParams(value = config?.request?.url)
-        f()
-        check(!(params as ActionsParams).value.isNullOrBlank()) { "URL to navigate should be set for the step:'$stepName'" }
+fun BrowserTest.navigateStep(
+    stepName: String,
+    url: String,
+    f: (SyntheticsStep.() -> Unit)? = null
+) = addStep(stepName) {
+    type = SyntheticsStepType.GO_TO_URL
+    val target = if (url.isDatadogVariable()) url else {
+        runCatching { URL(url) }
+            .recover { URL(config.request.url + url) }
+            .getOrThrow()
+            .toString()
     }
-
-/**
- * Configure the Actions step for the synthetic browser test
- */
-class ActionsStep : Step() {
-    /**
-     * Sets the text to be sent for the input text step
-     * @param value Text to be sent for the input text step
-     * For using global or local variable value, supply the parameter using the function "fromVariable(variableName)"
-     * @return ActionsStep object with text value set
-     */
-    fun text(value: String) = apply {
-        params = withParamType<ActionsParams> {
-            copy(value = value)
-        }
-    }
-
-    /**
-     * Sets the URL to be sent for the navigate step
-     * @param url value to be sent for the navigate step
-     * For using global or local variable value, supply the parameter using the function "fromVariable(variableName)"
-     * @return ActionsStep object with URL value set
-     */
-    fun navigationUrl(url: String) = apply {
-        params = withParamType<ActionsParams> {
-            val target = if (url.isDatadogVariable()) url else {
-                runCatching { URL(url) }
-                    .recover { URL(value + url) }
-                    .getOrThrow()
-                    .toString()
-            }
-            copy(value = target)
-        }
-    }
+    params = ActionsParams(value = target)
+    if (f != null) f()
 }

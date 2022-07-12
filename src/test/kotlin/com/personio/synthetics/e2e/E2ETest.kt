@@ -41,6 +41,7 @@ import com.personio.synthetics.step.extract.extractTextFromElementStep
 import com.personio.synthetics.step.ui.clickStep
 import com.personio.synthetics.step.ui.hoverStep
 import com.personio.synthetics.step.ui.inputTextStep
+import com.personio.synthetics.step.ui.model.TargetElement
 import com.personio.synthetics.step.ui.navigateStep
 import com.personio.synthetics.step.ui.pressKeyStep
 import com.personio.synthetics.step.ui.refreshStep
@@ -87,98 +88,91 @@ class E2ETest {
                 name = "TIMESTAMP_PATTERN",
                 duration = 10.seconds
             )
-            inputTextStep("Enter username") {
-                targetElement {
-                    locator = "[name='email']"
-                }
-                text("test@personio.de")
-            }
-            inputTextStep("Enter password") {
-                targetElement {
-                    locator = "[name='password']"
-                }
-                text("{{ TEST_PASSWORD }}")
-            }
-            clickStep("Click login button") {
-                targetElement {
-                    locator = "[name='login']"
-                }
-            }
-            currentUrlAssertion("Check current URL") {
-                expectedValue("https://synthetic-test.personio.de")
-                check(SyntheticsCheckType.CONTAINS)
-            }
-            pageContainsTextAssertion("Check that test element is present on the page") {
-                expectedValue("string that should be present")
-            }
-            pageNotContainsTextAssertion("Check text is not present on the page") {
-                expectedValue("string that should not be present")
-            }
-            clickStep("Navigate to test page") {
-                targetElement {
-                    locator = "[name='test-page']"
-                }
-            }
-            elementPresentAssertion("Check if test link is present") {
-                targetElement {
-                    locator = "[name='link-name']"
-                }
-            }
-            elementContentAssertion("Check text of the test link") {
-                targetElement {
-                    locator = "[name='link-name']"
-                }
-
-                expectedValue("Test")
-                check(SyntheticsCheckType.EQUALS)
-            }
-            elementAttributeAssertion("Check that href of the test link is not empty") {
-                targetElement {
-                    locator = "[name='link-name']"
-                }
-                attribute("href")
-                expectedValue("")
-                check(SyntheticsCheckType.NOT_IS_EMPTY)
-            }
-            extractTextFromElementStep("Extract text from element") {
-                variable("EXTRACT_TEXT")
-                targetElement {
-                    locator = "[name='link-name']"
-                }
-            }
-            navigateStep("Navigate to test page by URL") {
-                navigationUrl("https://synthetic-test.personio.de/test")
-            }
-            customJavascriptAssertion("Check custom JS") {
-                code("return true;")
-            }
+            inputTextStep(
+                stepName = "Enter username",
+                targetElement = TargetElement("[name='email']"),
+                text = "test@personio.de"
+            )
+            inputTextStep(
+                stepName = "Enter password",
+                targetElement = TargetElement("[name='password']"),
+                text = "{{ TEST_PASSWORD }}"
+            )
+            clickStep(
+                stepName = "Click login button",
+                targetElement = TargetElement("[name='login']")
+            )
+            currentUrlAssertion(
+                stepName = "Check current URL",
+                expectedContent = "https://synthetic-test.personio.de",
+                check = SyntheticsCheckType.CONTAINS
+            )
+            pageContainsTextAssertion(
+                stepName = "Check that test element is present on the page",
+                expectedText = "string that should be present"
+            )
+            pageNotContainsTextAssertion(
+                stepName = "Check text is not present on the page",
+                text = "string that should not be present"
+            )
+            clickStep(
+                stepName = "Navigate to test page",
+                targetElement = TargetElement("[name='test-page']")
+            )
+            elementPresentAssertion(
+                stepName = "Check if test link is present",
+                targetElement = TargetElement("[name='link-name']")
+            )
+            elementContentAssertion(
+                stepName = "Check text of the test link",
+                targetElement = TargetElement("[name='link-name']"),
+                check = SyntheticsCheckType.EQUALS,
+                expectedContent = "Test"
+            )
+            elementAttributeAssertion(
+                stepName = "Check that href of the test link is not empty",
+                targetElement = TargetElement("[name='link-name']"),
+                attribute = "href",
+                check = SyntheticsCheckType.NOT_IS_EMPTY
+            )
+            extractTextFromElementStep(
+                stepName = "Extract text from element",
+                variableName = "EXTRACT_TEXT",
+                targetElement = TargetElement("[name='link-name']")
+            )
+            navigateStep(
+                stepName = "Navigate to test page by URL",
+                url = "https://synthetic-test.personio.de/test"
+            )
+            customJavascriptAssertion(
+                stepName = "Check custom JS",
+                code = "return true;"
+            )
             refreshStep("Refresh test page")
-            waitStep("Wait for a few seconds on the page") {
-                waitingTime(10.seconds)
-            }
+            waitStep(
+                stepName = "Wait for a few seconds on the page",
+                waitingTime = 10.seconds
+            )
             scrollStep("Scroll to test element") {
-                targetElement {
-                    locator = "[name='test-element']"
-                }
+                targetElement(locator = "[name='test-element']")
             }
             scrollStep("Scroll to test element with x,y coordinates") {
                 horizontalScroll(10)
                 verticalScroll(10)
             }
-            hoverStep("Hover over test element") {
-                targetElement {
-                    locator = "[name='test-element']"
-                }
-            }
-            pressKeyStep("Press Ctrl+Shift+Backspace keys") {
-                key(Key.BACKSPACE)
-                modifiers(Modifier.CONTROL, Modifier.SHIFT)
-            }
-            extractFromJavascriptStep("Extract from js") {
-                allowFailure(true)
-                code("return 'abc'")
-                variable("JS_STEP_VAR")
-            }
+            hoverStep(
+                stepName = "Hover over test element",
+                targetElement = TargetElement("[name='test-element']")
+            )
+            pressKeyStep(
+                stepName = "Press Ctrl+Shift+Backspace keys",
+                key = Key.BACKSPACE
+            ) { modifiers(Modifier.CONTROL, Modifier.SHIFT) }
+            extractFromJavascriptStep(
+                stepName = "Extract from js",
+                code = "return 'abc'",
+                variableName = "JS_STEP_VAR"
+            )
             apiStep("API Step", HTTPMethod.POST) {
                 requestBody("{\"userName\": \"test\"}")
                 requestHeaders(mutableMapOf("content-type" to "application/json"))

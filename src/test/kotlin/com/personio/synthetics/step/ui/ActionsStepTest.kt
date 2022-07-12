@@ -3,50 +3,27 @@ package com.personio.synthetics.step.ui
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.actions.ActionsParams
+import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
-import java.lang.IllegalStateException
+import java.net.URL
 
 internal class ActionsStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
     private val browserTest = BrowserTest("Test", syntheticsApi)
 
     @Test
-    fun `inputTextStep without text value and target element throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.inputTextStep("Step") {}
-        }
-    }
-
-    @Test
-    fun `inputTextStep without target element throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.inputTextStep("Step") {
-                text("SampleText")
-            }
-        }
-    }
-
-    @Test
-    fun `inputTextStep without text value throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.inputTextStep("Step") {
-                targetElement { locator = "#locatorId" }
-            }
-        }
-    }
-
-    @Test
     fun `inputTextStep adds step with type text and params of type ActionsParams`() {
-        browserTest.inputTextStep("Step") {
-            text("SampleText")
-            targetElement { locator = "#locatorId" }
-        }
+        browserTest.inputTextStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locator"),
+            text = "text"
+        )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.TYPE_TEXT, step?.type)
@@ -54,43 +31,58 @@ internal class ActionsStepTest {
     }
 
     @Test
-    fun `inputTextStep with text value and target element adds new step to the browser test object`() {
-        browserTest
-            .inputTextStep("Step") {
-                text("SampleText")
-                targetElement { locator = "#locatorId" }
-            }
-        val params = browserTest.steps?.get(0)?.params as ActionsParams
-
-        assertEquals("SampleText", params.value)
-        assertEquals("#locatorId", params.element?.userLocator?.values?.get(0)?.value)
+    fun `inputTextStep adds the passed text to the params object`() {
+        val text = "Sample Text"
+        browserTest.inputTextStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locator"),
+            text = text
+        )
+        assertEquals(text, (browserTest.steps?.get(0)?.params as ActionsParams).value)
     }
 
     @Test
-    fun `text function for inputTextStep sets the passed datadog variable as the text value`() {
-        val variable = "TEXT_VALUE"
-        browserTest
-            .inputTextStep("Step") {
-                text(fromVariable(variable))
-                targetElement { locator = "#locatorId" }
-            }
-        val params = browserTest.steps?.get(0)?.params as ActionsParams
+    fun `inputTextStep adds the passed target element to the params object`() {
+        val targetElement = TargetElement("#locator")
+        browserTest.inputTextStep(
+            stepName = "Step",
+            targetElement = targetElement,
+            text = "text"
+        )
 
-        assertEquals("{{ $variable }}", params.value)
+        assertEquals(targetElement.getElementObject(), (browserTest.steps?.get(0)?.params as ActionsParams).element)
     }
 
     @Test
-    fun `clickStep without target element throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.clickStep("Step") {}
-        }
+    fun `inputTextStep sets the passed datadog variable as the text value`() {
+        val variableName = "TEXT_VALUE"
+        browserTest.inputTextStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locator"),
+            text = fromVariable(variableName)
+        )
+        val params = browserTest.steps?.get(0)?.params as ActionsParams
+
+        assertEquals("{{ $variableName }}", params.value)
+    }
+
+    @Test
+    fun `inputTextStep accepts additional configuration changes to the test step`() {
+        browserTest.inputTextStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locator"),
+            text = "text"
+        ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     @Test
     fun `clickStep adds step with type click and params of type ActionsParams`() {
-        browserTest.clickStep("Step") {
-            targetElement { locator = "#locatorId" }
-        }
+        browserTest.clickStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locatorId")
+        )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.CLICK, step?.type)
@@ -99,27 +91,33 @@ internal class ActionsStepTest {
 
     @Test
     fun `clickStep with target element add new step to browser test object`() {
-        browserTest.clickStep("Step") {
-            targetElement { locator = "#locatorId" }
-        }
+        val locator = "#locator"
+        browserTest.clickStep(
+            stepName = "Step",
+            targetElement = TargetElement(locator)
+        )
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
-        assertEquals("#locatorId", params.element?.userLocator?.values?.get(0)?.value)
+        assertEquals(locator, params.element?.userLocator?.values?.get(0)?.value)
     }
 
     @Test
-    fun `navigateStep without URL throws exception`() {
-        assertThrows<IllegalStateException> {
-            browserTest.navigateStep("Step") {}
-        }
+    fun `clickStep accepts additional configuration changes to the test step`() {
+        browserTest.clickStep(
+            stepName = "Step",
+            targetElement = TargetElement("#locator")
+        ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     @Test
     fun `navigateStep adds step with type go to url and params of type ActionsParams`() {
         browserTest
-            .navigateStep("Step") {
-                navigationUrl("https://synthetic-test.personio.de")
-            }
+            .navigateStep(
+                stepName = "Step",
+                url = "https://synthetic-test.personio.de"
+            )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.GO_TO_URL, step?.type)
@@ -127,25 +125,53 @@ internal class ActionsStepTest {
     }
 
     @Test
-    fun `navigationUrl adds url value to the step`() {
+    fun `navigateStep adds passed navigationUrl to the params object`() {
+        val url = "https://synthetic-test.personio.de"
         browserTest
-            .navigateStep("Step") {
-                navigationUrl("https://synthetic-test.personio.de")
-            }
-        val params = browserTest.steps?.get(0)?.params as ActionsParams
+            .navigateStep(
+                stepName = "Step",
+                url = url
+            )
 
-        assertEquals("https://synthetic-test.personio.de", params.value)
+        assertEquals(url, (browserTest.steps?.get(0)?.params as ActionsParams).value)
     }
 
     @Test
-    fun `navigationUrl adds the passed datadog variable as the url`() {
+    fun `navigateStep appends the passed navigationUrl location to the base url of the test`() {
+        val baseUrl = "https://synthetic-test.personio.de"
+        val url = "/test"
+        val expectedUrl = baseUrl + url
+
+        browserTest
+            .baseUrl(URL(baseUrl))
+            .navigateStep(
+                stepName = "Step",
+                url = url
+            )
+
+        assertEquals(expectedUrl, (browserTest.steps?.get(0)?.params as ActionsParams).value)
+    }
+
+    @Test
+    fun `navigateStep sets the passed datadog variable as the url`() {
         val variable = "NAVIGATION_URL"
         browserTest
-            .navigateStep("Step") {
-                navigationUrl(fromVariable(variable))
-            }
-        val params = browserTest.steps?.get(0)?.params as ActionsParams
+            .navigateStep(
+                stepName = "Step",
+                url = fromVariable(variable)
+            )
 
-        assertEquals("{{ $variable }}", params.value)
+        assertEquals("{{ $variable }}", (browserTest.steps?.get(0)?.params as ActionsParams).value)
+    }
+
+    @Test
+    fun `navigateStep accepts additional configuration changes to the test step`() {
+        browserTest
+            .navigateStep(
+                stepName = "Step",
+                url = "https://synthetic-test.personio.de"
+            ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 }

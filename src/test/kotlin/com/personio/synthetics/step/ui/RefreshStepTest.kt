@@ -28,4 +28,11 @@ class RefreshStepTest {
         assertEquals(SyntheticsStepType.REFRESH, step?.type)
         assertInstanceOf(Params::class.java, step?.params)
     }
+
+    @Test
+    fun `refreshStep accepts additional configuration changes to the test step`() {
+        browserTest.refreshStep("Step") { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
+    }
 }
