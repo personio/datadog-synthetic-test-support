@@ -66,3 +66,6 @@ class SyntheticTest(private val syntheticsTest: BrowserTest) {
     }
 }
 ```
+## Changelog
+
+This repository maintains a separate log for each change. Refer to `CHANGELOG.md` for changes to the `synthetic-test-support` library.
