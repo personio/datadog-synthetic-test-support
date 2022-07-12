@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.personio"
-version = "0.0.1"
+version = "0.0.2"
 
 jacoco {
     toolVersion = "0.8.7"
