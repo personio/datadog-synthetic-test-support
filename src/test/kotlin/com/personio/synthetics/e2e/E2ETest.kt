@@ -41,6 +41,7 @@ import com.personio.synthetics.step.extract.extractTextFromElementStep
 import com.personio.synthetics.step.ui.clickStep
 import com.personio.synthetics.step.ui.hoverStep
 import com.personio.synthetics.step.ui.inputTextStep
+import com.personio.synthetics.step.ui.model.TargetElement
 import com.personio.synthetics.step.ui.navigateStep
 import com.personio.synthetics.step.ui.pressKeyStep
 import com.personio.synthetics.step.ui.refreshStep
@@ -87,98 +88,91 @@ class E2ETest {
                 name = "TIMESTAMP_PATTERN",
                 duration = 10.seconds
             )
-            inputTextStep("Enter username") {
-                targetElement {
-                    locator = "#email"
-                }
-                text("abc@personio.de")
-            }
-            inputTextStep("Enter password") {
-                targetElement {
-                    locator = "#password"
-                }
-                text("{{ PASSWORD_PROD_TEST }}")
-            }
-            clickStep("Click login button") {
-                targetElement {
-                    locator = "button[type='submit']"
-                }
-            }
-            currentUrlAssertion("Check current URL") {
-                expectedValue("https://denys-demo.personio.de")
-                check(SyntheticsCheckType.CONTAINS)
-            }
-            pageContainsTextAssertion("Check that company overview heading is present on the page") {
-                expectedValue("CS Demo GmbH im Überblick")
-            }
-            pageNotContainsTextAssertion("Check text is not present on the page") {
-                expectedValue("string that should not be present")
-            }
-            clickStep("Navigate to settings page") {
-                targetElement {
-                    locator = "[data-test-id='navsidebar-settings']"
-                }
-            }
-            elementPresentAssertion("Check if cost centers link is present") {
-                targetElement {
-                    locator = "[data-test-id='settings-listitem-cost-centers']"
-                }
-            }
-            elementContentAssertion("Check text of the cost centers link") {
-                targetElement {
-                    locator = "[data-test-id='settings-listitem-cost-centers']"
-                }
-
-                expectedValue("Kostenstellen")
-                check(SyntheticsCheckType.EQUALS)
-            }
-            elementAttributeAssertion("Check that href of the cost centers link is not empty") {
-                targetElement {
-                    locator = "[data-test-id='settings-listitem-cost-centers']"
-                }
-                attribute("href")
-                expectedValue("")
-                check(SyntheticsCheckType.NOT_IS_EMPTY)
-            }
-            extractTextFromElementStep("Extract text from element") {
-                variable("EXTRACT_TEXT")
-                targetElement {
-                    locator = "[data-test-id='settings-listitem-cost-centers']"
-                }
-            }
-            navigateStep("Navigate to Dashboard page by URL") {
-                navigationUrl("https://denys-demo.personio.de/my-desk")
-            }
-            customJavascriptAssertion("Check custom JS") {
-                code("return true;")
-            }
+            inputTextStep(
+                stepName = "Enter username",
+                targetElement = TargetElement("#email"),
+                text = "abc@personio.de"
+            )
+            inputTextStep(
+                stepName = "Enter password",
+                targetElement = TargetElement("#password"),
+                text = "{{ PASSWORD_PROD_TEST }}"
+            )
+            clickStep(
+                stepName = "Click login button",
+                targetElement = TargetElement("button[type='submit']")
+            )
+            currentUrlAssertion(
+                stepName = "Check current URL",
+                expectedContent = "https://denys-demo.personio.de",
+                check = SyntheticsCheckType.CONTAINS
+            )
+            pageContainsTextAssertion(
+                stepName = "Check that company overview heading is present on the page",
+                expectedText = "CS Demo GmbH im Überblick"
+            )
+            pageNotContainsTextAssertion(
+                stepName = "Check text is not present on the page",
+                text = "string that should not be present"
+            )
+            clickStep(
+                stepName = "Navigate to settings page",
+                targetElement = TargetElement("[data-test-id='navsidebar-settings']")
+            )
+            elementPresentAssertion(
+                stepName = "Check if cost centers link is present",
+                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']")
+            )
+            elementContentAssertion(
+                stepName = "Check text of the cost centers link",
+                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']"),
+                check = SyntheticsCheckType.EQUALS,
+                expectedContent = "Kostenstellen"
+            )
+            elementAttributeAssertion(
+                stepName = "Check that href of the cost centers link is not empty",
+                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']"),
+                attribute = "href",
+                check = SyntheticsCheckType.NOT_IS_EMPTY
+            )
+            extractTextFromElementStep(
+                stepName = "Extract text from element",
+                variableName = "EXTRACT_TEXT",
+                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']")
+            )
+            navigateStep(
+                stepName = "Navigate to Dashboard page by URL",
+                url = "https://denys-demo.personio.de/my-desk"
+            )
+            customJavascriptAssertion(
+                stepName = "Check custom JS",
+                code = "return true;"
+            )
             refreshStep("Refresh Dashboard page")
-            waitStep("Wait for a few seconds on the page") {
-                waitingTime(10.seconds)
-            }
+            waitStep(
+                stepName = "Wait for a few seconds on the page",
+                waitingTime = 10.seconds
+            )
             scrollStep("Scroll to Employees Joining widget") {
-                targetElement {
-                    locator = "[data-action-name='dbv2-kpi-employees-joining']"
-                }
+                targetElement(locator = "[data-action-name='dbv2-kpi-employees-joining']")
             }
             scrollStep("Scroll to Employees Joining widget with x,y coordinates") {
                 horizontalScroll(10)
                 verticalScroll(10)
             }
-            hoverStep("Hover over Employees Joining widget") {
-                targetElement {
-                    locator = "[data-action-name='dbv2-kpi-employees-joining']"
-                }
-            }
-            pressKeyStep("Press Ctrl+Shift+Backspace keys") {
-                key(Key.BACKSPACE)
-                modifiers(Modifier.CONTROL, Modifier.SHIFT)
-            }
-            extractFromJavascriptStep("Extract from js") {
-                allowFailure(true)
-                code("return 'abc'")
-                variable("JS_STEP_VAR")
-            }
+            hoverStep(
+                stepName = "Hover over Employees Joining widget",
+                targetElement = TargetElement("[data-action-name='dbv2-kpi-employees-joining']")
+            )
+            pressKeyStep(
+                stepName = "Press Ctrl+Shift+Backspace keys",
+                key = Key.BACKSPACE
+            ) { modifiers(Modifier.CONTROL, Modifier.SHIFT) }
+            extractFromJavascriptStep(
+                stepName = "Extract from js",
+                code = "return 'abc'",
+                variableName = "JS_STEP_VAR"
+            )
             apiStep("API Step", HTTPMethod.POST) {
                 requestBody("{\"email\": \"abc\"}")
                 requestHeaders(mutableMapOf("content-type" to "application/json"))

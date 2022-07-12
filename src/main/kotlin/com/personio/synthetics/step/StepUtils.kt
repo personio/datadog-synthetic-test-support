@@ -14,3 +14,12 @@ internal inline fun <reified T> BrowserTest.addStep(stepName: String, step: T, f
     }
     return step.apply { f() }
 }
+
+internal inline fun BrowserTest.addStep(stepName: String, f: SyntheticsStep.() -> Unit): SyntheticsStep {
+    check(stepName.isNotBlank()) { "The step name must not be empty" }
+    return SyntheticsStep().apply {
+        name = stepName
+        f()
+        addStepsItem(this)
+    }
+}

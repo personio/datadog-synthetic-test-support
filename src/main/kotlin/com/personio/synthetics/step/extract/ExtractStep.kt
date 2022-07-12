@@ -1,59 +1,54 @@
 package com.personio.synthetics.step.extract
 
+import com.datadog.api.v1.client.model.SyntheticsStep
 import com.datadog.api.v1.client.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.extract.ExtractParams
 import com.personio.synthetics.model.extract.Variable
-import com.personio.synthetics.step.Step
 import com.personio.synthetics.step.addStep
-import com.personio.synthetics.step.withParamType
+import com.personio.synthetics.step.ui.model.TargetElement
+import org.intellij.lang.annotations.Language
 
 /**
  * Add Extract from JS step to the synthetic browser test
  * @param stepName Name of the step
- * @param f Add all the parameters required for this test step such as code, variable, targetElement
- * @return ExtractStep object with this step added
+ * @param variableName Name of the variable to which the result of the JS code is to be saved
+ * @param code The Javascript code to be executed
+ * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @return Extract from javascript type synthetic step object
  */
-fun BrowserTest.extractFromJavascriptStep(stepName: String, f: ExtractStep.() -> Unit): ExtractStep =
-    addStep(stepName, ExtractStep()) {
-        type = SyntheticsStepType.EXTRACT_FROM_JAVASCRIPT
-        params = ExtractParams()
-        f()
-        with(params as ExtractParams) {
-            check(!code.isNullOrBlank()) { "JavaScript code should be set for the step: '$stepName'" }
-            check(!variable?.name.isNullOrBlank()) { "JavaScript variable should be set for the step: '$stepName'" }
-        }
-    }
+fun BrowserTest.extractFromJavascriptStep(
+    stepName: String,
+    variableName: String,
+    @Language("JS") code: String,
+    f: (SyntheticsStep.() -> Unit)? = null
+) = addStep(stepName) {
+    type = SyntheticsStepType.EXTRACT_FROM_JAVASCRIPT
+    params = ExtractParams(
+        code = code,
+        variable = Variable(name = variableName)
+    )
+    if (f != null) f()
+}
 
 /**
  * Add Extract text from element step to the synthetic browser test
  * @param stepName Name of the step
- * @param f Add all the parameters required for this test step such as variable, target element
- * @return ExtractStep object with this step added
+ * @param variableName Name of the Datadog variable to which the text from element need to be extracted to
+ * @param targetElement The target element from which the text need to be extracted
+ * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @return Extract variable type synthetic step object
  */
-fun BrowserTest.extractTextFromElementStep(stepName: String, f: ExtractStep.() -> Unit): ExtractStep =
-    addStep(stepName, ExtractStep()) {
-        type = SyntheticsStepType.EXTRACT_VARIABLE
-        params = ExtractParams()
-        f()
-        with(params as ExtractParams) {
-            check(!variable?.name.isNullOrBlank()) { "Variable name should be set for the step: '$stepName'" }
-            checkNotNull(element) { "Target element should be set for the step: '$stepName'" }
-        }
-    }
-
-/**
- * Configure the JS step for the synthetic browser test
- */
-class ExtractStep : Step() {
-    /**
-     * The variable where the extracted value to be stored
-     * @param name Name of the variable where the extracted value is to be stored
-     * @return ExtractStep object after setting the variable
-     */
-    fun variable(name: String) = apply {
-        params = withParamType<ExtractParams> {
-            copy(variable = Variable(name = name))
-        }
-    }
+fun BrowserTest.extractTextFromElementStep(
+    stepName: String,
+    variableName: String,
+    targetElement: TargetElement,
+    f: (SyntheticsStep.() -> Unit)? = null
+) = addStep(stepName) {
+    type = SyntheticsStepType.EXTRACT_VARIABLE
+    params = ExtractParams(
+        variable = Variable(name = variableName),
+        element = targetElement.getElementObject()
+    )
+    if (f != null) f()
 }

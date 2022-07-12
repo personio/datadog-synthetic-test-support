@@ -8,10 +8,8 @@ import com.personio.synthetics.model.file.UploadFile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
 import java.io.File
-import java.lang.IllegalStateException
 import java.util.Base64
 
 internal class UploadFileStepTest {
@@ -20,18 +18,20 @@ internal class UploadFileStepTest {
 
     @Test
     fun `uploadFileStep adds new step to the browser test`() {
-        browserTest.uploadFileStep("Step") {
-            uploadFile(getFile())
-        }
+        browserTest.uploadFileStep(
+            stepName = "Step",
+            uploadFile = getFile()
+        )
 
         assertEquals(1, browserTest.steps?.size)
     }
 
     @Test
     fun `uploadFileStep creates step with type Upload files and params of type FileParams`() {
-        browserTest.uploadFileStep("Step") {
-            uploadFile(getFile())
-        }
+        browserTest.uploadFileStep(
+            stepName = "Step",
+            uploadFile = getFile()
+        )
         val step = browserTest.steps?.get(0)
 
         assertEquals(SyntheticsStepType.UPLOAD_FILES, step?.type)
@@ -39,14 +39,7 @@ internal class UploadFileStepTest {
     }
 
     @Test
-    fun `uploadFileStep throws exception if file to be uploaded is not passed`() {
-        assertThrows<IllegalStateException> {
-            browserTest.uploadFileStep("Step") {}
-        }
-    }
-
-    @Test
-    fun `uploadFile adds the passed file to the FileParams object`() {
+    fun `uploadFileStep adds the passed file to the FileParams object`() {
         val uploadFileContent = "text"
         val fileToBeUploaded = getFile(uploadFileContent).apply { writeText(uploadFileContent) }
         val expectedFile = UploadFile(
@@ -55,13 +48,23 @@ internal class UploadFileStepTest {
             content = Base64.getEncoder().encodeToString(uploadFileContent.toByteArray())
         )
 
-        browserTest
-            .uploadFileStep("Step") {
-                uploadFile(fileToBeUploaded)
-            }
+        browserTest.uploadFileStep(
+            stepName = "Step",
+            uploadFile = fileToBeUploaded
+        )
         val params = browserTest.steps?.get(0)?.params as FileParams
 
         assertEquals(expectedFile, params.files[0])
+    }
+
+    @Test
+    fun `uploadFileStep accepts additional configuration changes to the test step`() {
+        browserTest.uploadFileStep(
+            stepName = "Step",
+            uploadFile = getFile()
+        ) { timeout = 10 }
+
+        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     private fun getFile(content: String = "text"): File =
