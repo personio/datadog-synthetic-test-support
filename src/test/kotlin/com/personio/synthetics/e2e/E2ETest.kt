@@ -25,12 +25,15 @@ import com.personio.synthetics.config.timestampPatternVariable
 import com.personio.synthetics.config.useGlobalVariable
 import com.personio.synthetics.model.actions.Key
 import com.personio.synthetics.model.actions.Modifier
+import com.personio.synthetics.model.assertion.FileNameCheckType
+import com.personio.synthetics.model.assertion.FileSizeCheckType
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
 import com.personio.synthetics.step.api.apiStep
 import com.personio.synthetics.step.assertion.currentUrlAssertion
 import com.personio.synthetics.step.assertion.customJavascriptAssertion
+import com.personio.synthetics.step.assertion.downloadedFileAssertion
 import com.personio.synthetics.step.assertion.elementAttributeAssertion
 import com.personio.synthetics.step.assertion.elementContentAssertion
 import com.personio.synthetics.step.assertion.elementPresentAssertion
@@ -148,6 +151,11 @@ class E2ETest {
                 stepName = "Check custom JS",
                 code = "return true;"
             )
+            downloadedFileAssertion("Check downloaded file assertion step") {
+                nameCheck(FileNameCheckType.NOT_IS_EMPTY)
+                sizeCheck(FileSizeCheckType.GREATER, 1)
+                expectedMd5("123")
+            }
             refreshStep("Refresh test page")
             waitStep(
                 stepName = "Wait for a few seconds on the page",
