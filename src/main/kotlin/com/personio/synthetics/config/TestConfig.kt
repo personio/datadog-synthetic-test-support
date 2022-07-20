@@ -8,5 +8,7 @@ object TestConfig {
     const val RETRY_COUNT: Long = 1
     const val RETRY_INTERVAL: Double = 60.0 // in milliseconds
     const val RENOTIFY_INTERVAL: Long = 10 // in minutes
+    const val AWS_REGION = "eu-central-1"
+    const val DATADOG_CREDENTIALS_AWS_ARN = "<datadog_credentials_aws_arn>"
     val RUN_LOCATIONS = listOf("aws:eu-central-1")
 }
