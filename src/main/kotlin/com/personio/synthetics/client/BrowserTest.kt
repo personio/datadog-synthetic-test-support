@@ -17,7 +17,7 @@ inline fun syntheticBrowserTest(name: String, steps: BrowserTest.() -> Unit) {
     check(name.isNotBlank()) {
         "The test's name must not be empty"
     }
-    val browserTest = BrowserTest(name, SyntheticsApiClient())
+    val browserTest = BrowserTest(name, SyntheticsApiClient(AwsSecretsManagerCredentialsProvider()))
     browserTest.steps()
     browserTest.createBrowserTest()
 }

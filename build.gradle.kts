@@ -1,14 +1,16 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.7.0"
+    val kotlinVersion = "1.7.0"
+    id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version "1.6.21"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
     id("org.sonarqube") version "3.3"
 }
 
 group = "com.personio"
-version = "0.0.2"
+version = "0.0.3"
 
 jacoco {
     toolVersion = "0.8.7"
@@ -35,8 +37,13 @@ tasks.check { dependsOn(e2eTest) }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
+    val awsSdkVersion = "2.17.220"
+    api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
+    api("software.amazon.awssdk:sts:$awsSdkVersion")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     api("javax.activation:activation:1.1.1")
     api("com.datadoghq:datadog-api-client:1.7.1")
+    testImplementation("software.amazon.awssdk:sso:$awsSdkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-inline:4.6.1")

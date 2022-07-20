@@ -37,28 +37,22 @@ test:unit:
       - build/test-results/test/xml/jacocoReport.xml
     expire_in: 1 day
 
-dd:keys:
-  stage: build
-  tags:
-    - dev
-  script:
-    - |
-      SECRETS_FILE="ops/env/dev/secrets.yaml"
-      echo "DD_API_KEY=$(sops -d --extract '["dd_api_key"]' $SECRETS_FILE)" > dd.env
-      echo "DD_APP_KEY=$(sops -d --extract '["dd_app_key"]' $SECRETS_FILE)" >> dd.env
-  artifacts:
-    reports:
-      dotenv: dd.env
-  variables:
-    AWS_PROFILE: dev
-
 test:e2e:
   image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
   stage: post-build
+  needs: []
+  dependencies: []
   script:
     - ./gradlew e2eTest
-  dependencies:
-    - dd:keys
+  tags:
+    - dev
+  variables:
+    AWS_PROFILE: dev
+  artifacts:
+    when: on_failure
+    expire_in: 1 week
+    paths:
+      - "build/reports/tests/e2eTest/*"
 
 sonarscan:
   extends:
