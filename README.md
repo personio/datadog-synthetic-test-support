@@ -2,43 +2,38 @@
 This library is used for creating Datadog Synthetic Browser Test as code
 
 ## Installation in your project
-Add the Personio nexus repository to your `build.gradle` file
+Add the Personio nexus repository to your `build.gradle` file:
 ```kotlin
 repositories { 
     maven("https://nexus.tools.personio-internal.de/repository/maven/") 
 }
 ```
-Add the dependency to the project
+
+Add the dependency to the project:
 ```kotlin
 dependencies {
     testImplementation("com.personio:synthetic-test-support:x.x.x")
 }
 ```
-For running the tests, the API and APP keys of Datadog has to be added to the project. Add the API and APP keys to `secrets.yaml`
-To run the test creation scripts in Gitlab CI, add the following configuration to `gitlab-ci.yaml`
-```yaml
-dd:keys:
-  stage: get-keys
-  tags:
-    - dev
-  script:
-    - |
-      SECRETS_FILE="ops/env/dev/secrets.yaml"
-      echo "DD_API_KEY=$(sops -d --extract '["dd_api_key"]' $SECRETS_FILE)" > dd.env
-      echo "DD_APP_KEY=$(sops -d --extract '["dd_app_key"]' $SECRETS_FILE)" >> dd.env
-  artifacts:
-    reports:
-      dotenv: dd.env
-  variables:
-    AWS_PROFILE: dev
 
+Datadog API credentials are fetched from AWS Secrets Manager.
+
+To run the test creation scripts in Gitlab CI, add the following configuration to `gitlab-ci.yaml`:
+```yaml
 create:test:
   image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
   stage: test-create
   script:
     - ./gradlew test
-  dependencies:
-    - dd:keys
+  tags:
+    - dev
+```
+
+To run e2e tests locally, you need to be logged in to AWS with `dev` profile and add the following dependency to your project:
+```kotlin
+dependencies {
+    testImplementation("software.amazon.awssdk:sso:2.17.220")
+}
 ```
 
 ## Creating synthetic browser test
