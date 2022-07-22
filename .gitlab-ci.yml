@@ -1,8 +1,8 @@
 include:
   project: dx/pipelines
   file:
+    - /kotlin/kotlin-sdk.yml
     - /jobs/sonarscan-dev-edition.yml
-    - /jobs/approvabot.yml
 
 workflow:
   rules:
@@ -60,24 +60,3 @@ sonarscan:
   stage: post-build
   needs:
     - test:unit
-
-.publish:
-  stage: publish
-  image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
-  tags:
-    - dev
-
-publishSnapshot:
-  extends:
-    - .publish
-  script:
-    - ./gradlew publish
-
-publishRelease:
-  extends:
-    - .publish
-  only:
-    - master
-  when: manual
-  script:
-    - ./gradlew publish -Prelease
