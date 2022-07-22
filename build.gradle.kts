@@ -1,8 +1,9 @@
 plugins {
     val kotlinVersion = "1.7.0"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
-    id("org.jetbrains.dokka") version "1.6.21"
+    id("org.jetbrains.dokka") version kotlinVersion
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("com.personio.gradleplugin.gittagversion") version "1.0.0"
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
@@ -10,13 +11,11 @@ plugins {
 }
 
 group = "com.personio"
-version = "0.0.3"
+version = versionFromGitTag("0.0.0")
 
 jacoco {
     toolVersion = "0.8.7"
 }
-
-apply(plugin = "org.jetbrains.dokka")
 
 repositories {
     mavenCentral()
@@ -43,7 +42,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     api("javax.activation:activation:1.1.1")
     api("com.datadoghq:datadog-api-client:1.7.1")
-    testImplementation("software.amazon.awssdk:sso:$awsSdkVersion")
+    testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     testImplementation("org.mockito:mockito-inline:4.6.1")

@@ -15,9 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-## [0.0.2] - 2022-07-12
+## [1.0.0] - 2022-07-22
 ### Added
 - Framework for synthetic test as code
 
-[Unreleased]: https://github.com/personio/datadog-synthetic-test-support/-/compare/v0.0.2...master
-[0.0.2]: https://github.com/personio/datadog-synthetic-test-support/-/tags/v0.0.2
+[Unreleased]: https://github.com/personio/datadog-synthetic-test-support/-/compare/v1.0.0...master
+[1.0.0]: https://github.com/personio/datadog-synthetic-test-support/-/tags/v1.0.0
