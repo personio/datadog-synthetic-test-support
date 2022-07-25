@@ -1,66 +1,25 @@
 # Synthetic Test Support
-This library is used for creating Datadog Synthetic Browser Test as code
+This library provides a programmatic way to manage Datadog synthetic browser tests. This library contains all the necessary functions that are required to manage the synthetic browser tests with different steps and configurations.
 
-## Installation in your project
-Add the Personio nexus repository to your `build.gradle` file:
-```kotlin
-repositories { 
-    maven("https://nexus.tools.personio-internal.de/repository/maven/") 
-}
-```
+## How to use the library
+You can find out more details and usage of this library in [tpf-docs](https://docs.personio.tools/test/synthetics/synthetics-as-code/).
 
-Add the dependency to the project:
-```kotlin
-dependencies {
-    testImplementation("com.personio:synthetic-test-support:x.x.x")
-}
-```
+## Build the library
+The following are some useful commands for working with the project.
 
-Datadog API credentials are fetched from AWS Secrets Manager.
+- Run `./gradlew build` to build the whole project.
+- Run `./gradlew ktlintFormat` to format the project.
+- Run `./gradlew test` to execute all the unit tests.
+- Run `./gradlew e2eTest` to execute the e2e test, you need to be logged in to `AWS` with `dev` profile and set the environment variable `AWS_PROFILE` to `dev` profile.
+- Run `./gradlew publishToMavenLocal` to publish to your local .m2 repository.
 
-To run the test creation scripts in Gitlab CI, add the following configuration to `gitlab-ci.yaml`:
-```yaml
-create:test:
-  image: 824725208937.dkr.ecr.eu-central-1.amazonaws.com/personio-jdk:1.3.0
-  stage: test-create
-  script:
-    - ./gradlew test
-  tags:
-    - dev
-```
+## Creating a new release
+The process of creating a new release of the library is as follows:
 
-To run e2e tests locally, you need to be logged in to AWS with `dev` profile and add the following dependency to your project:
-```kotlin
-dependencies {
-    testImplementation("software.amazon.awssdk:sso:2.17.220")
-}
-```
+- The pipeline step tagRelease will automatically create a Release and a tag from changes to CHANGELOG.md. The tag name is v<version number> where <version number> should follow [semantic versioning](https://semver.org/). Please use a meaningful release title and document all relevant changes as part of the release notes.
+- Ensure that the CHANGELOG.md file has been updated to include the new version's changes & additions following the [keepachangelog.com](https://keepachangelog.com/en/1.0.0/) format.
+- Once a new release has been created, trigger a pipeline for the master branch. Alternatively, the master pipeline can also be triggered automatically by merging a merge request.
+- Publishing a release of the new version to Nexus is manual, so make sure you trigger it as part of the last stage.
 
-## Creating synthetic browser test
-To create a synthetic test, annotate the class with `@SyntheticUITest`. This library provides the class `BrowserTest` which has to be added as parameter to the constructor.
-For example
-```kotlin
-@SyntheticUITest
-class SyntheticTest(private val syntheticsTest: BrowserTest) {
-    @Test
-    fun `create synthetic test`() {
-        syntheticsTest
-            .name("Synthetic Test")
-            .message("{{#is_alert}} @slack-not_gitlab_qa Test Failed {{/is_alert}}")
-            .addTagsItem("synthetics-api")
-            .setUrl("https://synthetics-monitoring-hrm.personio.de/")
-        syntheticsTest.inputTextStep()
-            .name("Enter username")
-            .targetElement("#email")
-            .text("qa-engineering@personio.de")
-        syntheticsTest.clickStep()
-            .name("Click login button")
-            .targetElement("button[type=\"submit\"]")
-        syntheticsTest.assertionStep(AssertionType.ELEMENTPRESENT)
-            .targetElement("[data-test-id=\"settings-listitem-cost-centers\"]")
-    }
-}
-```
 ## Changelog
-
 This repository maintains a separate log for each change. Refer to `CHANGELOG.md` for changes to the `synthetic-test-support` library.
