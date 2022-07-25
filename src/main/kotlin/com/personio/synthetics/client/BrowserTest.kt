@@ -31,6 +31,7 @@ class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsA
         locations = TestConfig.RUN_LOCATIONS
         config = SyntheticsBrowserTestConfig()
         options = defaultSyntheticsTestOptions()
+        message = ""
     }
 
     /**
