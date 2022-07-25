@@ -6,6 +6,7 @@ import com.datadog.api.v1.client.model.SyntheticsAssertionType
 import com.datadog.api.v1.client.model.SyntheticsCheckType
 import com.datadog.api.v1.client.model.SyntheticsDeviceID
 import com.personio.synthetics.client.syntheticBrowserTest
+import com.personio.synthetics.config.alertMessage
 import com.personio.synthetics.config.alphabeticPatternVariable
 import com.personio.synthetics.config.alphanumericPatternVariable
 import com.personio.synthetics.config.baseUrl
@@ -17,6 +18,7 @@ import com.personio.synthetics.config.monitorName
 import com.personio.synthetics.config.monitorPriority
 import com.personio.synthetics.config.numericPatternVariable
 import com.personio.synthetics.config.publicLocation
+import com.personio.synthetics.config.recoveryMessage
 import com.personio.synthetics.config.renotifyInterval
 import com.personio.synthetics.config.retry
 import com.personio.synthetics.config.testFrequency
@@ -61,7 +63,8 @@ class E2ETest {
     @Test
     fun `create synthetic test`() {
         syntheticBrowserTest("[Test] Synthetic-Test-As-Code") {
-            message = "{{#is_alert}} @slack-test_slack_channel Test Failed {{/is_alert}}"
+            alertMessage("Test Failed", "@slack-test_slack_channel")
+            recoveryMessage("Test recovered")
             tags(listOf("env:qa", "synthetics-api"))
             baseUrl(URL("https://synthetic-test.personio.de"))
             browserAndDevice(SyntheticsDeviceID.CHROME_MOBILE_SMALL, SyntheticsDeviceID.FIREFOX_LAPTOP_LARGE)
