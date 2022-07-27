@@ -1,13 +1,13 @@
 package com.personio.synthetics.step.api
 
-import com.datadog.api.v1.client.model.HTTPMethod
-import com.datadog.api.v1.client.model.SyntheticsAssertion
-import com.datadog.api.v1.client.model.SyntheticsAssertionOperator
-import com.datadog.api.v1.client.model.SyntheticsAssertionTarget
-import com.datadog.api.v1.client.model.SyntheticsAssertionType
-import com.datadog.api.v1.client.model.SyntheticsGlobalVariableParserType
-import com.datadog.api.v1.client.model.SyntheticsStepType
-import com.datadog.api.v1.client.model.SyntheticsVariableParser
+import com.datadog.api.client.v1.model.HTTPMethod
+import com.datadog.api.client.v1.model.SyntheticsAssertion
+import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
+import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
+import com.datadog.api.client.v1.model.SyntheticsAssertionType
+import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
+import com.datadog.api.client.v1.model.SyntheticsStepType
+import com.datadog.api.client.v1.model.SyntheticsVariableParser
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.baseUrl

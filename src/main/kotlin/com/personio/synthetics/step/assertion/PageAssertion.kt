@@ -1,8 +1,8 @@
 package com.personio.synthetics.step.assertion
 
-import com.datadog.api.v1.client.model.SyntheticsCheckType
-import com.datadog.api.v1.client.model.SyntheticsStep
-import com.datadog.api.v1.client.model.SyntheticsStepType
+import com.datadog.api.client.v1.model.SyntheticsCheckType
+import com.datadog.api.client.v1.model.SyntheticsStep
+import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.addStep

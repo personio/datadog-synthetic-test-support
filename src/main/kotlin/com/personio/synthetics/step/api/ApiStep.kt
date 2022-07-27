@@ -1,14 +1,14 @@
 package com.personio.synthetics.step.api
 
-import com.datadog.api.v1.client.model.HTTPMethod
-import com.datadog.api.v1.client.model.SyntheticsAssertion
-import com.datadog.api.v1.client.model.SyntheticsAssertionTarget
-import com.datadog.api.v1.client.model.SyntheticsGlobalVariableParseTestOptionsType
-import com.datadog.api.v1.client.model.SyntheticsGlobalVariableParserType
-import com.datadog.api.v1.client.model.SyntheticsStep
-import com.datadog.api.v1.client.model.SyntheticsStepType
-import com.datadog.api.v1.client.model.SyntheticsTestRequest
-import com.datadog.api.v1.client.model.SyntheticsVariableParser
+import com.datadog.api.client.v1.model.HTTPMethod
+import com.datadog.api.client.v1.model.SyntheticsAssertion
+import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
+import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParseTestOptionsType
+import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
+import com.datadog.api.client.v1.model.SyntheticsStep
+import com.datadog.api.client.v1.model.SyntheticsStepType
+import com.datadog.api.client.v1.model.SyntheticsTestRequest
+import com.datadog.api.client.v1.model.SyntheticsVariableParser
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.config.isDatadogVariable
 import com.personio.synthetics.model.api.ExtractValue
@@ -28,8 +28,7 @@ fun BrowserTest.apiStep(stepName: String, httpMethod: HTTPMethod, f: ApiStep.() 
     addStep(stepName, ApiStep()) {
         type = SyntheticsStepType.RUN_API_TEST
         params = with(RequestParams()) {
-            request.config.request(SyntheticsTestRequest().url(config?.request?.url))
-            request.config.request.method = httpMethod
+            request.config.request(SyntheticsTestRequest().url(config?.request?.url).method(httpMethod))
             copy(request = request.copy(subtype = "http"))
         }
         f()

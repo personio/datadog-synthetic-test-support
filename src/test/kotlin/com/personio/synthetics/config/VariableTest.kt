@@ -1,8 +1,8 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.v1.client.model.SyntheticsBrowserTestConfig
-import com.datadog.api.v1.client.model.SyntheticsBrowserVariable
-import com.datadog.api.v1.client.model.SyntheticsBrowserVariableType
+import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
+import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
+import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import org.junit.jupiter.api.Assertions.assertEquals

@@ -1,6 +1,6 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.v1.client.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.config.Location

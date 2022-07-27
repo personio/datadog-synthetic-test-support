@@ -1,11 +1,11 @@
 package com.personio.synthetics.client
 
-import com.datadog.api.v1.client.model.SyntheticsBrowserTest
-import com.datadog.api.v1.client.model.SyntheticsBrowserTestConfig
-import com.datadog.api.v1.client.model.SyntheticsDeviceID
-import com.datadog.api.v1.client.model.SyntheticsTestOptions
-import com.datadog.api.v1.client.model.SyntheticsTestOptionsMonitorOptions
-import com.datadog.api.v1.client.model.SyntheticsTestOptionsRetry
+import com.datadog.api.client.v1.model.SyntheticsBrowserTest
+import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsTestOptions
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.personio.synthetics.config.TestConfig
 
 /**

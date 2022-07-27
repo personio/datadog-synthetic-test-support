@@ -1,6 +1,6 @@
 package com.personio.synthetics.step
 
-import com.datadog.api.v1.client.model.SyntheticsStep
+import com.datadog.api.client.v1.model.SyntheticsStep
 import com.personio.synthetics.client.BrowserTest
 
 internal inline fun <reified T> SyntheticsStep.withParamType(f: T.() -> T): T =
