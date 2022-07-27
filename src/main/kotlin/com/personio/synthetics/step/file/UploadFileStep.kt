@@ -1,7 +1,7 @@
 package com.personio.synthetics.step.file
 
-import com.datadog.api.v1.client.model.SyntheticsStep
-import com.datadog.api.v1.client.model.SyntheticsStepType
+import com.datadog.api.client.v1.model.SyntheticsStep
+import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.file.FileParams
 import com.personio.synthetics.model.file.UploadFile

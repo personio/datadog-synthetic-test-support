@@ -1,6 +1,6 @@
 package com.personio.synthetics.client
 
-import com.datadog.api.v1.client.auth.ApiKeyAuth
+import com.datadog.api.client.auth.ApiKeyAuth
 import com.personio.synthetics.config.TestConfig
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

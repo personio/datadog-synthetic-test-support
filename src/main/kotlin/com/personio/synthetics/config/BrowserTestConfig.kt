@@ -1,8 +1,8 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.v1.client.model.HTTPMethod
-import com.datadog.api.v1.client.model.SyntheticsDeviceID
-import com.datadog.api.v1.client.model.SyntheticsTestRequest
+import com.datadog.api.client.v1.model.HTTPMethod
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority

@@ -1,10 +1,10 @@
 package com.personio.synthetics.e2e
 
-import com.datadog.api.v1.client.model.HTTPMethod
-import com.datadog.api.v1.client.model.SyntheticsAssertionOperator
-import com.datadog.api.v1.client.model.SyntheticsAssertionType
-import com.datadog.api.v1.client.model.SyntheticsCheckType
-import com.datadog.api.v1.client.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.HTTPMethod
+import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
+import com.datadog.api.client.v1.model.SyntheticsAssertionType
+import com.datadog.api.client.v1.model.SyntheticsCheckType
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.personio.synthetics.client.syntheticBrowserTest
 import com.personio.synthetics.config.alertMessage
 import com.personio.synthetics.config.alphabeticPatternVariable

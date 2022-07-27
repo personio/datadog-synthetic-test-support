@@ -1,7 +1,7 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.v1.client.model.SyntheticsBrowserVariable
-import com.datadog.api.v1.client.model.SyntheticsBrowserVariableType
+import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
+import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
 import com.personio.synthetics.client.BrowserTest
 import kotlin.math.absoluteValue
 import kotlin.time.Duration

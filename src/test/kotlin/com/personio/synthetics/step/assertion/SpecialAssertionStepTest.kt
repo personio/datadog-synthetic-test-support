@@ -1,6 +1,6 @@
 package com.personio.synthetics.step.assertion
 
-import com.datadog.api.v1.client.model.SyntheticsStepType
+import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.assertion.AssertionParams

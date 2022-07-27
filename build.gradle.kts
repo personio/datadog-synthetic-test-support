@@ -41,7 +41,7 @@ dependencies {
     api("software.amazon.awssdk:sts:$awsSdkVersion")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     api("javax.activation:activation:1.1.1")
-    api("com.datadoghq:datadog-api-client:1.7.1")
+    api("com.datadoghq:datadog-api-client:2.0.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")

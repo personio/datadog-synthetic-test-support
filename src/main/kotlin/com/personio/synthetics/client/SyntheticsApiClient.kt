@@ -1,7 +1,7 @@
 package com.personio.synthetics.client
 
-import com.datadog.api.v1.client.Configuration
-import com.datadog.api.v1.client.api.SyntheticsApi
+import com.datadog.api.client.ApiClient
+import com.datadog.api.client.v1.api.SyntheticsApi
 import com.personio.synthetics.config.TestConfig
 
 /**
@@ -10,7 +10,7 @@ import com.personio.synthetics.config.TestConfig
 class SyntheticsApiClient(credentialsProvider: CredentialsProvider) : SyntheticsApi() {
     init {
         val credentials = credentialsProvider.getCredentials()
-        apiClient = Configuration.getDefaultApiClient().apply {
+        apiClient = ApiClient.getDefaultApiClient().apply {
             serverVariables = mapOf("site" to TestConfig.DATADOG_API_HOST)
             configureApiKeys(mapOf("apiKeyAuth" to credentials.apiKey, "appKeyAuth" to credentials.appKey))
         }
