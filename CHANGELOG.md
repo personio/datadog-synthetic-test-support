@@ -19,5 +19,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Framework for synthetic test as code
 
-[Unreleased]: https://gitlab.personio-internal.de/qa/synthetic-test-support/-/compare/v1.0.0...master
-[1.0.0]: https://gitlab.personio-internal.de/qa/synthetic-test-support/-/tags/v1.0.0
+[Unreleased]: https://gitlab.personio-internal.de/ts/synthetic-test-support/-/compare/v1.0.0...master
+[1.0.0]: https://gitlab.personio-internal.de/ts/synthetic-test-support/-/tags/v1.0.0

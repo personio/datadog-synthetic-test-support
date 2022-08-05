@@ -3,7 +3,7 @@ type: infra
 component:
   name: synthetic-test-support
   service: synthetic-test-support
-  team: QA
+  team: TS
   description: Framework to create synthetic test as code
   domain: platform
   slackChannel: '#cir_tribe_tech_pf'
