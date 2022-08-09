@@ -165,6 +165,19 @@ internal class ActionsStepTest {
     }
 
     @Test
+    fun `navigateStep accepts the datadog variable in the url`() {
+        val baseUrl = "https://synthetic-test.personio.de"
+        val locationVariable = "LOCATION"
+        browserTest
+            .navigateStep(
+                stepName = "Step",
+                url = "$baseUrl/${fromVariable(locationVariable)}"
+            )
+
+        assertEquals("$baseUrl/{{ $locationVariable }}", (browserTest.steps?.get(0)?.params as ActionsParams).value)
+    }
+
+    @Test
     fun `navigateStep accepts additional configuration changes to the test step`() {
         browserTest
             .navigateStep(

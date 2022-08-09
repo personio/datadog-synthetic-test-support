@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [1.0.1] - 2022-08-09
+### Fixed
+Fixing uploadFileStep function by adding element as a parameter 
+
 ## [1.0.0] - 2022-07-22
 ### Added
 - Framework for synthetic test as code

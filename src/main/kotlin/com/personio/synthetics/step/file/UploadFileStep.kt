@@ -6,6 +6,7 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.file.FileParams
 import com.personio.synthetics.model.file.UploadFile
 import com.personio.synthetics.step.addStep
+import com.personio.synthetics.step.ui.model.TargetElement
 import java.io.File
 import java.util.Base64
 
@@ -13,17 +14,20 @@ import java.util.Base64
  * Adds a new Upload file step to the synthetic browser test
  * @param stepName Name of the step
  * @param uploadFile The file to be uploaded
+ * @param element The target element details where the file needs to be uploaded to
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
  * @return Upload files type synthetic step object
  */
 fun BrowserTest.uploadFileStep(
     stepName: String,
     uploadFile: File,
+    element: TargetElement,
     f: (SyntheticsStep.() -> Unit)? = null
 ) = addStep(stepName) {
     type = SyntheticsStepType.UPLOAD_FILES
     params = FileParams(
-        files = listOf(UploadFile(name = uploadFile.name, content = convertToBase64(uploadFile), size = uploadFile.length()))
+        files = listOf(UploadFile(name = uploadFile.name, content = convertToBase64(uploadFile), size = uploadFile.length())),
+        element = element.getElementObject()
     )
     if (f != null) f()
 }

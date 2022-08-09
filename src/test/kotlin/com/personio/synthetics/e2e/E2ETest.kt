@@ -43,6 +43,7 @@ import com.personio.synthetics.step.assertion.pageContainsTextAssertion
 import com.personio.synthetics.step.assertion.pageNotContainsTextAssertion
 import com.personio.synthetics.step.extract.extractFromJavascriptStep
 import com.personio.synthetics.step.extract.extractTextFromElementStep
+import com.personio.synthetics.step.file.uploadFileStep
 import com.personio.synthetics.step.ui.clickStep
 import com.personio.synthetics.step.ui.hoverStep
 import com.personio.synthetics.step.ui.inputTextStep
@@ -53,6 +54,7 @@ import com.personio.synthetics.step.ui.refreshStep
 import com.personio.synthetics.step.ui.scrollStep
 import com.personio.synthetics.step.ui.waitStep
 import org.junit.jupiter.api.Test
+import java.io.File
 import java.net.URL
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
@@ -153,6 +155,11 @@ class E2ETest {
             customJavascriptAssertion(
                 stepName = "Check custom JS",
                 code = "return true;"
+            )
+            uploadFileStep(
+                stepName = "Upload file",
+                element = TargetElement("[name='upload-file']"),
+                uploadFile = File.createTempFile("upload", ".pdf").apply { writeText("Test") }
             )
             downloadedFileAssertion("Check downloaded file assertion step") {
                 nameCheck(FileNameCheckType.NOT_IS_EMPTY)

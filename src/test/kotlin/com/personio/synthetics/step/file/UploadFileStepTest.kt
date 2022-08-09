@@ -5,6 +5,7 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.file.FileParams
 import com.personio.synthetics.model.file.UploadFile
+import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
@@ -20,7 +21,8 @@ internal class UploadFileStepTest {
     fun `uploadFileStep adds new step to the browser test`() {
         browserTest.uploadFileStep(
             stepName = "Step",
-            uploadFile = getFile()
+            uploadFile = getFile(),
+            element = TargetElement("#locator")
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -30,7 +32,8 @@ internal class UploadFileStepTest {
     fun `uploadFileStep creates step with type Upload files and params of type FileParams`() {
         browserTest.uploadFileStep(
             stepName = "Step",
-            uploadFile = getFile()
+            uploadFile = getFile(),
+            element = TargetElement("#locator")
         )
         val step = browserTest.steps?.get(0)
 
@@ -50,7 +53,8 @@ internal class UploadFileStepTest {
 
         browserTest.uploadFileStep(
             stepName = "Step",
-            uploadFile = fileToBeUploaded
+            uploadFile = fileToBeUploaded,
+            element = TargetElement("#locator")
         )
         val params = browserTest.steps?.get(0)?.params as FileParams
 
@@ -58,10 +62,24 @@ internal class UploadFileStepTest {
     }
 
     @Test
+    fun `uploadFileStep adds the passed element to the FileParams object`() {
+        val element = TargetElement("#locator")
+        browserTest.uploadFileStep(
+            stepName = "Step",
+            uploadFile = getFile(),
+            element = element
+        )
+        val params = browserTest.steps?.get(0)?.params as FileParams
+
+        assertEquals(element.getElementObject(), params.element)
+    }
+
+    @Test
     fun `uploadFileStep accepts additional configuration changes to the test step`() {
         browserTest.uploadFileStep(
             stepName = "Step",
-            uploadFile = getFile()
+            uploadFile = getFile(),
+            element = TargetElement("#locator")
         ) { timeout = 10 }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
