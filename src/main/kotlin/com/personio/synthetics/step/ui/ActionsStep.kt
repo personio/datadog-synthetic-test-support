@@ -60,6 +60,7 @@ fun BrowserTest.clickStep(
  * - only the location (eg: /staff/wizard) for appending to the base url of the test
  * - pass full url including http(s)://
  * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
+ *   for example /staff/details/${fromVariable("EMPLOYEE_ID")}
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
  * @return Navigate type synthetic step object
  */
