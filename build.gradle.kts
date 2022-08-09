@@ -38,11 +38,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
     val awsSdkVersion = "2.17.248"
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
-    api("software.amazon.awssdk:sts:$awsSdkVersion")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     api("javax.activation:activation:1.1.1")
     api("com.datadoghq:datadog-api-client:2.1.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
+    testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     testImplementation("org.mockito:mockito-inline:4.6.1")
