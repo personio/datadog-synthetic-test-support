@@ -45,7 +45,7 @@ dependencies {
     testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
-    testImplementation("org.mockito:mockito-inline:4.6.1")
+    testImplementation("org.mockito:mockito-inline:4.7.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 }
