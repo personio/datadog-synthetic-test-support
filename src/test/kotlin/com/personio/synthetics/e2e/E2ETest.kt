@@ -5,6 +5,7 @@ import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
 import com.datadog.api.client.v1.model.SyntheticsAssertionType
 import com.datadog.api.client.v1.model.SyntheticsCheckType
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.client.syntheticBrowserTest
 import com.personio.synthetics.config.alertMessage
 import com.personio.synthetics.config.alphabeticPatternVariable
@@ -41,6 +42,7 @@ import com.personio.synthetics.step.assertion.elementContentAssertion
 import com.personio.synthetics.step.assertion.elementPresentAssertion
 import com.personio.synthetics.step.assertion.pageContainsTextAssertion
 import com.personio.synthetics.step.assertion.pageNotContainsTextAssertion
+import com.personio.synthetics.step.continueWithTestIfStepFails
 import com.personio.synthetics.step.extract.extractFromJavascriptStep
 import com.personio.synthetics.step.extract.extractTextFromElementStep
 import com.personio.synthetics.step.file.uploadFileStep
@@ -53,6 +55,7 @@ import com.personio.synthetics.step.ui.pressKeyStep
 import com.personio.synthetics.step.ui.refreshStep
 import com.personio.synthetics.step.ui.scrollStep
 import com.personio.synthetics.step.ui.waitStep
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.net.URL
@@ -65,6 +68,7 @@ class E2ETest {
     @Test
     fun `create synthetic test`() {
         syntheticBrowserTest("[Test] Synthetic-Test-As-Code") {
+            status(SyntheticsTestPauseStatus.PAUSED)
             alertMessage("Test Failed", "@slack-test_slack_channel")
             recoveryMessage("Test recovered")
             tags(listOf("env:qa", "synthetics-api"))
@@ -109,7 +113,9 @@ class E2ETest {
             clickStep(
                 stepName = "Click login button",
                 targetElement = TargetElement("[name='login']")
-            )
+            ) {
+                waitBeforeDeclaringStepAsFailed(75.seconds)
+            }
             currentUrlAssertion(
                 stepName = "Check current URL",
                 expectedContent = "https://synthetic-test.personio.de",
@@ -118,7 +124,10 @@ class E2ETest {
             pageContainsTextAssertion(
                 stepName = "Check that test element is present on the page",
                 expectedText = "string that should be present"
-            )
+            ) {
+                waitBeforeDeclaringStepAsFailed(30.seconds)
+                continueWithTestIfStepFails(true)
+            }
             pageNotContainsTextAssertion(
                 stepName = "Check text is not present on the page",
                 text = "string that should not be present"
@@ -210,6 +219,8 @@ class E2ETest {
                     name = "SESSION",
                     field = "set-cookie",
                 )
+                waitBeforeDeclaringStepAsFailed(90.seconds)
+                continueWithTestIfStepFails()
             }
         }
     }

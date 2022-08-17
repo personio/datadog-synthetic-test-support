@@ -6,12 +6,14 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.ui.model.TargetElement
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
+import kotlin.time.Duration.Companion.seconds
 
 internal class ElementAssertionStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -63,7 +65,7 @@ internal class ElementAssertionStepTest {
         browserTest.elementPresentAssertion(
             stepName = "Step",
             targetElement = TargetElement("#locator")
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -183,7 +185,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             check = SyntheticsCheckType.EQUALS,
             expectedContent = "expectedContent"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -327,7 +329,7 @@ internal class ElementAssertionStepTest {
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
             expectedValue = "expectedValue"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }

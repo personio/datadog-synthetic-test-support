@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - yyyy-mm-dd
 ### Added
+Support features: status, advanced options for steps (timeout, allow failure and mark test as failed)
 
 ### Changed
 

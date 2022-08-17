@@ -7,11 +7,13 @@ import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.step.ui.model.TargetElement
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import java.net.URL
+import kotlin.time.Duration.Companion.seconds
 
 internal class ActionsStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -72,7 +74,7 @@ internal class ActionsStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             text = "text"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -106,7 +108,7 @@ internal class ActionsStepTest {
         browserTest.clickStep(
             stepName = "Step",
             targetElement = TargetElement("#locator")
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -183,7 +185,7 @@ internal class ActionsStepTest {
             .navigateStep(
                 stepName = "Step",
                 url = "https://synthetic-test.personio.de"
-            ) { timeout = 10 }
+            ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
