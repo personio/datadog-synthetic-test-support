@@ -23,12 +23,10 @@ import kotlin.time.Duration
  */
 fun BrowserTest.waitStep(
     stepName: String,
-    waitingTime: Duration,
-    f: (SyntheticsStep.() -> Unit)? = null
+    waitingTime: Duration
 ) = addStep(stepName) {
     type = SyntheticsStepType.WAIT
     params = WaitParams(value = waitingTime.inWholeSeconds.toInt())
-    if (f != null) f()
 }
 
 /**

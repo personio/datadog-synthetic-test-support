@@ -9,6 +9,7 @@ import com.personio.synthetics.model.actions.PressKeyParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.step.ui.model.TargetElement
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
@@ -71,16 +72,6 @@ internal class SpecialActionsStepTest {
                 waitingTime = 301.seconds
             )
         }
-    }
-
-    @Test
-    fun `waitStep accepts additional configuration changes to the test step`() {
-        browserTest.waitStep(
-            stepName = "Step",
-            waitingTime = 1.seconds
-        ) { timeout = 10 }
-
-        assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     @Test
@@ -235,7 +226,7 @@ internal class SpecialActionsStepTest {
         browserTest.hoverStep(
             stepName = "Step",
             targetElement = TargetElement("#locatorId")
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -297,7 +288,7 @@ internal class SpecialActionsStepTest {
             .pressKeyStep(
                 stepName = "Step",
                 key = Key.ENTER
-            ) { timeout = 10 }
+            ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }

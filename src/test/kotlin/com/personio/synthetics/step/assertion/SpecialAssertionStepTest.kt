@@ -7,12 +7,14 @@ import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.model.assertion.DownloadedFileAssertionParams
 import com.personio.synthetics.model.assertion.FileNameCheckType
 import com.personio.synthetics.model.assertion.FileSizeCheckType
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
+import kotlin.time.Duration.Companion.seconds
 
 internal class SpecialAssertionStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -64,7 +66,7 @@ internal class SpecialAssertionStepTest {
         browserTest.customJavascriptAssertion(
             stepName = "Step",
             code = "return true;"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }

@@ -6,12 +6,14 @@ import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.file.FileParams
 import com.personio.synthetics.model.file.UploadFile
 import com.personio.synthetics.step.ui.model.TargetElement
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import java.io.File
 import java.util.Base64
+import kotlin.time.Duration.Companion.seconds
 
 internal class UploadFileStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -80,7 +82,7 @@ internal class UploadFileStepTest {
             stepName = "Step",
             uploadFile = getFile(),
             element = TargetElement("#locator")
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }

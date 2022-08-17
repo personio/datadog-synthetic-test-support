@@ -5,10 +5,12 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.extract.ExtractParams
 import com.personio.synthetics.step.ui.model.TargetElement
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
+import kotlin.time.Duration.Companion.seconds
 
 internal class ExtractStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -68,7 +70,7 @@ internal class ExtractStepTest {
             stepName = "Step",
             code = "return 'true'",
             variableName = "EXTRACT_JS_STEP_VAR"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -127,7 +129,7 @@ internal class ExtractStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locatorId"),
             variableName = "EXTRACT_TEXT_VAR"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }

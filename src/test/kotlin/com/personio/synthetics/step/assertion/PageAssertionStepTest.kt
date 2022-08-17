@@ -5,12 +5,14 @@ import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.model.assertion.AssertionParams
+import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
+import kotlin.time.Duration.Companion.seconds
 
 internal class PageAssertionStepTest {
     private val syntheticsApi = mock<SyntheticsApiClient>()
@@ -109,7 +111,7 @@ internal class PageAssertionStepTest {
             stepName = "Step",
             check = SyntheticsCheckType.EQUALS,
             expectedContent = "expectedContent"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -160,7 +162,7 @@ internal class PageAssertionStepTest {
         browserTest.pageContainsTextAssertion(
             stepName = "Step",
             expectedText = "expectedText"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
@@ -211,7 +213,7 @@ internal class PageAssertionStepTest {
         browserTest.pageNotContainsTextAssertion(
             stepName = "Step",
             text = "text"
-        ) { timeout = 10 }
+        ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
