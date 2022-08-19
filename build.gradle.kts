@@ -47,6 +47,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     testImplementation("org.mockito:mockito-inline:4.7.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.4.1")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 }
 

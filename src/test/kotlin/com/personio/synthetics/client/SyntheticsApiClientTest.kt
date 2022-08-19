@@ -11,7 +11,7 @@ internal class SyntheticsApiClientTest {
     @Test
     fun `server variables are set properly in the client`() {
         val expectedServerVariables = mapOf("site" to TestConfig.DATADOG_API_HOST)
-        val credentialsProvider: AwsSecretsManagerCredentialsProvider = mock()
+        val credentialsProvider: CredentialsProvider = mock()
         whenever(credentialsProvider.getCredentials()).thenReturn(ApiCredentials("apikey", "appkey"))
         val apiClient = SyntheticsApiClient(credentialsProvider)
         assertEquals(expectedServerVariables, apiClient.apiClient.serverVariables)
