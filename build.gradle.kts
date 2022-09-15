@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version kotlinVersion
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("com.personio.gradleplugin.gittagversion") version "1.0.0"
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
@@ -11,14 +10,13 @@ plugins {
 }
 
 group = "com.personio"
-version = versionFromGitTag("0.0.0")
 
 jacoco {
     toolVersion = "0.8.7"
 }
 
 repositories {
-    maven("https://nexus.tools.personio-internal.de/repository/maven/")
+    mavenCentral()
 }
 
 val e2eTest =

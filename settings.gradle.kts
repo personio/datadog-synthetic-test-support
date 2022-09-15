@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-        maven(url = "https://nexus.tools.personio-internal.de/repository/maven/")
+        gradlePluginPortal()
     }
 }
 rootProject.name = "synthetic-test-support"
