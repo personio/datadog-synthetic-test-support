@@ -96,7 +96,7 @@ internal class PageAssertionStepTest {
     }
 
     @Test
-    fun `currentUrlAssertion throw exception if expected content is not passed and check type is neither "IS_EMPTY" nor "NOT_IS_EMPTY"`() {
+    fun `currentUrlAssertion throw exception if expected content is not passed and check type is neither IS_EMPTY nor NOT_IS_EMPTY`() {
         assertThrows<IllegalStateException> {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
