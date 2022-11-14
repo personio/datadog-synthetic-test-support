@@ -310,7 +310,7 @@ internal class ElementAssertionStepTest {
     }
 
     @Test
-    fun `elementAttributeAssertion throws exception if expected value is not passed and check type is neither "IS_EMPTY" nor "NOT_IS_EMPTY"`() {
+    fun `elementAttributeAssertion throws exception if expected value is not passed and check type is neither IS_EMPTY nor NOT_IS_EMPTY`() {
         assertThrows<IllegalStateException> {
             browserTest.elementAttributeAssertion(
                 stepName = "Step",

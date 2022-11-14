@@ -26,7 +26,9 @@ While filling the form, add all relevant information, including:
 
 ## Contributions via Pull Requests
 
-Contributions via pull requests are much appreciated. 
+Contributions via pull requests are much appreciated.
+
+Dependency: You should have JDK 18 installed.
 
 Before submitting a pull request, please ensure that:
 
