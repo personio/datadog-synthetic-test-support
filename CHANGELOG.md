@@ -9,12 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Upgrade Java version to 18
 
 ### Fixed
 
 ### Removed
 
 ### Security
+
 ## [1.0.2] - 2022-08-19
 ### Added
 - Support features: status, advanced options for steps (timeout, allow failure and mark test as failed)
