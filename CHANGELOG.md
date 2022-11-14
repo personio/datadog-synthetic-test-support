@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Upgrade Java version to 18
+- Upgrade Java to 18, Gradle to 7.4.2, Jacoco to 0.8.8 version
 
 ### Fixed
 
