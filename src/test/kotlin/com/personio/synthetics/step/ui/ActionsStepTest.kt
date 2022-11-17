@@ -118,7 +118,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = "https://denys-demo.personio.de"
+                url = "https://synthetic-test.personio.de"
             )
         val step = browserTest.steps?.get(0)
 
@@ -128,7 +128,7 @@ internal class ActionsStepTest {
 
     @Test
     fun `navigateStep adds passed navigationUrl to the params object`() {
-        val url = "https://denys-demo.personio.de"
+        val url = "https://synthetic-test.personio.de"
         browserTest
             .navigateStep(
                 stepName = "Step",
@@ -140,8 +140,8 @@ internal class ActionsStepTest {
 
     @Test
     fun `navigateStep appends the passed navigationUrl location to the base url of the test`() {
-        val baseUrl = "https://synthetics.personio.de"
-        val url = "/my-desk"
+        val baseUrl = "https://synthetic-test.personio.de"
+        val url = "/test"
         val expectedUrl = baseUrl + url
 
         browserTest
@@ -168,7 +168,7 @@ internal class ActionsStepTest {
 
     @Test
     fun `navigateStep accepts the datadog variable in the url`() {
-        val baseUrl = "https://test.personio-internal.de"
+        val baseUrl = "https://synthetic-test.personio.de"
         val locationVariable = "LOCATION"
         browserTest
             .navigateStep(
@@ -184,7 +184,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = "https://synthetics.personio.de"
+                url = "https://synthetic-test.personio.de"
             ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

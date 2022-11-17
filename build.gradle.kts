@@ -90,18 +90,4 @@ publishing {
                 }
         }
     }
-    repositories {
-        maven {
-            name = "nexus-releases"
-            val releasesPath = "maven-releases/"
-            val snapshotsPath = "maven-snapshots/"
-            val finalUrl = "https://nexus.tools.personio-internal.de/repository/" +
-                if (project.hasProperty("release")) releasesPath else snapshotsPath
-            url = uri(finalUrl)
-            credentials {
-                username = System.getenv("NEXUS_USER") ?: ""
-                password = System.getenv("NEXUS_PASSWORD") ?: ""
-            }
-        }
-    }
 }

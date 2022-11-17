@@ -43,13 +43,13 @@ internal class ApiStepTest {
 
     @Test
     fun `addApiStep creates params with request sub type http and url that of browser test`() {
-        browserTest.baseUrl(URL("https://synthetic-test.personio-internal.de"))
+        browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
 
         browserTest.apiStep("Step", HTTPMethod.POST) { }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals("http", params.request.subtype)
-        assertEquals("https://synthetic-test.personio-internal.de", params.request.config.request.url)
+        assertEquals("https://synthetic-test.personio.de", params.request.config.request.url)
     }
 
     @Test
@@ -121,24 +121,24 @@ internal class ApiStepTest {
 
     @Test
     fun `part url passed to the url method should append to the base url into the request`() {
-        browserTest.baseUrl(URL("https://synthetic-test.personio-internal.de"))
+        browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
         browserTest.apiStep("Step", HTTPMethod.GET) {
             url("/login")
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        assertEquals("https://synthetic-test.personio-internal.de/login", params.request.config.request.url)
+        assertEquals("https://synthetic-test.personio.de/login", params.request.config.request.url)
     }
 
     @Test
     fun `full url passed to the url method should be added into the request`() {
-        browserTest.baseUrl(URL("https://synthetic-test.personio-internal.de"))
+        browserTest.baseUrl(URL("https://synthetic-test.personio.de"))
         browserTest.apiStep("Step", HTTPMethod.GET) {
-            url("https://newurl.personio-internal.de")
+            url("https://newurl.personio.de")
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        assertEquals("https://newurl.personio-internal.de", params.request.config.request.url)
+        assertEquals("https://newurl.personio.de", params.request.config.request.url)
     }
 
     @Test

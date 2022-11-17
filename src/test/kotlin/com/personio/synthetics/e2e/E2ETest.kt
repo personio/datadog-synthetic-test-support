@@ -69,10 +69,10 @@ class E2ETest {
     fun `create synthetic test`() {
         syntheticBrowserTest("[Test] Synthetic-Test-As-Code") {
             status(SyntheticsTestPauseStatus.PAUSED)
-            alertMessage("Test Failed", "@opsgenie-o11y-integration team=TS")
+            alertMessage("Test Failed", "@slack-test_slack_channel")
             recoveryMessage("Test recovered")
             tags(listOf("env:qa", "synthetics-api"))
-            baseUrl(URL("https://denys-demo.personio.de"))
+            baseUrl(URL("https://synthetic-test.personio.de"))
             browserAndDevice(SyntheticsDeviceID.CHROME_MOBILE_SMALL, SyntheticsDeviceID.FIREFOX_LAPTOP_LARGE)
             publicLocation(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
             testFrequency(6.minutes)
@@ -82,7 +82,7 @@ class E2ETest {
             monitorName("Test Monitor Name")
             renotifyInterval(RenotifyInterval.HOURS_2)
             monitorPriority(MonitorPriority.P3_MEDIUM)
-            useGlobalVariable("PASSWORD_PROD_TEST")
+            useGlobalVariable("TEST_PASSWORD")
             textVariable("TEXT_VARIABLE", "test")
             numericPatternVariable(
                 name = "NUMERIC_PATTERN",
@@ -102,28 +102,28 @@ class E2ETest {
             )
             inputTextStep(
                 stepName = "Enter username",
-                targetElement = TargetElement("#email"),
-                text = "abc@personio.de"
+                targetElement = TargetElement("[name='email']"),
+                text = "test@personio.de"
             )
             inputTextStep(
                 stepName = "Enter password",
-                targetElement = TargetElement("#password"),
-                text = "{{ PASSWORD_PROD_TEST }}"
+                targetElement = TargetElement("[name='password']"),
+                text = "{{ TEST_PASSWORD }}"
             )
             clickStep(
                 stepName = "Click login button",
-                targetElement = TargetElement("button[type='submit']")
+                targetElement = TargetElement("[name='login']")
             ) {
                 waitBeforeDeclaringStepAsFailed(75.seconds)
             }
             currentUrlAssertion(
                 stepName = "Check current URL",
-                expectedContent = "https://denys-demo.personio.de",
+                expectedContent = "https://synthetic-test.personio.de",
                 check = SyntheticsCheckType.CONTAINS
             )
             pageContainsTextAssertion(
-                stepName = "Check that company overview heading is present on the page",
-                expectedText = "CS Demo GmbH im Überblick"
+                stepName = "Check text is present on the page",
+                expectedText = "string that should be present"
             ) {
                 waitBeforeDeclaringStepAsFailed(30.seconds)
                 continueWithTestIfStepFails(true)
@@ -133,33 +133,33 @@ class E2ETest {
                 text = "string that should not be present"
             )
             clickStep(
-                stepName = "Navigate to settings page",
-                targetElement = TargetElement("[data-test-id='navsidebar-settings']")
+                stepName = "Navigate to test page",
+                targetElement = TargetElement("[name='test-page']")
             )
             elementPresentAssertion(
-                stepName = "Check if cost centers link is present",
-                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']")
+                stepName = "Check if test link is present",
+                targetElement = TargetElement("[name='link-name']")
             )
             elementContentAssertion(
-                stepName = "Check text of the cost centers link",
-                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']"),
+                stepName = "Check text of the test link",
+                targetElement = TargetElement("[value='link-text']"),
                 check = SyntheticsCheckType.EQUALS,
-                expectedContent = "Kostenstellen"
+                expectedContent = "Test"
             )
             elementAttributeAssertion(
-                stepName = "Check that href of the cost centers link is not empty",
-                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']"),
+                stepName = "Check that href of the test link is not empty",
+                targetElement = TargetElement("[href='link-href']"),
                 attribute = "href",
                 check = SyntheticsCheckType.NOT_IS_EMPTY
             )
             extractTextFromElementStep(
                 stepName = "Extract text from element",
                 variableName = "EXTRACT_TEXT",
-                targetElement = TargetElement("[data-test-id='settings-listitem-cost-centers']")
+                targetElement = TargetElement("[value='test-extract']")
             )
             navigateStep(
-                stepName = "Navigate to Dashboard page by URL",
-                url = "https://denys-demo.personio.de/my-desk"
+                stepName = "Navigate to test page by URL",
+                url = "https://synthetic-test.personio.de/test"
             )
             customJavascriptAssertion(
                 stepName = "Check custom JS",
@@ -167,7 +167,7 @@ class E2ETest {
             )
             uploadFileStep(
                 stepName = "Upload file",
-                element = TargetElement("[data-test-id='upload-file']"),
+                element = TargetElement("[name='upload-file']"),
                 uploadFile = File.createTempFile("upload", ".pdf").apply { writeText("Test") }
             )
             downloadedFileAssertion("Check downloaded file assertion step") {
@@ -175,21 +175,21 @@ class E2ETest {
                 sizeCheck(FileSizeCheckType.GREATER, 1)
                 expectedMd5("123")
             }
-            refreshStep("Refresh Dashboard page")
+            refreshStep("Refresh test page")
             waitStep(
                 stepName = "Wait for a few seconds on the page",
                 waitingTime = 10.seconds
             )
-            scrollStep("Scroll to Employees Joining widget") {
-                targetElement(locator = "[data-action-name='dbv2-kpi-employees-joining']")
+            scrollStep("Scroll to test element") {
+                targetElement(locator = "[name='test-element']")
             }
-            scrollStep("Scroll to Employees Joining widget with x,y coordinates") {
+            scrollStep("Scroll to test element with x,y coordinates") {
                 horizontalScroll(10)
                 verticalScroll(10)
             }
             hoverStep(
-                stepName = "Hover over Employees Joining widget",
-                targetElement = TargetElement("[data-action-name='dbv2-kpi-employees-joining']")
+                stepName = "Hover over test element",
+                targetElement = TargetElement("[name='test-element']")
             )
             pressKeyStep(
                 stepName = "Press Ctrl+Shift+Backspace keys",
@@ -203,7 +203,7 @@ class E2ETest {
             apiStep("API Step", HTTPMethod.POST) {
                 requestBody("{\"email\": \"abc\"}")
                 requestHeaders(mutableMapOf("content-type" to "application/json"))
-                url("/login/wizard")
+                url("/login")
                 assertion {
                     target = 302
                     type = SyntheticsAssertionType.STATUS_CODE
@@ -213,10 +213,10 @@ class E2ETest {
                     type = SyntheticsAssertionType.HEADER
                     property = "set-cookie"
                     operator = SyntheticsAssertionOperator.CONTAINS
-                    target = "personio_session="
+                    target = "session="
                 }
                 extractHeaderValue(
-                    name = "PERSONIO_SESSION",
+                    name = "SESSION",
                     field = "set-cookie",
                 )
                 waitBeforeDeclaringStepAsFailed(90.seconds)

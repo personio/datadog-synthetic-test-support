@@ -83,7 +83,7 @@ class ApiStep : SyntheticsStep() {
      * Set the url used for the API request
      * @param url url to be used for the API request
      * Supply the parameter like one of the following
-     * - only the location (eg: /staff/wizard) for appending to the base url of the test
+     * - only the location (eg: /test/page) for appending to the base url of the test
      * - pass full url including http(s)://
      * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
      * @return ApiStep object with the method set

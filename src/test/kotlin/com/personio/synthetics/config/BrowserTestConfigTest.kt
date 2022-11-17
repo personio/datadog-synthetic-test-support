@@ -20,7 +20,7 @@ internal class BrowserTestConfigTest {
 
     @Test
     fun `baseUrl function sets the base url in the test config`() {
-        val expectedUrl = "https://synthetic-test.personio-internal.de"
+        val expectedUrl = "https://synthetic-test.personio.de"
         browserTest.baseUrl(URL(expectedUrl))
 
         assertEquals(expectedUrl, browserTest.config!!.request.url)

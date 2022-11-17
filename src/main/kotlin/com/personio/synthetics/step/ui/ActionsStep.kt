@@ -57,10 +57,10 @@ fun BrowserTest.clickStep(
  * Adds a navigate step to the synthetic browser test
  * @param stepName Name of the step
  * @param url The navigation url. You can pass url like the following
- * - only the location (eg: /staff/wizard) for appending to the base url of the test
+ * - only the location (eg: /test/page) for appending to the base url of the test
  * - pass full url including http(s)://
  * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
- *   for example /staff/details/${fromVariable("EMPLOYEE_ID")}
+ *   for example /test/page/${fromVariable("TEST")}
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
  * @return Navigate type synthetic step object
  */

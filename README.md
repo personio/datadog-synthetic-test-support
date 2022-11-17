@@ -45,7 +45,7 @@ Start using our library  in a gradle project by following the steps below:
     fun `add a synthetic test`() {
        syntheticBrowserTest("Test Login to the app") {
           tags(listOf("env:qa"))
-          baseUrl(URL("https://demo.personio.de"))
+          baseUrl(URL("https://synthetic-test.personio.de"))
           browserAndDevice(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
           publicLocation(Location.FRANKFURT_AWS)
           testFrequency(5.minutes)
@@ -53,17 +53,17 @@ Start using our library  in a gradle project by following the steps below:
           useGlobalVariable("PASSWORD")
           inputTextStep(
              stepName = "Enter username",
-             targetElement = TargetElement("#email"),
+             targetElement = TargetElement("[name='email']"),
              text = "test@personio.de"
           )
           inputTextStep(
              stepName = "Enter password",
-             targetElement = TargetElement("#password"),
+             targetElement = TargetElement("[name='password']"),
              text = "{{ PASSWORD }}"
           )
           clickStep(
              stepName = "Click login button",
-             targetElement = TargetElement("button[type='submit']")
+             targetElement = TargetElement("[name='login']")
           ) {
              waitBeforeDeclaringStepAsFailed(30.seconds)
           }
