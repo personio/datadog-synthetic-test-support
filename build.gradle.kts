@@ -90,18 +90,4 @@ publishing {
                 }
         }
     }
-    repositories {
-        maven {
-            name = "nexus-releases"
-            val releasesPath = "maven-releases/"
-            val snapshotsPath = "maven-snapshots/"
-            val finalUrl = "***REMOVED***" +
-                if (project.hasProperty("release")) releasesPath else snapshotsPath
-            url = uri(finalUrl)
-            credentials {
-                username
-                password
-            }
-        }
-    }
 }

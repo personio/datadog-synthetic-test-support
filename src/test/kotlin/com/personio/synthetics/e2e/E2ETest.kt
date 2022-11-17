@@ -122,7 +122,7 @@ class E2ETest {
                 check = SyntheticsCheckType.CONTAINS
             )
             pageContainsTextAssertion(
-                stepName = "Check that test element is present on the page",
+                stepName = "Check text is present on the page",
                 expectedText = "string that should be present"
             ) {
                 waitBeforeDeclaringStepAsFailed(30.seconds)
@@ -142,20 +142,20 @@ class E2ETest {
             )
             elementContentAssertion(
                 stepName = "Check text of the test link",
-                targetElement = TargetElement("[name='link-name']"),
+                targetElement = TargetElement("[value='link-text']"),
                 check = SyntheticsCheckType.EQUALS,
                 expectedContent = "Test"
             )
             elementAttributeAssertion(
                 stepName = "Check that href of the test link is not empty",
-                targetElement = TargetElement("[name='link-name']"),
+                targetElement = TargetElement("[href='link-href']"),
                 attribute = "href",
                 check = SyntheticsCheckType.NOT_IS_EMPTY
             )
             extractTextFromElementStep(
                 stepName = "Extract text from element",
                 variableName = "EXTRACT_TEXT",
-                targetElement = TargetElement("[name='link-name']")
+                targetElement = TargetElement("[value='test-extract']")
             )
             navigateStep(
                 stepName = "Navigate to test page by URL",
