@@ -100,8 +100,6 @@ You need to include an additional AWS package dependency, depending on how you l
 
 Please check the currently supported AWS SDK version in `build.gradle.kts`.
 
-**TODO**: This section to be updated as part of the ticket TS-1957 about implementing configuration set by the consumer.
-
 ## Build the library
 
 The following are some useful commands for working with the project.
@@ -109,12 +107,12 @@ The following are some useful commands for working with the project.
 - Run `./gradlew build` to build the whole project.
 - Run `./gradlew ktlintFormat` to format the project.
 - Run `./gradlew test` to execute all the unit tests.
-- Run `./gradlew e2eTest` to execute the e2e test. TODO: to be updated after implementing TS-1957.
+- Run `./gradlew e2eTest` to execute the e2e test.
 - Run `./gradlew publishToMavenLocal` to publish to your local .m2 repository.
 
 ## Creating a new release
 
-**TODO**: This section to be updated as part of the ticket TS-1883 about publishing releases.
+This section to be updated with information about publishing releases.
 
 ## Changelog
 

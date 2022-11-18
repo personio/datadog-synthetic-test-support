@@ -201,11 +201,11 @@ class E2ETest {
                 variableName = "JS_STEP_VAR"
             )
             apiStep("API Step", HTTPMethod.POST) {
-                requestBody("{\"email\": \"abc\"}")
+                requestBody("{\"userName\": \"test\"}")
                 requestHeaders(mutableMapOf("content-type" to "application/json"))
                 url("/login")
                 assertion {
-                    target = 302
+                    target = 200
                     type = SyntheticsAssertionType.STATUS_CODE
                     operator = SyntheticsAssertionOperator.IS
                 }
