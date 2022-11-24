@@ -13,7 +13,9 @@ There are 2 ways to provide the API credentials in order to communicate with Dat
 
 ## Getting started
 
-Start using our library  in a gradle project by following the steps below:
+This library is compiled with JDK 17. Your project should be on JDK 17+ in order to use it. 
+
+Start using the library in a gradle project by following the steps below:
 
 1. In the gradle project, add a new source set and Gradle task to run test generation in `build.gradle.kts` file.
 ```kotlin
