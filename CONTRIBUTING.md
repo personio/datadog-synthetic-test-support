@@ -28,7 +28,7 @@ While filling the form, add all relevant information, including:
 
 Contributions via pull requests are much appreciated.
 
-Dependency: You should have JDK 18 installed.
+Dependency: You should have JDK 17 installed.
 
 Before submitting a pull request, please ensure that:
 
