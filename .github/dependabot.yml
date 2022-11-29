@@ -6,7 +6,3 @@ updates:
       interval: daily
       time: "09:00"
       timezone: "CET"
-    ignore:
-      - dependency-name: "software.amazon.awssdk:secretsmanager"
-      - dependency-name: "software.amazon.awssdk:sso"
-      - dependency-name: "software.amazon.awssdk:sts"
