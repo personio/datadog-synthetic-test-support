@@ -6,7 +6,7 @@ plugins {
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
-    id("org.sonarqube") version "3.4.0.2513"
+    id("org.sonarqube") version "3.5.0.2730"
 }
 
 group = "com.personio"
