@@ -1,12 +1,11 @@
 plugins {
-    val kotlinVersion = "1.7.10"
+    val kotlinVersion = "1.7.20"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version kotlinVersion
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
-    id("org.sonarqube") version "3.4.0.2513"
 }
 
 group = "com.personio"
@@ -33,19 +32,19 @@ val e2eTest =
 tasks.check { dependsOn(e2eTest) }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
-    val awsSdkVersion = "2.17.261"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.21")
+    val awsSdkVersion = "2.18.26"
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     api("javax.activation:activation:1.1.1")
-    api("com.datadoghq:datadog-api-client:2.2.0")
+    api("com.datadoghq:datadog-api-client:2.5.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
     testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
-    testImplementation("org.mockito:mockito-inline:4.7.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+    testImplementation("org.mockito:mockito-inline:4.9.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.4")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
 }
 
