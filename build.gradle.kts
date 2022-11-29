@@ -36,7 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
     val awsSdkVersion = "2.17.261"
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     api("javax.activation:activation:1.1.1")
     api("com.datadoghq:datadog-api-client:2.2.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
