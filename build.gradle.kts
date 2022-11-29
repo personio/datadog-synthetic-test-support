@@ -1,5 +1,5 @@
 plugins {
-    val kotlinVersion = "1.7.10"
+    val kotlinVersion = "1.7.20"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version kotlinVersion
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
