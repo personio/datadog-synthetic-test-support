@@ -7,15 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
+- Add License ([#2](https://github.com/personio/datadog-synthetic-test-support/pull/2))
+- Add Github workflows for unit test and lint ([#3](https://github.com/personio/datadog-synthetic-test-support/pull/3))
+- Add CONTRIBUTING file ([#4](https://github.com/personio/datadog-synthetic-test-support/pull/4))
+- Add CODEOWNERS file ([#13](https://github.com/personio/datadog-synthetic-test-support/pull/13))
+- Setup automatic dependencies updates via Dependabot ([#14](https://github.com/personio/datadog-synthetic-test-support/pull/14))
+
 
 ### Changed
-- Upgrade Java to 18, Gradle to 7.4.2, Jacoco to 0.8.8 version
+- Update README file with dependencies, getting started, changelog and license sections ([#5](https://github.com/personio/datadog-synthetic-test-support/pull/5))
+- Upgrade Java to 17 version ([#12](https://github.com/personio/datadog-synthetic-test-support/pull/12))
+- Upgrade Gradle to 7.4.2 version ([#8](https://github.com/personio/datadog-synthetic-test-support/pull/8))
 
 ### Fixed
 
 ### Removed
 
 ### Security
+
+### Dependencies
+- Bump datadog-api-client from 2.2.0 to 2.5.0 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump jackson-module-kotlin from 2.13.3 to 2.14.1 ([#19](https://github.com/personio/datadog-synthetic-test-support/pull/19))
+- Bump jacoco from 0.8.7 to 0.8.8 ([#8](https://github.com/personio/datadog-synthetic-test-support/pull/8))
+- Bump junit-jupiter-api from 5.9.0 to 5.9.1 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump junit-jupiter-engine from 5.9.0 to 5.9.1 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump kotest-runner-junit5-jvm from 5.4.2 to 5.5.4 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump kotlin-stdlib from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump kotlinx-serialization-json from 1.4.0 to 1.4.1 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump mockito-inline from 4.7.0 to 4.9.0 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump mockito-kotlin from 4.0.0 to 4.1.0 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump org.jetbrains.dokka from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump org.jetbrains.kotlin.jvm from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump plugin.serialization from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump secretsmanager from 2.17.261 to 2.18.26 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump sso from 2.17.261 to 2.18.26 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Bump sts from 2.17.261 to 2.18.26 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
 
 ## [1.0.2] - 2022-08-19
 ### Added
@@ -28,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2022-07-22
 ### Added
-- Framework for synthetic test as code
+- Framework for synthetic test as code ([#1](https://github.com/personio/datadog-synthetic-test-support/pull/1))
 
 [Unreleased]: https://github.com/personio/datadog-synthetic-test-support/compare/v1.0.2...HEAD
 [1.0.2]: https://github.com/personio/datadog-synthetic-test-support/compare/v1.0.1...v1.0.2
