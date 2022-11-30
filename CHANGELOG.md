@@ -27,12 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 - Bump datadog-api-client from 2.2.0 to 2.5.0 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump jacoco from 0.8.7 to 0.8.8 ([#8](https://github.com/personio/datadog-synthetic-test-support/pull/8))
 - Bump kotlin-stdlib from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
 - Bump kotlinx-serialization-json from 1.4.0 to 1.4.1 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump org.jetbrains.dokka from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump org.jetbrains.kotlin.jvm from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump plugin.serialization from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
 - Bump secretsmanager from 2.17.261 to 2.18.26 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
 
 ## [1.0.2] - 2022-08-19
