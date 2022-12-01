@@ -32,7 +32,7 @@ val e2eTest =
 tasks.check { dependsOn(e2eTest) }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.20")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.22")
     val awsSdkVersion = "2.18.27"
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
