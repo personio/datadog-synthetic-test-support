@@ -4,6 +4,7 @@ import com.datadog.api.client.v1.model.SyntheticsCheckType
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
@@ -16,8 +17,9 @@ import org.mockito.kotlin.mock
 import kotlin.time.Duration.Companion.seconds
 
 internal class ElementAssertionStepTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `elementPresentAssertion adds the new step item to the browser test object`() {

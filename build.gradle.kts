@@ -34,6 +34,10 @@ tasks.check { dependsOn(e2eTest) }
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.22")
     val awsSdkVersion = "2.18.30"
+    val jacksonVersion = "2.14.1"
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    implementation("org.apache.commons:commons-text:1.10.0")
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     api("javax.activation:activation:1.1.1")
@@ -45,7 +49,6 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:4.9.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.4")
-    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
 }
 
 tasks {

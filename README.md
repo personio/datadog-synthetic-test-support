@@ -92,6 +92,14 @@ Start using the library in a gradle project by following the steps below:
 Notes:
 - Test name is a unique identifier which is used during test publishing. If a test with the given name already exists in Datadog, it will be overridden.
 
+## Configuration
+
+There are some variables like Datadog API host, library and default test settings that would need to be configured in order to have the Synthetic Test library up and running. Follow the steps below to setup your configuration:
+
+- Copy the file `configuration.yaml.sample` into the `resources` folder in your source set.
+- Rename the file to `configuration.yaml`.
+- Update the variables in the file with your own specifications or specify the environment variables (and optionally default values to use when variables are not set using `${<VAR_NAME>:-<default-value>}` [syntax](https://commons.apache.org/proper/commons-text/apidocs/org/apache/commons/text/StringSubstitutor.html#:~:text=Providing%20Default%20Values)). If datadogCredentialsAwsArn is set in the configuration, the library will default to using the AWS Secrets Manager to fetch Datadog API credentials, alternatively ddApiKey and ddAppKey need to be provided in the configuration.
+
 ### Configuring credentials provider
 
 You can use AWS Secrets Manager to store and fetch Datadog API credentials to enable the library to publish test changes to Datadog.

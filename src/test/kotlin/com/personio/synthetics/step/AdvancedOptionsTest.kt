@@ -2,6 +2,7 @@ package com.personio.synthetics.step
 
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.step.ui.refreshStep
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -10,8 +11,9 @@ import org.mockito.kotlin.mock
 import kotlin.time.Duration.Companion.seconds
 
 internal class AdvancedOptionsTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `waitBeforeDeclaringStepAsFailed adds the timeout to the browser test object`() {

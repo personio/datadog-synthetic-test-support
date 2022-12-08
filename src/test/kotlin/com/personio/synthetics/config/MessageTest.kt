@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 
 internal class MessageTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `alertMessage function sets the passed message to the message field`() {
