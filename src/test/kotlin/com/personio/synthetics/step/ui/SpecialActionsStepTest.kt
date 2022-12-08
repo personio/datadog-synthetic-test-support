@@ -3,6 +3,7 @@ package com.personio.synthetics.step.ui
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.model.actions.Key
 import com.personio.synthetics.model.actions.Modifier
 import com.personio.synthetics.model.actions.PressKeyParams
@@ -19,8 +20,9 @@ import java.lang.IllegalArgumentException
 import kotlin.time.Duration.Companion.seconds
 
 internal class SpecialActionsStepTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `waitStep adds the new step item to the browser test object`() {

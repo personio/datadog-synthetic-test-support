@@ -3,6 +3,7 @@ package com.personio.synthetics.step.ui
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.actions.ActionsParams
@@ -16,8 +17,9 @@ import java.net.URL
 import kotlin.time.Duration.Companion.seconds
 
 internal class ActionsStepTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `inputTextStep adds step with type text and params of type ActionsParams`() {

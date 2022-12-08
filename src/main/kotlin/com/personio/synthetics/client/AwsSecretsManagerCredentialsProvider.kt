@@ -1,17 +1,17 @@
 package com.personio.synthetics.client
 
-import com.personio.synthetics.config.TestConfig
+import com.personio.synthetics.config.Credentials
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest
 
-class AwsSecretsManagerCredentialsProvider(val client: SecretsManagerClient = SecretsManagerClient.builder().region(Region.of(TestConfig.AWS_REGION)).build()) : CredentialsProvider {
+class AwsSecretsManagerCredentialsProvider(val credentials: Credentials, val client: SecretsManagerClient = SecretsManagerClient.builder().region(Region.of(credentials.awsRegion)).build()) : CredentialsProvider {
 
     override fun getCredentials(): ApiCredentials {
         val getSecretValueRequest = GetSecretValueRequest.builder()
-            .secretId(TestConfig.DATADOG_CREDENTIALS_AWS_ARN)
+            .secretId(credentials.datadogCredentialsAwsArn)
             .build()
 
         val secret = runCatching { client.getSecretValue(getSecretValueRequest) }

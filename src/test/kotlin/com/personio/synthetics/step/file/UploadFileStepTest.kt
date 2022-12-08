@@ -3,6 +3,7 @@ package com.personio.synthetics.step.file
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.client.SyntheticsApiClient
+import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.model.file.FileParams
 import com.personio.synthetics.model.file.UploadFile
 import com.personio.synthetics.step.ui.model.TargetElement
@@ -16,8 +17,9 @@ import java.util.Base64
 import kotlin.time.Duration.Companion.seconds
 
 internal class UploadFileStepTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `uploadFileStep adds new step to the browser test`() {

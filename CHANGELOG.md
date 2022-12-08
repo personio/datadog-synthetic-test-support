@@ -10,9 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add License ([#2](https://github.com/personio/datadog-synthetic-test-support/pull/2))
 - Add Github workflows for unit test and lint ([#3](https://github.com/personio/datadog-synthetic-test-support/pull/3))
 - Add CONTRIBUTING file ([#4](https://github.com/personio/datadog-synthetic-test-support/pull/4))
+- Get configurations from yaml file ([#7](https://github.com/personio/datadog-synthetic-test-support/pull/7))
 - Add CODEOWNERS file ([#13](https://github.com/personio/datadog-synthetic-test-support/pull/13))
 - Setup automatic dependencies updates via Dependabot ([#14](https://github.com/personio/datadog-synthetic-test-support/pull/14))
-
 
 ### Changed
 - Update README file with dependencies, getting started, changelog and license sections ([#5](https://github.com/personio/datadog-synthetic-test-support/pull/5))

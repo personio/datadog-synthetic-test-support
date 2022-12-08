@@ -5,7 +5,7 @@ import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariable
 import com.datadog.api.client.v1.model.SyntheticsListGlobalVariablesResponse
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.personio.synthetics.config.TestConfig
+import com.personio.synthetics.config.Defaults
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -14,12 +14,13 @@ import org.mockito.kotlin.whenever
 import java.lang.IllegalStateException
 
 internal class BrowserTestTest {
+    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi)
+    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `initialising a BrowserTest object sets the default test locations`() {
-        assertEquals(TestConfig.RUN_LOCATIONS, browserTest.locations)
+        assertEquals(defaults.runLocations, browserTest.locations)
     }
 
     @Test
@@ -34,32 +35,32 @@ internal class BrowserTestTest {
 
     @Test
     fun `initialising a BrowserTest object sets the default test frequency as in TestConfig`() {
-        assertEquals(TestConfig.TEST_FREQUENCY, browserTest.options.tickEvery)
+        assertEquals(defaults.testFrequencySec, browserTest.options.tickEvery)
     }
 
     @Test
     fun `initialising a BrowserTest object sets the default min failure duration as in TestConfig`() {
-        assertEquals(TestConfig.MIN_FAILURE_DURATION, browserTest.options.minFailureDuration)
+        assertEquals(defaults.minFailureDurationSec, browserTest.options.minFailureDuration)
     }
 
     @Test
     fun `initialising a BrowserTest object sets the default min location failed as in TestConfig`() {
-        assertEquals(TestConfig.MIN_LOCATION_FAILED, browserTest.options.minLocationFailed)
+        assertEquals(defaults.minLocationFailed, browserTest.options.minLocationFailed)
     }
 
     @Test
     fun `initialising a BrowserTest object sets a default retry count as in TestConfig`() {
-        assertEquals(TestConfig.RETRY_COUNT, browserTest.options.retry?.count)
+        assertEquals(defaults.retryCount, browserTest.options.retry?.count)
     }
 
     @Test
     fun `initialising a BrowserTest object sets a default retry interval as in TestConfig`() {
-        assertEquals(TestConfig.RETRY_INTERVAL, browserTest.options.retry?.interval)
+        assertEquals(defaults.retryIntervalMillisec, browserTest.options.retry?.interval)
     }
 
     @Test
     fun `initialising a BrowserTest object sets a default renotify interval as in TestConfig`() {
-        assertEquals(TestConfig.RENOTIFY_INTERVAL, browserTest.options.monitorOptions?.renotifyInterval)
+        assertEquals(defaults.renotifyIntervalMinutes, browserTest.options.monitorOptions?.renotifyInterval)
     }
 
     @Test
