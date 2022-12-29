@@ -26,7 +26,6 @@ val e2eTest =
             includeTestsMatching("*.e2e.*")
         }
         useJUnitPlatform()
-        shouldRunAfter("test")
     }
 
 tasks.check { dependsOn(e2eTest) }

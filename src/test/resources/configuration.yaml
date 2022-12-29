@@ -1,8 +1,7 @@
 credentials:
-  ddApiKey: ${DD_API_KEY:-}
-  ddAppKey: ${DD_APP_KEY:-}
+  ddApiKey: ${DD_API_KEY}
+  ddAppKey: ${DD_APP_KEY}
   awsRegion: eu-central-1
-  datadogCredentialsAwsArn: ${DATADOG_CREDENTIALS_AWS_ARN:-}
 testSettings:
   datadogApiHost: datadoghq.eu
   defaults:

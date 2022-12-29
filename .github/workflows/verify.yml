@@ -30,3 +30,19 @@ jobs:
         distribution: "temurin"
     - name: Run lint check
       run: ./gradlew ktlintCheck
+  e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - name: Run Datadog synthetic test
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
+        run: ./gradlew e2eTest --stacktrace
