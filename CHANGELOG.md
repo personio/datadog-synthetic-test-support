@@ -1,50 +1,63 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and the format is partially based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) with customised sections:
+- Breaking changes: any changes that could break the existing implementation and require adjustments from library user's side
+- New features & improvements: any changes which add new functionality or improvements to the existing code
+- Bug fixes: any changes that fix issues or bug in the existing code
+- Dependencies: updates of dependency versions
 
 ## [Unreleased] - yyyy-mm-dd
 
-### Added
-- Add License ([#2](https://github.com/personio/datadog-synthetic-test-support/pull/2))
-- Add Github workflows for unit test and lint ([#3](https://github.com/personio/datadog-synthetic-test-support/pull/3))
-- Add CONTRIBUTING file ([#4](https://github.com/personio/datadog-synthetic-test-support/pull/4))
-- Get configurations from yaml file ([#7](https://github.com/personio/datadog-synthetic-test-support/pull/7))
-- Add CODEOWNERS file ([#13](https://github.com/personio/datadog-synthetic-test-support/pull/13))
-- Setup automatic dependencies updates via Dependabot ([#14](https://github.com/personio/datadog-synthetic-test-support/pull/14))
+### Breaking changes
 
-### Changed
-- Update README file with dependencies, getting started, changelog and license sections ([#5](https://github.com/personio/datadog-synthetic-test-support/pull/5))
+### New features & improvements
 - Upgrade Java to 17 version ([#12](https://github.com/personio/datadog-synthetic-test-support/pull/12))
-- Upgrade Gradle to 7.4.2 version ([#8](https://github.com/personio/datadog-synthetic-test-support/pull/8))
+- Get configurations from yaml file ([16cbb0f](https://github.com/personio/datadog-synthetic-test-support/commit/16cbb0fb40d24e98d1fb1d20da5786004cdeb2bf))
 
-### Fixed
-
-### Removed
-
-### Security
+### Bug fixes
 
 ### Dependencies
-- Bump datadog-api-client from 2.2.0 to 2.5.0 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump kotlin-stdlib from 1.7.10 to 1.7.20 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump kotlinx-serialization-json from 1.4.0 to 1.4.1 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
-- Bump secretsmanager from 2.17.261 to 2.18.26 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Update datadog-api-client dependency from 2.0.0 to 2.5.0 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Update kotlin-stdlib dependency from 1.7.10 to 1.7.22 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20), [#22](https://github.com/personio/datadog-synthetic-test-support/pull/22))
+- Update kotlinx-serialization-json dependency from 1.4.0 to 1.4.1 ([#20](https://github.com/personio/datadog-synthetic-test-support/pull/20))
+- Update secretsmanager dependency from 2.17.255 to 2.18.35 ([d84e121](https://github.com/personio/datadog-synthetic-test-support/commit/d84e121e0cab5e6f9e36514055f7979812ed6337), [0f24790](https://github.com/personio/datadog-synthetic-test-support/commit/0f24790f20bc2d1758c8ee963e643d8fee7e50d3), [03fa798](https://github.com/personio/datadog-synthetic-test-support/commit/03fa798ffdc4821f71984ea32c1564183045a18e), [1b800da](https://github.com/personio/datadog-synthetic-test-support/commit/1b800da4145dd55c7d4a3719b8496322d83018be), [#20](https://github.com/personio/datadog-synthetic-test-support/pull/20)), ([#21](https://github.com/personio/datadog-synthetic-test-support/pull/21), [#23](https://github.com/personio/datadog-synthetic-test-support/pull/23), [#24](https://github.com/personio/datadog-synthetic-test-support/pull/24))
 
 ## [1.0.2] - 2022-08-19
-### Added
-- Support features: status, advanced options for steps (timeout, allow failure and mark test as failed)
-- EnvironmentVariablesCredentialsProvider to fetch Datadog API credentials from environment variables
+### New features & improvements
+- Support features: status, advanced options for steps (timeout, allow failure and mark test as failed) ([9ca80d0](https://github.com/personio/datadog-synthetic-test-support/commit/9ca80d08feb169e46a223f970e1a1110a61862ed))
+- Implement EnvironmentVariablesCredentialsProvider to fetch Datadog API credentials from environment variables ([d720eb1](https://github.com/personio/datadog-synthetic-test-support/commit/d720eb1f9895dc0ad39ef004972d0054e0b71188))
+
+### Dependencies
+- Update datadog-api-client dependency from 2.1.0 to 2.2.0 ([d3e6a79](https://github.com/personio/datadog-synthetic-test-support/commit/d3e6a79e93746a1ed7363a7472b647751fba3aa2))
+- Update kotlinx-serialization-json dependency from 1.3.3 to 1.4.0 ([2873de1](https://github.com/personio/datadog-synthetic-test-support/commit/2873de15fc94695d09e937305209692debae3b5b))
+- Update secretsmanager dependency from 2.17.249 to 2.17.255 ([b47b06e](https://github.com/personio/datadog-synthetic-test-support/commit/b47b06ecaf9afdbd5e0d0e3e603aca813492196c), [5195316](https://github.com/personio/datadog-synthetic-test-support/commit/5195316a768d46d6165d60a46245598259e3d176), [efc113c](https://github.com/personio/datadog-synthetic-test-support/commit/efc113c4a800706d42714f0d3fa2e0bd6ce2c831), [238846b](https://github.com/personio/datadog-synthetic-test-support/commit/238846b7be85c75f4ea939c74ce9e880cf143ff7))
 
 ## [1.0.1] - 2022-08-09
-### Fixed
-- Fixing uploadFileStep function by adding element as a parameter 
+### Bug fixes
+- Fix uploadFileStep function by adding element as a parameter ([d7fd558](https://github.com/personio/datadog-synthetic-test-support/commit/d7fd5584a13640a6935f1271b34d4aa82a11b571))
+
+### Dependencies
+- Update datadog-api-client dependency from 2.0.0 to 2.1.0 ([ba7aa2e](https://github.com/personio/datadog-synthetic-test-support/commit/ba7aa2ecef460aa87b3770331c831eced716065d))
+- Update secretsmanager dependency from 2.17.240 to 2.17.249 ([e6b02b9](https://github.com/personio/datadog-synthetic-test-support/commit/e6b02b9af32821dd22849e9c16c692e28566760d), [936f94b](https://github.com/personio/datadog-synthetic-test-support/commit/936f94b904d39cd8cdca5df2b8b66e499fe583ff), [abfa26e](https://github.com/personio/datadog-synthetic-test-support/commit/abfa26e3567cd949076ae7485bcc930600bbdda0), [bda910c](https://github.com/personio/datadog-synthetic-test-support/commit/bda910c6b2711e3d21e0638aa55bb85a22947a30), [f123200](https://github.com/personio/datadog-synthetic-test-support/commit/f12320026bd75d531b9b7803046ab480b63075b8), [d0dccab](https://github.com/personio/datadog-synthetic-test-support/commit/d0dccab57c2e0fd0d138005ae8b5b5b079586c43), [716f4cc](https://github.com/personio/datadog-synthetic-test-support/commit/716f4ccebb0dbaa8b13a9ad3ae6c7138f1a3fe33))
 
 ## [1.0.0] - 2022-07-22
-### Added
-- Framework for synthetic test as code ([#1](https://github.com/personio/datadog-synthetic-test-support/pull/1))
+### New features & improvements
+- Initial framework for synthetic test as code ([06632f2](https://github.com/personio/datadog-synthetic-test-support/commit/06632f2d77acb7276fce0b7d6755eba0a6efeb7c))
+- Use immutable members for model classes and implement additional conditions for the steps ([2927b65](https://github.com/personio/datadog-synthetic-test-support/commit/2927b6556f7c26753f7001b6a7cb151a8d516e83))
+- Add missing steps for navigation and special actions ([4a63cfd](https://github.com/personio/datadog-synthetic-test-support/commit/4a63cfdce7486f41102dc48a8a433a06ae7176e0))
+- Refactor the code for adding steps and parameters ([e939dae](https://github.com/personio/datadog-synthetic-test-support/commit/e939dae3d4f628b070a7217bf2e9f5088a8e8870))
+- Use DD provided assertions instead of custom enum and implement commonly used assertion steps ([e316cb0](https://github.com/personio/datadog-synthetic-test-support/commit/e316cb0d251e077a5795234b11cd6c0a4e5a36db))
+- Add custom DSL syntax for the browser test creation and refactor steps ([5bf820b](https://github.com/personio/datadog-synthetic-test-support/commit/5bf820b2c453af234dbee12d49367179d56c427e))
+- Make the test details configurable ([1520147](https://github.com/personio/datadog-synthetic-test-support/commit/1520147d5f20f3ba8de56ef438cb87ea5d633ce9))
+- Add upload file and extract text steps ([4da1264](https://github.com/personio/datadog-synthetic-test-support/commit/4da126455e5e0fa99fdbe83a7f037e4f78bd9e4b))
+- Add JS and api step validations ([638cbb7](https://github.com/personio/datadog-synthetic-test-support/commit/638cbb75f95e7953522fd405ca73708733d49115))
+- Refactor steps to supply required parameters in constructor ([6025703](https://github.com/personio/datadog-synthetic-test-support/commit/60257035cd9a9b97c40a4ea07afb8f5f36a08bfe))
+- Implement downloadedFileAssertion step ([9a90d5b](https://github.com/personio/datadog-synthetic-test-support/commit/9a90d5b067c418aa8bd057956a47d098e4f09756))
+- Fetch DD API credentials from AWS secrets manager ([91bee52](https://github.com/personio/datadog-synthetic-test-support/commit/91bee520f532f90e0d19da94d427fcc3ed99a462))
+- Add functions for alert and recovery messages ([b957348](https://github.com/personio/datadog-synthetic-test-support/commit/b9573484a18d9f7ab8afd83a4717f8e22050e9e8))
 
-[Unreleased]: https://github.com/personio/datadog-synthetic-test-support/compare/v1.0.2...HEAD
-[1.0.2]: https://github.com/personio/datadog-synthetic-test-support/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/personio/datadog-synthetic-test-support/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/personio/datadog-synthetic-test-support/releases/tag/v1.0.0
+### Dependencies
+- Update datadog-api-client dependency from 1.3.0 to 2.0.0 ([6439414](https://github.com/personio/datadog-synthetic-test-support/commit/643941490c665b45ac3cf559ce5dcd2a2f407550), [b5f4ece](https://github.com/personio/datadog-synthetic-test-support/commit/b5f4eceadd8f2513ab8b94021be90345bf9e77eb), [9013c2c](https://github.com/personio/datadog-synthetic-test-support/commit/9013c2cdd1ae394294914eb9ce990d44a0e895a8), [0ccd3d5](https://github.com/personio/datadog-synthetic-test-support/commit/0ccd3d5fe7555bd401ed9df6d07f5c1459600050))
+- Update kotlin-stdlib dependency from 1.6.10 to 1.7.10 ([6439414](https://github.com/personio/datadog-synthetic-test-support/commit/643941490c665b45ac3cf559ce5dcd2a2f407550), [b5f4ece](https://github.com/personio/datadog-synthetic-test-support/commit/b5f4eceadd8f2513ab8b94021be90345bf9e77eb), [9013c2c](https://github.com/personio/datadog-synthetic-test-support/commit/9013c2cdd1ae394294914eb9ce990d44a0e895a8), [26988aa](https://github.com/personio/datadog-synthetic-test-support/commit/26988aa2541006b2edcd9738b801718f1aec9bdc))
+- Update secretsmanager dependency from 2.17.220 to 2.17.240 ([bd2468c](https://github.com/personio/datadog-synthetic-test-support/commit/bd2468c8ce352249244e19fafa6c5fee05ff7c5e), [a303e86](https://github.com/personio/datadog-synthetic-test-support/commit/a303e86c84deaca558a9c560f26c9e68026634a8))
