@@ -26,10 +26,7 @@ val e2eTest =
             includeTestsMatching("*.e2e.*")
         }
         useJUnitPlatform()
-        shouldRunAfter("test")
     }
-
-tasks.check { dependsOn(e2eTest) }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.22")
