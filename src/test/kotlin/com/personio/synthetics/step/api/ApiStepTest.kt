@@ -9,8 +9,6 @@ import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.datadog.api.client.v1.model.SyntheticsVariableParser
 import com.personio.synthetics.client.BrowserTest
-import com.personio.synthetics.client.SyntheticsApiClient
-import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.config.fromVariable
 import com.personio.synthetics.model.api.RequestParams
@@ -23,9 +21,7 @@ import org.mockito.kotlin.mock
 import java.net.URL
 
 internal class ApiStepTest {
-    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
-    private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
+    private val browserTest = BrowserTest("Test", mock(), mock())
 
     @Test
     fun `addApiStep adds the new step item to the browser test object`() {

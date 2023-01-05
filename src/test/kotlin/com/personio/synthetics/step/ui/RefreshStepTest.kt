@@ -2,8 +2,6 @@ package com.personio.synthetics.step.ui
 
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
-import com.personio.synthetics.client.SyntheticsApiClient
-import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.model.Params
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
@@ -11,9 +9,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 
 class RefreshStepTest {
-    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
-    private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
+    private val browserTest = BrowserTest("Test", mock(), mock())
 
     @Test
     fun `refreshStep adds the new step item to the browser test object`() {

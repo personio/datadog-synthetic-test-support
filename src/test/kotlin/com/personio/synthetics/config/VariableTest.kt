@@ -4,7 +4,6 @@ import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
 import com.personio.synthetics.client.BrowserTest
-import com.personio.synthetics.client.SyntheticsApiClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -20,9 +19,7 @@ import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.Duration.Companion.seconds
 
 class VariableTest {
-    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
-    private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
+    private val browserTest = BrowserTest("Test", mock(), mock())
 
     @Test
     fun `useGlobalVariable adds a global variable to the test config`() {
