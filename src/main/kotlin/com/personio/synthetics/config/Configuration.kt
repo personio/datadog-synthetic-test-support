@@ -1,8 +1,9 @@
 package com.personio.synthetics.config
 
 data class Configuration(
-    var credentials: Credentials,
-    val testSettings: TestSettings
+    val credentials: Credentials,
+    val datadogApiHost: String,
+    val defaults: Defaults
 )
 
 data class Credentials(
@@ -12,17 +13,11 @@ data class Credentials(
     val datadogCredentialsAwsArn: String?
 )
 
-data class TestSettings(
-    val datadogApiHost: String,
-    val defaults: Defaults
-)
-
 data class Defaults(
-    val testFrequencySec: Long,
-    val minFailureDurationSec: Long,
+    val testFrequency: Long,
+    val minFailureDuration: Long,
     val minLocationFailed: Long,
     val retryCount: Long,
-    val retryIntervalMillisec: Double,
-    val renotifyIntervalMinutes: Long,
+    val retryInterval: Double,
     val runLocations: List<String>
 )

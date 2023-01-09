@@ -5,66 +5,100 @@ import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariable
 import com.datadog.api.client.v1.model.SyntheticsListGlobalVariablesResponse
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.personio.synthetics.config.Config
+import com.personio.synthetics.config.Credentials
 import com.personio.synthetics.config.Defaults
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import java.lang.IllegalStateException
 
 internal class BrowserTestTest {
-    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
     private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
 
     @Test
     fun `initialising a BrowserTest object sets the default test locations`() {
-        assertEquals(defaults.runLocations, browserTest.locations)
+        val expectedTestLocation = listOf("eu-central")
+        val browserTest = BrowserTest(
+            "Test",
+            syntheticsApi,
+            defaults(runLocations = expectedTestLocation)
+        )
+        assertEquals(expectedTestLocation, browserTest.locations)
     }
 
     @Test
     fun `initialising a BrowserTest object sets the default config`() {
+        val browserTest = BrowserTest("Test", syntheticsApi, defaults())
         assertEquals(SyntheticsBrowserTestConfig(), browserTest.config)
     }
 
     @Test
     fun `initialising a BrowserTest object sets the device id to chrome laptop large`() {
+        val browserTest = BrowserTest("Test", syntheticsApi, defaults())
         assertEquals(listOf(SyntheticsDeviceID.CHROME_LAPTOP_LARGE), browserTest.options.deviceIds)
     }
 
     @Test
-    fun `initialising a BrowserTest object sets the default test frequency as in TestConfig`() {
-        assertEquals(defaults.testFrequencySec, browserTest.options.tickEvery)
+    fun `initialising a BrowserTest object sets the default test frequency converted into seconds`() {
+        val expectedTestFrequencyInMillis = 10L
+        val browserTest = BrowserTest(
+            "Test",
+            syntheticsApi,
+            defaults(testFrequency = expectedTestFrequencyInMillis)
+        )
+        assertEquals(expectedTestFrequencyInMillis / 1000, browserTest.options.tickEvery)
     }
 
     @Test
-    fun `initialising a BrowserTest object sets the default min failure duration as in TestConfig`() {
-        assertEquals(defaults.minFailureDurationSec, browserTest.options.minFailureDuration)
+    fun `initialising a BrowserTest object sets the default min failure duration converted into seconds`() {
+        val expectedMinFailureDurationInMillis = 10L
+        val browserTest = BrowserTest(
+            "Test",
+            syntheticsApi,
+            defaults(minFailureDuration = expectedMinFailureDurationInMillis)
+        )
+        assertEquals(expectedMinFailureDurationInMillis / 1000, browserTest.options.minFailureDuration)
     }
 
     @Test
-    fun `initialising a BrowserTest object sets the default min location failed as in TestConfig`() {
-        assertEquals(defaults.minLocationFailed, browserTest.options.minLocationFailed)
+    fun `initialising a BrowserTest object sets the default min location failed`() {
+        val expectedMinLocationFailed = 10L
+        val browserTest = BrowserTest(
+            "Test",
+            syntheticsApi,
+            defaults(minLocationFailed = expectedMinLocationFailed)
+        )
+        assertEquals(expectedMinLocationFailed, browserTest.options.minLocationFailed)
     }
 
     @Test
-    fun `initialising a BrowserTest object sets a default retry count as in TestConfig`() {
-        assertEquals(defaults.retryCount, browserTest.options.retry?.count)
+    fun `initialising a BrowserTest object sets a default retry count`() {
+        val expectedRetryCount = 10L
+        val browserTest = BrowserTest(
+            "Test",
+            syntheticsApi,
+            defaults(retryCount = expectedRetryCount)
+        )
+        assertEquals(expectedRetryCount, browserTest.options.retry?.count)
     }
 
     @Test
-    fun `initialising a BrowserTest object sets a default retry interval as in TestConfig`() {
-        assertEquals(defaults.retryIntervalMillisec, browserTest.options.retry?.interval)
-    }
-
-    @Test
-    fun `initialising a BrowserTest object sets a default renotify interval as in TestConfig`() {
-        assertEquals(defaults.renotifyIntervalMinutes, browserTest.options.monitorOptions?.renotifyInterval)
+    fun `initialising a BrowserTest object sets a default retry interval`() {
+        val expectedRetryInterval = 10.0
+        val browserTest = BrowserTest(
+            "Test",
+            syntheticsApi,
+            defaults(retryInterval = expectedRetryInterval)
+        )
+        assertEquals(expectedRetryInterval, browserTest.options.retry?.interval)
     }
 
     @Test
     fun `getGlobalVariableId returns the id of the global variable`() {
+        val browserTest = BrowserTest("Test", syntheticsApi, defaults())
         val expectedId = "id"
         val variableName = "VARIABLE"
         val globalVariable = getGlobalVariableObject(expectedId, variableName)
@@ -78,6 +112,7 @@ internal class BrowserTestTest {
 
     @Test
     fun `getGlobalVariableId returns null if the global variable name is not found`() {
+        val browserTest = BrowserTest("Test", syntheticsApi, defaults())
         val variableName = "VARIABLE1"
         val globalVariable = getGlobalVariableObject("id", variableName)
         val response = SyntheticsListGlobalVariablesResponse().addVariablesItem(globalVariable)
@@ -96,8 +131,47 @@ internal class BrowserTestTest {
         }
     }
 
+    @Test
+    fun `getCredentialsProvider returns AwsSecretsManagerCredentialsProvider if datadogCredentialsAwsArn is set`() {
+        Config.testConfig = mock()
+        whenever(Config.testConfig.credentials).thenReturn(Credentials(ddApiKey = null, ddAppKey = null, awsRegion = "awsRegion", datadogCredentialsAwsArn = "awsArn"))
+        Assertions.assertInstanceOf(AwsSecretsManagerCredentialsProvider::class.java, getCredentialsProvider())
+    }
+
+    @Test
+    fun `getCredentialsProvider returns ConfigCredentialsProvider if datadogCredentialsAwsArn is null and ddApiKey and ddAppKey are not null`() {
+        Config.testConfig = mock()
+        whenever(Config.testConfig.credentials).thenReturn(Credentials(ddApiKey = "apiKey", ddAppKey = "appKey", awsRegion = "", datadogCredentialsAwsArn = ""))
+        Assertions.assertInstanceOf(ConfigCredentialsProvider::class.java, getCredentialsProvider())
+    }
+
+    @Test
+    fun `Validate exception is thrown when api key is not set`() {
+        Config.testConfig = mock()
+        whenever(Config.testConfig.credentials).thenReturn(Credentials(ddApiKey = "", ddAppKey = "appKey", null, datadogCredentialsAwsArn = ""))
+        val exception = assertThrows<IllegalStateException> { getCredentialsProvider() }
+        assertEquals("Please set the required config values for credentials in the \"configuration.yaml\" under resources.", exception.message)
+    }
+
+    @Test
+    fun `Validate exception is thrown when app key is not set`() {
+        Config.testConfig = mock()
+        whenever(Config.testConfig.credentials).thenReturn(Credentials(ddApiKey = "apiKey", ddAppKey = "", null, datadogCredentialsAwsArn = ""))
+        val exception = assertThrows<IllegalStateException> { getCredentialsProvider() }
+        assertEquals("Please set the required config values for credentials in the \"configuration.yaml\" under resources.", exception.message)
+    }
+
     private fun getGlobalVariableObject(id: String, name: String): SyntheticsGlobalVariable {
         val globalVariable = "{ \"id\": \"${id}\", \"description\": \"desc\", \"name\": \"${name}\", \"tags\": [], \"value\": {\"value\": \"abc\"}}"
         return jacksonObjectMapper().readValue(globalVariable, SyntheticsGlobalVariable::class.java)
     }
+
+    private fun defaults(
+        testFrequency: Long = 1,
+        minFailureDuration: Long = 1,
+        minLocationFailed: Long = 1,
+        retryCount: Long = 1,
+        retryInterval: Double = 1.0,
+        runLocations: List<String> = listOf("location1")
+    ) = Defaults(testFrequency, minFailureDuration, minLocationFailed, retryCount, retryInterval, runLocations)
 }

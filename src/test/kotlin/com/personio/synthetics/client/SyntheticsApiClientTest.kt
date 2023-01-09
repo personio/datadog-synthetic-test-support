@@ -9,11 +9,13 @@ import org.mockito.kotlin.whenever
 internal class SyntheticsApiClientTest {
     @Test
     fun `server variables are set properly in the client`() {
-        val expectedServerVariables = mapOf("site" to "datadoghq.eu")
         val credentialsProvider: CredentialsProvider = mock()
         whenever(credentialsProvider.getCredentials()).thenReturn(ApiCredentials("apikey", "appkey"))
-        val apiClient = SyntheticsApiClient(credentialsProvider, "datadoghq.eu")
-        assertEquals(expectedServerVariables, apiClient.apiClient.serverVariables)
+
+        val expectedHost = "datadoghq.eu"
+
+        val apiClient = SyntheticsApiClient(credentialsProvider, expectedHost)
+        assertEquals(expectedHost, apiClient.apiClient.serverVariables["site"])
     }
 
     @Test

@@ -6,13 +6,13 @@ import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
-import com.personio.synthetics.config.Configuration
-import com.personio.synthetics.config.ConfigurationLoader
-import com.personio.synthetics.config.Credentials
+import com.personio.synthetics.config.Config
 import com.personio.synthetics.config.Defaults
+import com.personio.synthetics.config.loadConfiguration
 
 /**
- * Creates a synthetic browser test with the added configurations and steps in Datadog
+ * Creates a synthetic browser test with the added configurations (if any) and steps in Datadog.
+ * The default configurations for the tests are loaded from the configuration file in resources
  * @param name Name of the test
  * @param steps Calls the added steps and configuration functions of the test
  */
@@ -20,31 +20,29 @@ inline fun syntheticBrowserTest(name: String, steps: BrowserTest.() -> Unit) {
     check(name.isNotBlank()) {
         "The test's name must not be empty"
     }
-    val projectConfig = ConfigurationLoader().loadConfiguration(
-        Configuration::class.java
-    )
-    val browserTest = BrowserTest(name, SyntheticsApiClient(credentialsProvider(projectConfig.credentials), projectConfig.testSettings.datadogApiHost), projectConfig.testSettings.defaults)
+    loadConfiguration("configuration.yaml")
+    val browserTest = BrowserTest(name, SyntheticsApiClient(getCredentialsProvider()))
     browserTest.steps()
     browserTest.createBrowserTest()
 }
 
-fun credentialsProvider(credentials: Credentials): CredentialsProvider {
-    return if (!credentials.datadogCredentialsAwsArn.isNullOrEmpty()) {
-        AwsSecretsManagerCredentialsProvider(credentials)
-    } else if (!credentials.ddApiKey.isNullOrEmpty() && !credentials.ddAppKey.isNullOrEmpty()) {
-        ConfigCredentialsProvider(credentials)
-    } else {
-        throw IllegalStateException("Please set the required config values for credentials.")
+fun getCredentialsProvider(): CredentialsProvider {
+    return Config.testConfig.credentials.let {
+        when {
+            !it.datadogCredentialsAwsArn.isNullOrEmpty() -> AwsSecretsManagerCredentialsProvider(it)
+            !it.ddApiKey.isNullOrEmpty() && !it.ddAppKey.isNullOrEmpty() -> ConfigCredentialsProvider(it)
+            else -> throw IllegalStateException("Please set the required config values for credentials in the \"configuration.yaml\" under resources.")
+        }
     }
 }
 
 /**
  * Synthetic browser test client for the API calls with the Datadog
  */
-class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsApiClient, private val defaultsSettings: Defaults) : SyntheticsBrowserTest() {
+class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsApiClient, private val defaultSettings: Defaults = Config.testConfig.defaults) : SyntheticsBrowserTest() {
     init {
         name = testName
-        locations = defaultsSettings.runLocations
+        locations = defaultSettings.runLocations
         config = SyntheticsBrowserTestConfig()
         options = defaultSyntheticsTestOptions()
         message = ""
@@ -83,12 +81,11 @@ class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsA
     private fun defaultSyntheticsTestOptions(): SyntheticsTestOptions =
         SyntheticsTestOptions()
             .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
-            .tickEvery(defaultsSettings.testFrequencySec)
-            .minFailureDuration(defaultsSettings.minFailureDurationSec)
-            .minLocationFailed(defaultsSettings.minLocationFailed)
-            .retry(SyntheticsTestOptionsRetry().count(defaultsSettings.retryCount).interval(defaultsSettings.retryIntervalMillisec))
+            .tickEvery(defaultSettings.testFrequency / 1000)
+            .minFailureDuration(defaultSettings.minFailureDuration / 1000)
+            .minLocationFailed(defaultSettings.minLocationFailed)
+            .retry(SyntheticsTestOptionsRetry().count(defaultSettings.retryCount).interval(defaultSettings.retryInterval))
             .monitorOptions(
                 SyntheticsTestOptionsMonitorOptions()
-                    .renotifyInterval(defaultsSettings.renotifyIntervalMinutes)
             )
 }

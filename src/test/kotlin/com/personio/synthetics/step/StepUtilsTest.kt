@@ -2,8 +2,6 @@ package com.personio.synthetics.step
 
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.client.BrowserTest
-import com.personio.synthetics.client.SyntheticsApiClient
-import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.step.ui.SpecialActionsStep
@@ -18,9 +16,7 @@ import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 
 internal class StepUtilsTest {
-    private val defaults = Defaults(300, 300, 1, 1, 60.0, 10, listOf("awsregion"))
-    private val syntheticsApi = mock<SyntheticsApiClient>()
-    private val browserTest = BrowserTest("Test", syntheticsApi, defaults)
+    private val browserTest = BrowserTest("Test", mock(), mock())
 
     @Test
     fun `withParamType returns the object which is an instance of the type at the caller`() {

@@ -1,0 +1,16 @@
+# Config file for the unit tests
+# Don't change the values
+credentials:
+  ddApiKey: apiKey
+  ddAppKey: appKey
+  awsRegion: eu-central-1
+  datadogCredentialsAwsArn: awsArn
+datadogApiHost: datadoghq.eu
+defaults:
+  testFrequency: 1
+  minFailureDuration: 2
+  minLocationFailed: 3
+  retryCount: 4
+  retryInterval: 5.0
+  runLocations:
+    - aws:eu-central-1

@@ -8,14 +8,19 @@ import org.apache.commons.text.lookup.StringLookupFactory
 import java.io.File
 import java.nio.file.Files
 
-class ConfigurationLoader() {
-    fun <T> loadConfiguration(cls: Class<T>?): T {
-        val stringSubstitutor = StringSubstitutor(
-            StringLookupFactory.INSTANCE.environmentVariableStringLookup()
-        ).setEnableUndefinedVariableException(true)
-        ObjectMapper(YAMLFactory()).apply {
-            registerModule(kotlinModule())
-            return readValue(stringSubstitutor.replace(String(Files.readAllBytes(File(this::class.java.classLoader.getResource("configuration.yaml").file).toPath()))), cls)
-        }
+fun loadConfiguration(configurationFile: String) {
+    val stringSubstitutor = StringSubstitutor(
+        StringLookupFactory.INSTANCE.environmentVariableStringLookup()
+    ).setEnableUndefinedVariableException(true)
+    ObjectMapper(YAMLFactory()).apply {
+        registerModule(kotlinModule())
+        Config.testConfig = readValue(
+            stringSubstitutor.replace(String(Files.readAllBytes(File(this::class.java.classLoader.getResource(configurationFile).file).toPath()))),
+            Configuration::class.java
+        )
     }
+}
+
+internal object Config {
+    lateinit var testConfig: Configuration
 }
