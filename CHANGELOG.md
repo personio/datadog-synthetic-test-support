@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
+- Improve the configuration setup code ([#36](https://github.com/personio/datadog-synthetic-test-support/pull/36))
 - Upgrade Java to 17 version ([#12](https://github.com/personio/datadog-synthetic-test-support/pull/12))
 - Get configurations from yaml file ([16cbb0f](https://github.com/personio/datadog-synthetic-test-support/commit/16cbb0fb40d24e98d1fb1d20da5786004cdeb2bf))
 
