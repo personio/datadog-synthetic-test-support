@@ -2,10 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and the format is partially based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) with customised sections:
-- Breaking changes: any changes that could break the existing implementation and require adjustments from library user's side
-- New features & improvements: any changes which add new functionality or improvements to the existing code
-- Bug fixes: any changes that fix issues or bug in the existing code
-- Dependencies: updates of dependency versions
+- Breaking changes: any changes that could break the existing implementation and require adjustments from library user's side.
+- New features & improvements: any changes which add new functionality or improvements to the existing code.
+- Bug fixes: any changes that fix issues or bug in the existing code.
+- Dependencies: updates of dependency versions.
 
 ## [Unreleased] - yyyy-mm-dd
 

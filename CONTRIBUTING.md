@@ -19,10 +19,10 @@ to make sure it was not reported already.
 
 While filling the form, add all relevant information, including:
 
-* Detailed test/use case that would help to reproduce and understand the issue
-* The version of our library being used
-* Any modifications you've made relevant to the issue
-* Anything unusual about your environment or deployment
+* Detailed test/use case that would help to reproduce and understand the issue.
+* The version of our library being used.
+* Any modifications you've made relevant to the issue.
+* Anything unusual about your environment or deployment.
 
 ## Contributions via Pull Requests
 
@@ -72,8 +72,8 @@ Solution
 Fixes #[GitHub issue ID]
 ```
 
-* Subject - one line commit title, describing what is done, not the result, with a reference to the GitHub issue by number
-* Problem - explain the context why you're making that change and what problem it solves
+* Subject - one line commit title, describing what is done, not the result, with a reference to the GitHub issue by number.
+* Problem - explain the context why you're making that change and what problem it solves.
 * Solution - describe the modifications you've made.
 
 ## Coding conventions
