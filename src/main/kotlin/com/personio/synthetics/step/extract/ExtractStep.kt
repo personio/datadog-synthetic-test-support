@@ -10,7 +10,7 @@ import com.personio.synthetics.step.ui.model.TargetElement
 import org.intellij.lang.annotations.Language
 
 /**
- * Add Extract from JS step to the synthetic browser test
+ * Adds Extract from JS step to the synthetic browser test
  * @param stepName Name of the step
  * @param variableName Name of the variable to which the result of the JS code is to be saved
  * @param code The Javascript code to be executed
@@ -32,7 +32,7 @@ fun BrowserTest.extractFromJavascriptStep(
 }
 
 /**
- * Add Extract text from element step to the synthetic browser test
+ * Adds Extract text from element step to the synthetic browser test
  * @param stepName Name of the step
  * @param variableName Name of the Datadog variable to which the text from element need to be extracted to
  * @param targetElement The target element from which the text need to be extracted

@@ -47,7 +47,7 @@ fun BrowserTest.downloadedFileAssertion(stepName: String, f: DownloadedFileAsser
     }
 
 /**
- * Configure the Downloaded file assertion step for the synthetic browser test
+ * Configures the Downloaded file assertion step for the synthetic browser test
  */
 class DownloadedFileAssertionStep : SyntheticsStep() {
     /**

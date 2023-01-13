@@ -91,7 +91,7 @@ fun BrowserTest.timestampPatternVariable(name: String, duration: Duration, prefi
 }
 
 /**
- * Use the global variable in the test
+ * Uses the global variable in the test
  * @param name name of the existing global variable. The name would be converted to upper case letters
  * @return BrowserTest object with this added global variable
  */

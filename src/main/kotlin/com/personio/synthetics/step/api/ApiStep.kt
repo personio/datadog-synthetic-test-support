@@ -35,7 +35,7 @@ fun BrowserTest.apiStep(stepName: String, httpMethod: HTTPMethod, f: ApiStep.() 
     }
 
 /**
- * Configure the API step for the synthetic browser test
+ * Configures the API step for the synthetic browser test
  */
 class ApiStep : SyntheticsStep() {
     /**
@@ -57,7 +57,7 @@ class ApiStep : SyntheticsStep() {
     }
 
     /**
-     * Body to be passed to the API request
+     * Sets the request body to be passed to the API request
      * @param body The body of the request
      * @return ApiStep object with the request body set
      */
@@ -68,7 +68,7 @@ class ApiStep : SyntheticsStep() {
     }
 
     /**
-     * Headers to be passed to the API request
+     * Sets the request headers to be passed to the API request
      * @param headers a map of header name and header values
      * eg: mapOf("content-type" to "application/json")
      * @return ApiStep object with the request headers set
@@ -80,7 +80,7 @@ class ApiStep : SyntheticsStep() {
     }
 
     /**
-     * Set the url used for the API request
+     * Sets the url used for the API request
      * @param url url to be used for the API request
      * Supply the parameter like one of the following
      * - only the location (eg: /test/page) for appending to the base url of the test
@@ -103,7 +103,7 @@ class ApiStep : SyntheticsStep() {
     }
 
     /**
-     * Extract the header value from the API response
+     * Extracts the header value from the API response
      * @param name Name of the variable to extract the value to
      * @param field Header field that need to be extracted from the response
      * @param regex Regular expression to extract the value in the header field (Optional parameter)
@@ -128,7 +128,7 @@ class ApiStep : SyntheticsStep() {
     }
 
     /**
-     * Extract value from the response body
+     * Extracts value from the API response
      * @param name Name of the variable to extract the value to
      * @param parserType Type of parser to use
      * @param parserValue Parser value (Optional parameter)
@@ -157,7 +157,7 @@ class ApiStep : SyntheticsStep() {
     }
 
     /**
-     * Set extract value object
+     * Sets extract value object
      * @param extractValue Extract value object that need to be set
      * @return RequestParams object with the extract value object added
      */
