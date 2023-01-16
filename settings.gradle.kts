@@ -3,4 +3,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "synthetic-test-support"
+rootProject.name = "datadog-synthetic-test-support"

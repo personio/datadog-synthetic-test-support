@@ -57,9 +57,9 @@ tasks {
     }
     jacocoTestReport {
         reports {
-            xml.isEnabled = true
-            html.isEnabled = false
-            xml.destination = file("$buildDir/test-results/test/xml/jacocoReport.xml")
+            xml.required.set(true)
+            html.required.set(false)
+            xml.outputLocation.set(buildDir.resolve("test-results/test/xml/jacocoReport.xml"))
         }
     }
 }

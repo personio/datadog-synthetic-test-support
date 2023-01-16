@@ -11,12 +11,12 @@ import java.io.File
 import java.util.Base64
 
 /**
- * Adds a new Upload file step to the synthetic browser test
+ * Adds a new step for uploading a file to the synthetic browser test
  * @param stepName Name of the step
  * @param uploadFile The file to be uploaded
  * @param element The target element details where the file needs to be uploaded to
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Upload files type synthetic step object
+ * @return Synthetic step object with uploadFileStep added
  */
 fun BrowserTest.uploadFileStep(
     stepName: String,

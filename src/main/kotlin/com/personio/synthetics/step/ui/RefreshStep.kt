@@ -7,9 +7,9 @@ import com.personio.synthetics.model.Params
 import com.personio.synthetics.step.addStep
 
 /**
- * Adds a refresh step to the synthetic browser test
+ * Adds a new navigation step for refreshing the active page to the synthetic browser test
  * @param stepName Name of the step
- * @return Refresh type synthetic step object
+ * @return Synthetic step object with refreshStep added
  */
 fun BrowserTest.refreshStep(stepName: String, f: (SyntheticsStep.() -> Unit)? = null) =
     addStep(stepName) {

@@ -16,12 +16,12 @@ class AwsSecretsManagerCredentialsProvider(val credentials: Credentials, val cli
 
         val secret = runCatching { client.getSecretValue(getSecretValueRequest) }
             .getOrElse {
-                throw CredentialsProviderException("Failed to get Datadog credentials from AWS Secrets Manager").initCause(it)
-            }.secretString() ?: throw CredentialsProviderException("Secret obtained from AWS Secrets Manager does not contain secret string")
+                throw CredentialsProviderException("Failed to get Datadog credentials from AWS Secrets Manager.").initCause(it)
+            }.secretString() ?: throw CredentialsProviderException("Secret obtained from AWS Secrets Manager does not contain secret string.")
 
         return runCatching { Json.decodeFromString<ApiCredentials>(secret) }
             .getOrElse {
-                throw CredentialsProviderException("Failed to decode the secret obtained from AWS Secrets Manager to Datadog credentials")
+                throw CredentialsProviderException("Failed to decode the secret obtained from AWS Secrets Manager to Datadog credentials.")
                     .initCause(it)
             }
     }

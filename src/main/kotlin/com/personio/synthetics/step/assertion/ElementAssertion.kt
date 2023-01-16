@@ -9,11 +9,11 @@ import com.personio.synthetics.step.addStep
 import com.personio.synthetics.step.ui.model.TargetElement
 
 /**
- * Adds a new element present assertion step to the synthetic browser test
+ * Adds a new assertion step for testing that an element is present to the synthetic browser test
  * @param stepName Name of the step
  * @param targetElement The element where the assertion is to be performed
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Element present assertion type synthetic step object
+ * @return Synthetic step object with elementPresentAssertion added
  */
 fun BrowserTest.elementPresentAssertion(
     stepName: String,
@@ -28,14 +28,14 @@ fun BrowserTest.elementPresentAssertion(
 }
 
 /**
- * Adds a new element content assertion step to the synthetic browser test
+ * Adds a new assertion step for testing element's content to the synthetic browser test
  * @param stepName Name of the step
  * @param targetElement The element where the assertion is to be performed
  * @param check The type of check to be done on the element content
- * @param expectedContent The expected content for the element (Optional)
- * The expectedValue need not be passed when the check is IS_EMPTY or NOT_IS_EMPTY
+ * @param expectedContent The expected content for the element (optional)
+ * The expectedValue does not need to be passed when the check is IS_EMPTY or NOT_IS_EMPTY
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Element content assertion type synthetic step object
+ * @return Synthetic step object with elementContentAssertion added
  */
 fun BrowserTest.elementContentAssertion(
     stepName: String,
@@ -45,7 +45,7 @@ fun BrowserTest.elementContentAssertion(
     f: (SyntheticsStep.() -> Unit)? = null
 ) = addStep(stepName) {
     if (check !in listOf(SyntheticsCheckType.IS_EMPTY, SyntheticsCheckType.NOT_IS_EMPTY)) {
-        check(!expectedContent.isNullOrEmpty()) { "Expected content is a required parameter for the passed check type $check in the step: $stepName" }
+        check(!expectedContent.isNullOrEmpty()) { "Expected content is a required parameter for the passed check type $check in the step: $stepName." }
     }
     type = SyntheticsStepType.ASSERT_ELEMENT_CONTENT
     params = AssertionParams(
@@ -57,15 +57,15 @@ fun BrowserTest.elementContentAssertion(
 }
 
 /**
- * Adds a new element attribute assertion step to the synthetic browser test
+ * Adds a new assertion step for testing element's attribute to the synthetic browser test
  * @param stepName Name of the step
  * @param attribute The attribute of the element where the assertion needs to be performed
  * @param targetElement The web element where the assertion is to be performed
  * @param check The type of check to be done on the element attribute
- * @param expectedValue The expected attribute content for the element (Optional parameter)
- * The expectedValue need not be passed when the check is IS_EMPTY or NOT_IS_EMPTY
+ * @param expectedValue The expected attribute content for the element (optional)
+ * The expectedValue does not need to be passed when the check is IS_EMPTY or NOT_IS_EMPTY
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Element attribute assertion type synthetic step object
+ * @return Synthetic step object with elementAttributeAssertion added
  */
 fun BrowserTest.elementAttributeAssertion(
     stepName: String,
@@ -76,7 +76,7 @@ fun BrowserTest.elementAttributeAssertion(
     f: (SyntheticsStep.() -> Unit)? = null
 ) = addStep(stepName) {
     if (check !in listOf(SyntheticsCheckType.IS_EMPTY, SyntheticsCheckType.NOT_IS_EMPTY)) {
-        check(!expectedValue.isNullOrEmpty()) { "Expected value is a required parameter for the passed check type $check in the step: $stepName" }
+        check(!expectedValue.isNullOrEmpty()) { "Expected value is a required parameter for the passed check type $check in the step: $stepName." }
     }
     type = SyntheticsStepType.ASSERT_ELEMENT_ATTRIBUTE
     params = AssertionParams(

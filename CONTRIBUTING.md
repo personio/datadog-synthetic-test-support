@@ -7,17 +7,17 @@ have all the necessary information to effectively respond to your bug report or 
 
 ## Getting Help
 
-If you have a question about the library or have encountered problems using it, start a
+If you have a question about the library or have encountered any problems using it, start a
 discussion using the [Question][question] form.
 
 ## Reporting Bugs/Feature Requests
 
-Use the Github [Issue tracker][issue] to report a bug or request a new feature by filling the respective form. 
+Use the Github [Issue tracker][issue] to report a bug or request a new feature by filling in the respective form. 
 
-Before submitting an issue, please search for similar issues among open and recently closed ones
+Before submitting an issue, please search for similar issues among the open and recently closed ones
 to make sure it was not reported already.
 
-While filling the form, add all relevant information, including:
+While filling in the form, add all relevant information, including:
 
 * Detailed test/use case that would help to reproduce and understand the issue
 * The version of our library being used
@@ -33,13 +33,13 @@ Dependency: You should have JDK 17 installed.
 Before submitting a pull request, please ensure that:
 
 * You are working against the latest source on the `master` branch.
-* You checked existing open and recently merged pull requests to make sure the problem is not addressed already.
+* You checked the existing open and recently merged pull requests to make sure the problem is not addressed already.
 * You opened an issue to discuss the proposed change. Avoid changing too many things at once. Make sure the issue covers one problem/improvement at a time.
 
 In order to contribute via pull requests, please follow the steps below:
 
 1. Clone the repository.
-2. Create a new branch from master.
+2. Create a new branch from `master`.
 3. Develop and test your code changes. See the project's [README](README.md) for further information about working in this repository.
 4. Add necessary unit tests for the code changes and make sure that all tests pass locally.
 5. Run `./gradlew ktlintFormat` to autoformat your code.
@@ -54,7 +54,7 @@ and [creating a pull request](https://help.github.com/articles/creating-a-pull-r
 
 ## Committing
 
-We prefer squash or rebase commits so that all changes from a branch are committed to `master` as a single commit.
+We prefer squashed or rebased commits so that all changes from a branch are committed to `master` as a single commit.
 All pull requests are squashed when merged, but rebasing prior to merge gives you better control over the commit
 message.
 
@@ -72,8 +72,8 @@ Solution
 Fixes #[GitHub issue ID]
 ```
 
-* Subject - one line commit title, describing what is done, not the result, with a reference to the GitHub issue by number
-* Problem - explain the context why you're making that change and what problem it solves
+* Subject - one line commit title, describing what is done, not the result, with a reference to the GitHub issue by ID.
+* Problem - explain the context why you're making the change and what problem it solves.
 * Solution - describe the modifications you've made.
 
 ## Coding conventions
@@ -99,7 +99,7 @@ Use American English spelling rules when writing documentation as well as for co
 
 ### Documentation
 
-* Explain the purpose of added functions in a consice manner.
+* Explain the purpose of added functions in a concise manner.
 * Explain parameters if applicable using `@param` tag, provide examples of usage and default state.
 * Explain what the function returns if applicable using `@return` tag.
 * Do not use @author tags. Instead, contributors are listed on [GitHub](https://github.com/personio/datadog-synthetic-test-support/graphs/contributors).
@@ -117,6 +117,9 @@ Use assertions from `org.junit.jupiter.api`.
 #### Mocking
 
 Use `org.mockito.kotlin.mock` library.
+
+## Releases
+Details about release process can be found in the project's [`README`](https://github.com/personio/datadog-synthetic-test-support#release-process).
 
 [question]: https://github.com/personio/datadog-synthetic-test-support/discussions/new
 [issue]: https://github.com/personio/datadog-synthetic-test-support/issues/new

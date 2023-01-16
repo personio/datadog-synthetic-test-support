@@ -8,7 +8,7 @@ import com.personio.synthetics.client.BrowserTest
  * @param alertMedium Specify one or more alert mediums. It can be Slack channels, email addresses etc.
  * For Slack channels, the channel name should be prefixed with "@slack-"
  * For email address, the email should be prefixed with "@"
- * Example : Slack channel -> @slack-test_slack_channel
+ * Example: Slack channel -> @slack-test_slack_channel
  * Email -> @firstName.lastName@domain.com
  */
 fun BrowserTest.alertMessage(failureMessage: String, vararg alertMedium: String) {
