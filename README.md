@@ -8,8 +8,8 @@ Synthetic Test Support library builds up on top of the Datadog's API [Java clien
 
 There are 2 ways to provide the API credentials in order to communicate with Datadog API:
 
-* fetching from the environment variables: DD_API_KEY and DD_APP_KEY.
-* fetching from [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/).
+* fetching from the environment variables: DD_API_KEY and DD_APP_KEY
+* fetching from [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
 
 ## Getting started
 
@@ -105,8 +105,8 @@ There are some variables like Datadog API host, library and default test setting
 You can use AWS Secrets Manager to store and fetch Datadog API credentials to enable the library to publish test changes to Datadog.
 
 You need to include an additional AWS package dependency, depending on how you login to AWS:
-- if you use [AWS SSO](https://docs.aws.amazon.com/sdkref/latest/guide/access-sso.html), please add [`software.amazon.awssdk:sso`](https://mvnrepository.com/artifact/software.amazon.awssdk/sso) dependency.
-- if you use [AWS STS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html), please add [`software.amazon.awssdk:sts`](https://mvnrepository.com/artifact/software.amazon.awssdk/sts) dependency.
+- if you use [AWS SSO](https://docs.aws.amazon.com/sdkref/latest/guide/access-sso.html), please add [`software.amazon.awssdk:sso`](https://mvnrepository.com/artifact/software.amazon.awssdk/sso) dependency
+- if you use [AWS STS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html), please add [`software.amazon.awssdk:sts`](https://mvnrepository.com/artifact/software.amazon.awssdk/sts) dependency
 
 Please check the currently supported AWS SDK version in `build.gradle.kts`.
 
