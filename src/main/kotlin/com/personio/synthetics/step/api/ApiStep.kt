@@ -1,6 +1,5 @@
 package com.personio.synthetics.step.api
 
-import com.datadog.api.client.v1.model.HTTPMethod
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParseTestOptionsType
@@ -24,7 +23,7 @@ import java.net.URL
  * @param f Add all the parameters required for this test step
  * @return ApiStep object with this step added
  */
-fun BrowserTest.apiStep(stepName: String, httpMethod: HTTPMethod, f: ApiStep.() -> Unit): ApiStep =
+fun BrowserTest.apiStep(stepName: String, httpMethod: String, f: ApiStep.() -> Unit): ApiStep =
     addStep(stepName, ApiStep()) {
         type = SyntheticsStepType.RUN_API_TEST
         params = with(RequestParams()) {
