@@ -1,6 +1,5 @@
 package com.personio.synthetics.e2e
 
-import com.datadog.api.client.v1.model.HTTPMethod
 import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
 import com.datadog.api.client.v1.model.SyntheticsAssertionType
 import com.datadog.api.client.v1.model.SyntheticsCheckType
@@ -200,7 +199,7 @@ class E2ETest {
                 code = "return 'abc'",
                 variableName = "JS_STEP_VAR"
             )
-            apiStep("API Step", HTTPMethod.POST) {
+            apiStep("API Step", "POST") {
                 requestBody("{\"userName\": \"test\"}")
                 requestHeaders(mutableMapOf("content-type" to "application/json"))
                 url("/login")

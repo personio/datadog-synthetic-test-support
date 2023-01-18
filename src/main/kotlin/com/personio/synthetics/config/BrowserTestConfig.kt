@@ -1,6 +1,5 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.client.v1.model.HTTPMethod
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.client.BrowserTest
@@ -22,7 +21,7 @@ fun BrowserTest.baseUrl(url: URL) = apply {
     config
         ?.request(
             SyntheticsTestRequest()
-                .method(HTTPMethod.GET)
+                .method("GET")
                 .url(url.toString())
         )
 }
