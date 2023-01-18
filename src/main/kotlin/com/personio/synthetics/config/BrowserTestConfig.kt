@@ -73,7 +73,7 @@ fun BrowserTest.minFailureDuration(minFailureDuration: Duration) = apply {
 
 /**
  * Sets the minimum location failed for the synthetic browser test
- * @param minLocationFailed The minimum number of locations in which browser test has failed in order to trigger the alert
+ * @param minLocationFailed The minimum number of locations in which the browser test has failed to trigger the alert
  * Allowed minimum location failed is between 1 and the number of locations where the test is configured to run
  * @return BrowserTest object with minimum location failed set
  */

@@ -6,7 +6,7 @@ This library provides a programmatic way to manage Datadog synthetic browser tes
 
 Synthetic Test Support library builds up on top of the Datadog's API [Java client library](https://github.com/DataDog/datadog-api-client-java/) and provides Kotlin implementation of functions to create and edit synthetic browser tests.
 
-There are 2 ways to provide the API credentials in order to communicate with Datadog API:
+There are 2 ways to provide the API credentials to communicate with Datadog API:
 
 * fetching from the environment variables: DD_API_KEY and DD_APP_KEY
 * fetching from [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
@@ -31,7 +31,7 @@ Please check the currently supported AWS SDK version in [`build.gradle.kts`](bui
 
 ## Getting started
 
-This library is compiled with JDK 17. Your project should be on JDK 17+ in order to use it. 
+This library is compiled with JDK 17. Your project should be on JDK 17+ to use it. 
 
 Start using the library in a gradle project by following the steps below:
 

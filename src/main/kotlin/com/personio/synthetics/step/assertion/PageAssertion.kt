@@ -13,7 +13,7 @@ import com.personio.synthetics.step.addStep
  * @param stepName Name of the step
  * @param check The type of check to be done on the current url
  * @param expectedContent The expected content for the url
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with currentUrlAssertion added
  */
 fun BrowserTest.currentUrlAssertion(
@@ -37,7 +37,7 @@ fun BrowserTest.currentUrlAssertion(
  * It checks if the page contains the given text
  * @param stepName Name of the step
  * @param expectedText The expected text to be verified in the page
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return "Page contains text assertion" type synthetic step object
  * @return Synthetic step object with pageContainsTextAssertion added
  */
@@ -58,7 +58,7 @@ fun BrowserTest.pageContainsTextAssertion(
  * It checks if the page does not contain the given text
  * @param stepName Name of the step
  * @param text The text that should not exist in the page
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with pageNotContainsTextAssertion added
  */
 fun BrowserTest.pageNotContainsTextAssertion(

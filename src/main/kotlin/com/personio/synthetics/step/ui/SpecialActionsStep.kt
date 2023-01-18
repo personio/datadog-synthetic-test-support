@@ -18,7 +18,7 @@ import kotlin.time.Duration
  * Adds a new wait step to the synthetic browser test with a default value as 1 second
  * @param stepName Name of the step
  * @param waitingTime The wait time to be passed for the step (1 to 300 seconds)
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with waitStep added
  */
 fun BrowserTest.waitStep(
@@ -53,7 +53,7 @@ fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): 
  * Adds a new hover step to the synthetic browser test
  * @param stepName Name of the step
  * @param targetElement The web element to which the hover has to be performed
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with hoverStep added
  */
 fun BrowserTest.hoverStep(
@@ -70,7 +70,7 @@ fun BrowserTest.hoverStep(
  * Adds a new press key step to the synthetic browser test
  * @param stepName Name of the step
  * @param key The key to be pressed
- * @param f Additional configurations that need to be added to the step like modifiers, timeout etc.
+ * @param f Additional configurations that need to be added to the step such as modifiers, timeout and so on
  * @return SpecialActionsStep object with pressKeyStep added
  */
 fun BrowserTest.pressKeyStep(

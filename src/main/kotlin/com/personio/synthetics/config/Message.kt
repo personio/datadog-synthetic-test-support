@@ -5,7 +5,7 @@ import com.personio.synthetics.client.BrowserTest
 /**
  * Configures the alert message to be sent when the test fails
  * @param failureMessage The message that needs to be sent to the configured alert medium upon test failure
- * @param alertMedium Specify one or more alert mediums. It can be Slack channels, email addresses etc.
+ * @param alertMedium Specify one or more alert mediums. It can be Slack channels, email addresses and so on
  * For Slack channels, the channel name should be prefixed with "@slack-"
  * For email address, the email should be prefixed with "@"
  * Example: Slack channel -> @slack-test_slack_channel

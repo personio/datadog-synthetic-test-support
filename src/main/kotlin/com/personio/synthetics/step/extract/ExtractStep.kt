@@ -14,7 +14,7 @@ import org.intellij.lang.annotations.Language
  * @param stepName Name of the step
  * @param variableName Name of the variable to which the result of the JS code is to be saved
  * @param code The Javascript code to be executed
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with extractFromJavascriptStep added
  */
 fun BrowserTest.extractFromJavascriptStep(
@@ -36,7 +36,7 @@ fun BrowserTest.extractFromJavascriptStep(
  * @param stepName Name of the step
  * @param variableName Name of the Datadog variable to which the text from element need to be extracted to
  * @param targetElement The target element from which the text need to be extracted
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with extractTextFromElementStep added
  */
 fun BrowserTest.extractTextFromElementStep(
