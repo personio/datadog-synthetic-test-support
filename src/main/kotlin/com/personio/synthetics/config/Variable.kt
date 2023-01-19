@@ -8,9 +8,9 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 
 /**
- * Creates a local variable with the supplied string as value
- * @param name name of the variable. The name would be converted to upper case letters
- * @param value supply the text to be set for the variable
+ * Creates a local variable with the supplied string as a value
+ * @param name Name of the variable. The name would be converted to upper case letters
+ * @param value Supply the text to be set for the variable
  * @return SyntheticsBrowserTest object with this created variable
  */
 fun BrowserTest.textVariable(name: String, value: String) = apply {
@@ -20,10 +20,10 @@ fun BrowserTest.textVariable(name: String, value: String) = apply {
 /**
  * Creates a local variable with the numeric pattern
  * The value of the variable will be a generated random numeric string with n digits
- * @param name name of the variable. The name would be converted to upper case letters
- * @param characterLength length of the random numeric value that's generated
- * @param prefix string to be appended before the pattern
- * @param suffix string to be appended after the pattern
+ * @param name Name of the variable. The name would be converted to upper case letters
+ * @param characterLength Length of the random numeric value that's generated
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
  * @return SyntheticsBrowserTest object with this created variable
  */
 fun BrowserTest.numericPatternVariable(name: String, characterLength: Int, prefix: String = "", suffix: String = "") = apply {
@@ -33,10 +33,10 @@ fun BrowserTest.numericPatternVariable(name: String, characterLength: Int, prefi
 /**
  * Creates a local variable with the alphabetic pattern
  * The value of the variable will be a generated random alphabetic string with n characters
- * @param name name of the variable. The name would be converted to upper case letters
- * @param characterLength length of the random alphabetic value that's generated
- * @param prefix string to be appended before the pattern
- * @param suffix string to be appended after the pattern
+ * @param name Name of the variable. The name would be converted to upper case letters
+ * @param characterLength Length of the random alphabetic value that's generated
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
  * @return SyntheticsBrowserTest object with this created variable
  */
 fun BrowserTest.alphabeticPatternVariable(name: String, characterLength: Int, prefix: String = "", suffix: String = "") = apply {
@@ -46,10 +46,10 @@ fun BrowserTest.alphabeticPatternVariable(name: String, characterLength: Int, pr
 /**
  * Creates a local variable with the alphanumeric pattern
  * The value of the variable will be a generated random alphanumeric string with n characters
- * @param name name of the variable. The name would be converted to upper case letters
- * @param characterLength length of the random alphanumeric value that's generated
- * @param prefix string to be appended before the pattern
- * @param suffix string to be appended after the pattern
+ * @param name Name of the variable. The name would be converted to upper case letters
+ * @param characterLength Length of the random alphanumeric value that's generated
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
  * @return SyntheticsBrowserTest object with this created variable
  */
 fun BrowserTest.alphanumericPatternVariable(name: String, characterLength: Int, prefix: String = "", suffix: String = "") = apply {
@@ -58,18 +58,18 @@ fun BrowserTest.alphanumericPatternVariable(name: String, characterLength: Int, 
 
 /**
  * Creates a local variable with the date pattern
- * The value of the variable will be a generated date in UTC in one of the accepted formats with a value corresponding to the date the test is initiated at +/- nunit.
- * @param name name of the variable. The name would be converted to upper case letters
+ * The value of the variable will be a generated date in UTC in one of the accepted formats with a value corresponding to the date the test is initiated at +/- nunit
+ * @param name Name of the variable. The name would be converted to upper case letters
  * @param duration The duration (+ or -) to be added to or subtracted from the time by which the test is run to generate the date
  * @param format Pass one of the accepted format in which the date needs to be generated
- * @param prefix string to be appended before the pattern
- * @param suffix string to be appended after the pattern
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
  * The accepted formats are according to https://date-fns.org/v1.29.0/docs/format
  * @return SyntheticsBrowserTest object with this created variable
  */
 fun BrowserTest.datePatternVariable(name: String, duration: Duration, format: String, prefix: String = "", suffix: String = "") = apply {
     val (scaledValue, unit) = checkNotNull(getScaledDate(duration)) {
-        "The passed duration should be less than 10_000_000 days for the date pattern variable $name"
+        "The passed duration should be less than 10_000_000 days for the date pattern variable $name."
     }
     addLocalVariable(name, "$prefix{{ date($scaledValue$unit, $format) }}$suffix")
 }
@@ -77,28 +77,28 @@ fun BrowserTest.datePatternVariable(name: String, duration: Duration, format: St
 /**
  * Creates a local variable with the timestamp pattern
  * The value of the variable will be a generated timestamp in one of the accepted formats with a value corresponding to the timestamp the test is initiated at +/- n unit.
- * @param name name of the variable. The name would be converted to upper case letters
+ * @param name Name of the variable. The name would be converted to upper case letters
  * @param duration The duration (+ or -) to be added to or subtracted from the time by which the test is run to generate the date
- * @param prefix string to be appended before the pattern
- * @param suffix string to be appended after the pattern
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
  * @return SyntheticsBrowserTest object with this created variable
  */
 fun BrowserTest.timestampPatternVariable(name: String, duration: Duration, prefix: String = "", suffix: String = "") = apply {
     val (scaledValue, unit) = checkNotNull(getScaledTimestamp(duration)) {
-        "The passed duration should be less than 1_000_000_000 seconds for the timestamp pattern variable $name"
+        "The passed duration should be less than 1_000_000_000 seconds for the timestamp pattern variable $name."
     }
     addLocalVariable(name, "$prefix{{ timestamp($scaledValue, $unit) }}$suffix")
 }
 
 /**
  * Uses the global variable in the test
- * @param name name of the existing global variable. The name would be converted to upper case letters
+ * @param name Name of the existing global variable. The name would be converted to upper case letters
  * @return BrowserTest object with this added global variable
  */
 fun BrowserTest.useGlobalVariable(name: String) = apply {
     val variableName = name.uppercase()
     val variableId = getGlobalVariableId(variableName)
-    checkNotNull(variableId) { "The global variable $name to be used in the test doesn't exist in DataDog" }
+    checkNotNull(variableId) { "The global variable $name to be used in the test doesn't exist in DataDog." }
     config
         ?.addVariablesItem(
             SyntheticsBrowserVariable()
@@ -110,7 +110,7 @@ fun BrowserTest.useGlobalVariable(name: String) = apply {
 
 /**
  * Used for formatting the variable according to Datadog standards
- * @param variableName the name of the variable to be used
+ * @param variableName The name of the variable to be used
  * @return Formatted variable name according to the Datadog standards
  */
 fun fromVariable(variableName: String): String =
@@ -151,7 +151,7 @@ private fun DurationUnit.toDatadogDurationUnit(): String {
         DurationUnit.MINUTES -> "m"
         DurationUnit.HOURS -> "h"
         DurationUnit.DAYS -> "d"
-        else -> throw IllegalArgumentException("The given duration unit is not supported")
+        else -> throw IllegalArgumentException("The given duration unit is not supported.")
     }
 }
 

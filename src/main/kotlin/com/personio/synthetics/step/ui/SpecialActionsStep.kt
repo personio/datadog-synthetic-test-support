@@ -15,11 +15,11 @@ import com.personio.synthetics.step.withParamType
 import kotlin.time.Duration
 
 /**
- * Adds a wait step to the synthetic browser test with a default value as 1 second
+ * Adds a new wait step to the synthetic browser test with a default value as 1 second
  * @param stepName Name of the step
  * @param waitingTime The wait time to be passed for the step (1 to 300 seconds)
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Wait type synthetic step object
+ * @return Synthetic step object with waitStep added
  */
 fun BrowserTest.waitStep(
     stepName: String,
@@ -30,12 +30,12 @@ fun BrowserTest.waitStep(
 }
 
 /**
- * Adds a scroll step to the synthetic browser test
+ * Adds a new scroll step to the synthetic browser test
  * @param stepName Name of the step
  * @param f Add one of the following parameters required for this test step
  * - target element -> The web element where the scroll is to be performed to
  * - vertical and horizontal scroll -> Supply the pixels for performing the scroll
- * @return SpecialActionsStep object with the scroll step added
+ * @return SpecialActionsStep object with scrollStep added
  */
 fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): SpecialActionsStep =
     addStep(stepName, SpecialActionsStep()) {
@@ -45,16 +45,16 @@ fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): 
         with(params as SpecialActionsParams) {
             check(
                 (x in 0..9999 && y in 0..9999) || (element != null)
-            ) { "Either set x,y coordinates within(0,9999) pixels or target element for step:'$stepName'" }
+            ) { "Either set x,y coordinates within(0,9999) pixels or target element for step:'$stepName'." }
         }
     }
 
 /**
- * Adds a hover step to the synthetic browser test
+ * Adds a new hover step to the synthetic browser test
  * @param stepName Name of the step
  * @param targetElement The web element to which the hover has to be performed
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Hover type synthetic step object
+ * @return Synthetic step object with hoverStep added
  */
 fun BrowserTest.hoverStep(
     stepName: String,
@@ -67,11 +67,11 @@ fun BrowserTest.hoverStep(
 }
 
 /**
- * Adds a press key step to the synthetic browser test
+ * Adds a new press key step to the synthetic browser test
  * @param stepName Name of the step
  * @param key The key to be pressed
  * @param f Additional configurations that need to be added to the step like modifiers, timeout etc.
- * @return Press key type SpecialActionsStep object
+ * @return SpecialActionsStep object with pressKeyStep added
  */
 fun BrowserTest.pressKeyStep(
     stepName: String,
@@ -85,12 +85,12 @@ fun BrowserTest.pressKeyStep(
     }
 
 /**
- * Configure the Special actions step for the synthetic browser test
+ * Configures the Special actions steps for the synthetic browser test
  */
 class SpecialActionsStep : SyntheticsStep() {
     /**
      * Sets the horizontal scroll value to be sent for the scroll step
-     * @param x to be sent for the scroll step
+     * @param x The number of pixels to scroll horizontally
      * @return SpecialActionsStep object with horizontal scroll value set
      */
     fun horizontalScroll(x: Int) = apply {
@@ -101,7 +101,7 @@ class SpecialActionsStep : SyntheticsStep() {
 
     /**
      * Sets the vertical scroll value to be sent for the scroll step
-     * @param y to be sent for the scroll step
+     * @param y The number of pixels to scroll vertically
      * @return SpecialActionsStep object with vertical scroll value set
      */
     fun verticalScroll(y: Int) = apply {

@@ -14,10 +14,10 @@ private const val DEFAULT_TEXT_DELAY: Long = 25 // in milliseconds
 /**
  * Adds a new input text step to the synthetic browser test
  * @param stepName Name of the step
- * @param targetElement The web element where the text need to be set
- * @param text The text value that need to be set
+ * @param targetElement The web element where the text needs to be set
+ * @param text The text value that needs to be set
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Input text type synthetic step object
+ * @return Synthetic step object with inputTextStep added
  */
 fun BrowserTest.inputTextStep(
     stepName: String,
@@ -39,7 +39,7 @@ fun BrowserTest.inputTextStep(
  * @param stepName Name of the step
  * @param targetElement The web element where the click is to be performed
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Click type synthetic step object
+ * @return Synthetic step object with clickStep added
  */
 fun BrowserTest.clickStep(
     stepName: String,
@@ -54,7 +54,7 @@ fun BrowserTest.clickStep(
 }
 
 /**
- * Adds a navigate step to the synthetic browser test
+ * Adds a new navigation step for following a link to the synthetic browser test
  * @param stepName Name of the step
  * @param url The navigation url. You can pass url like the following
  * - only the location (eg: /test/page) for appending to the base url of the test
@@ -62,7 +62,7 @@ fun BrowserTest.clickStep(
  * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
  *   for example /test/page/${fromVariable("TEST")}
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Navigate type synthetic step object
+ * @return Synthetic step object with navigateStep added
  */
 fun BrowserTest.navigateStep(
     stepName: String,

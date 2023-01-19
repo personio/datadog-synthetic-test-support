@@ -11,14 +11,14 @@ import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.config.loadConfiguration
 
 /**
- * Creates a synthetic browser test with the added configurations (if any) and steps in Datadog.
+ * Creates a synthetic browser test with the added configurations (if any) and steps in Datadog
  * The default configurations for the tests are loaded from the configuration file in resources
  * @param name Name of the test
  * @param steps Calls the added steps and configuration functions of the test
  */
 inline fun syntheticBrowserTest(name: String, steps: BrowserTest.() -> Unit) {
     check(name.isNotBlank()) {
-        "The test's name must not be empty"
+        "The test's name must not be empty."
     }
     loadConfiguration("configuration.yaml")
     val browserTest = BrowserTest(name, SyntheticsApiClient(getCredentialsProvider()))

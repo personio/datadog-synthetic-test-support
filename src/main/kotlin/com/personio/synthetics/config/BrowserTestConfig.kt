@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.minutes
 
 /**
  * Sets the base url for the synthetic browser test
- * @param url the base url for the test
+ * @param url The base url for the test
  * @return SyntheticsBrowserTest object with url set
  */
 fun BrowserTest.baseUrl(url: URL) = apply {

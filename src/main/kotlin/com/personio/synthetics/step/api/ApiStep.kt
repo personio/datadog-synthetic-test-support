@@ -39,7 +39,7 @@ fun BrowserTest.apiStep(stepName: String, httpMethod: String, f: ApiStep.() -> U
 class ApiStep : SyntheticsStep() {
     /**
      * Adds a new assertion to the API step
-     * @param f Add the assertion required for the API cal
+     * @param f Add the assertion required for the API call
      * type: Add the type of assertion
      * property: Header property where assertion is to be performed (Optional)
      * property parameter is not required for body or status code assertions
@@ -68,7 +68,7 @@ class ApiStep : SyntheticsStep() {
 
     /**
      * Sets the request headers to be passed to the API request
-     * @param headers a map of header name and header values
+     * @param headers A map of header name and header values
      * eg: mapOf("content-type" to "application/json")
      * @return ApiStep object with the request headers set
      */
@@ -80,7 +80,7 @@ class ApiStep : SyntheticsStep() {
 
     /**
      * Sets the url used for the API request
-     * @param url url to be used for the API request
+     * @param url URL to be used for the API request
      * Supply the parameter like one of the following
      * - only the location (eg: /test/page) for appending to the base url of the test
      * - pass full url including http(s)://
@@ -104,7 +104,7 @@ class ApiStep : SyntheticsStep() {
     /**
      * Extracts the header value from the API response
      * @param name Name of the variable to extract the value to
-     * @param field Header field that need to be extracted from the response
+     * @param field Header field that needs to be extracted from the response
      * @param regex Regular expression to extract the value in the header field (Optional parameter)
      * @return ApiStep object with the extract variable step added
      */
@@ -157,7 +157,7 @@ class ApiStep : SyntheticsStep() {
 
     /**
      * Sets extract value object
-     * @param extractValue Extract value object that need to be set
+     * @param extractValue Extract value object that needs to be set
      * @return RequestParams object with the extract value object added
      */
     private fun RequestParams.setExtractValue(extractValue: ExtractValue): RequestParams {

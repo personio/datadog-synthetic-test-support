@@ -8,13 +8,13 @@ import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.addStep
 
 /**
- * Adds a new current URL assertion step to the synthetic browser test
+ * Adds a new assertion step for testing the content of the URL of the active page to the synthetic browser test
  * It checks if active page URL content has expected value
  * @param stepName Name of the step
  * @param check The type of check to be done on the current url
  * @param expectedContent The expected content for the url
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Current url assertion type synthetic step object
+ * @return Synthetic step object with currentUrlAssertion added
  */
 fun BrowserTest.currentUrlAssertion(
     stepName: String,
@@ -23,7 +23,7 @@ fun BrowserTest.currentUrlAssertion(
     f: (SyntheticsStep.() -> Unit)? = null
 ) = addStep(stepName) {
     if (check !in listOf(SyntheticsCheckType.IS_EMPTY, SyntheticsCheckType.NOT_IS_EMPTY)) {
-        check(!expectedContent.isNullOrEmpty()) { "Expected content is a required parameter for the passed check type $check in the step: $stepName" }
+        check(!expectedContent.isNullOrEmpty()) { "Expected content is a required parameter for the passed check type $check in the step: $stepName." }
     }
     type = SyntheticsStepType.ASSERT_CURRENT_URL
     params = AssertionParams(
@@ -33,12 +33,13 @@ fun BrowserTest.currentUrlAssertion(
 }
 
 /**
- * Adds a new page contains text assertion step to the synthetic browser test
+ * Adds a new assertion step for testing that some text is present on the active page to the synthetic browser test
  * It checks if the page contains the given text
  * @param stepName Name of the step
  * @param expectedText The expected text to be verified in the page
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Page contains text assertion type synthetic step object
+ * @return "Page contains text assertion" type synthetic step object
+ * @return Synthetic step object with pageContainsTextAssertion added
  */
 fun BrowserTest.pageContainsTextAssertion(
     stepName: String,
@@ -53,12 +54,12 @@ fun BrowserTest.pageContainsTextAssertion(
 }
 
 /**
- * Adds a new Page not contains text assertion step to the synthetic browser test
+ * Adds a new assertion step for testing that some text is not present on the active page to the synthetic browser test
  * It checks if the page does not contain the given text
  * @param stepName Name of the step
  * @param text The text that should not exist in the page
  * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
- * @return Page not contains text assertion type synthetic step object
+ * @return Synthetic step object with pageNotContainsTextAssertion added
  */
 fun BrowserTest.pageNotContainsTextAssertion(
     stepName: String,
