@@ -18,7 +18,7 @@ import org.intellij.lang.annotations.Language
  * Adds a new assertion step for testing your UI with custom Javascript to the synthetic browser test
  * @param stepName Name of the step
  * @param code The Javascript code to be executed for performing the assertion
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with customJavascriptAssertion added
  */
 fun BrowserTest.customJavascriptAssertion(

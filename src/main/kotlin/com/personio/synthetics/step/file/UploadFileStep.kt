@@ -15,7 +15,7 @@ import java.util.Base64
  * @param stepName Name of the step
  * @param uploadFile The file to be uploaded
  * @param element The target element details where the file needs to be uploaded to
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with uploadFileStep added
  */
 fun BrowserTest.uploadFileStep(

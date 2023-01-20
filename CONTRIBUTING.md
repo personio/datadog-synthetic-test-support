@@ -36,7 +36,7 @@ Before submitting a pull request, please ensure that:
 * You checked the existing open and recently merged pull requests to make sure the problem is not addressed already.
 * You opened an issue to discuss the proposed change. Avoid changing too many things at once. Make sure the issue covers one problem/improvement at a time.
 
-In order to contribute via pull requests, please follow the steps below:
+To contribute via pull requests, please follow the steps below:
 
 1. Clone the repository.
 2. Create a new branch from `master`.
@@ -85,17 +85,17 @@ Please follow the rules below to keep the code clean and precise.
 Whenever an acronym is included as part of a field name or parameter name:
 
 * If the acronym comes at the start of the field or parameter name, use lowercase for the
-  entire acronym, e.g `String url`.
+  entire acronym, for example, `String url`.
 * Otherwise, keep the first letter of the acronym uppercase and use lowercase for the
-  rest of the acronym, e.g. `String baseUrl`.
+  rest of the acronym, for example, `String baseUrl`.
 
 ### Formatting
 
-For code formatting we use ktlint plugin. Run `./gradlew ktlintFormat` to autoformat your code.
+For code formatting we use ktlint plug-in. Run `./gradlew ktlintFormat` to autoformat your code.
 
 ### Spelling
 
-Use American English spelling rules when writing documentation as well as for code - class names, method names, variable names, etc.
+Use American English spelling rules when writing documentation as well as for code - class names, method names, variable names, and so on.
 
 ### Documentation
 

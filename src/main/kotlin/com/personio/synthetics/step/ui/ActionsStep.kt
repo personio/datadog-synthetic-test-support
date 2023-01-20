@@ -16,7 +16,7 @@ private const val DEFAULT_TEXT_DELAY: Long = 25 // in milliseconds
  * @param stepName Name of the step
  * @param targetElement The web element where the text needs to be set
  * @param text The text value that needs to be set
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with inputTextStep added
  */
 fun BrowserTest.inputTextStep(
@@ -38,7 +38,7 @@ fun BrowserTest.inputTextStep(
  * Adds a new click step to the synthetic browser test
  * @param stepName Name of the step
  * @param targetElement The web element where the click is to be performed
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with clickStep added
  */
 fun BrowserTest.clickStep(
@@ -61,7 +61,7 @@ fun BrowserTest.clickStep(
  * - pass full url including http(s)://
  * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
  *   for example /test/page/${fromVariable("TEST")}
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with navigateStep added
  */
 fun BrowserTest.navigateStep(

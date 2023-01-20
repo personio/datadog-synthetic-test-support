@@ -12,7 +12,7 @@ import com.personio.synthetics.step.ui.model.TargetElement
  * Adds a new assertion step for testing that an element is present to the synthetic browser test
  * @param stepName Name of the step
  * @param targetElement The element where the assertion is to be performed
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with elementPresentAssertion added
  */
 fun BrowserTest.elementPresentAssertion(
@@ -34,7 +34,7 @@ fun BrowserTest.elementPresentAssertion(
  * @param check The type of check to be done on the element content
  * @param expectedContent The expected content for the element (optional)
  * The expectedValue does not need to be passed when the check is IS_EMPTY or NOT_IS_EMPTY
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with elementContentAssertion added
  */
 fun BrowserTest.elementContentAssertion(
@@ -64,7 +64,7 @@ fun BrowserTest.elementContentAssertion(
  * @param check The type of check to be done on the element attribute
  * @param expectedValue The expected attribute content for the element (optional)
  * The expectedValue does not need to be passed when the check is IS_EMPTY or NOT_IS_EMPTY
- * @param f Additional configurations that need to be added to the step like timeout, allowFailure etc.
+ * @param f Additional configurations that need to be added to the step such as timeout, allowFailure and so on
  * @return Synthetic step object with elementAttributeAssertion added
  */
 fun BrowserTest.elementAttributeAssertion(
