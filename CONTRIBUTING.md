@@ -12,7 +12,7 @@ discussion using the [Question][question] form.
 
 ## Reporting Bugs/Feature Requests
 
-Use the Github [Issue tracker][issue] to report a bug or request a new feature by filling in the respective form. 
+Use the Github [Issue tracker][issue] to report a bug, documentation issue or request a new feature by filling in the respective form. 
 
 Before submitting an issue, please search for similar issues among the open and recently closed ones
 to make sure it was not reported already.
@@ -122,4 +122,4 @@ Use `org.mockito.kotlin.mock` library.
 Details about release process can be found in the project's [`README`](https://github.com/personio/datadog-synthetic-test-support#release-process).
 
 [question]: https://github.com/personio/datadog-synthetic-test-support/discussions/new
-[issue]: https://github.com/personio/datadog-synthetic-test-support/issues/new
+[issue]: https://github.com/personio/datadog-synthetic-test-support/issues/new/choose
