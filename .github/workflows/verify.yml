@@ -46,3 +46,10 @@ jobs:
           DD_API_KEY: ${{ secrets.DD_API_KEY }}
           DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
         run: ./gradlew e2eTest --stacktrace
+      - name: Upload e2e test results artifact
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: test-report
+          path: build/reports/tests/e2eTest
+          retention-days: 5
