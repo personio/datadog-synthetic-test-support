@@ -17,6 +17,13 @@ jobs:
         distribution: "temurin"
     - name: Run unit tests
       run: ./gradlew test
+    - name: Upload the JUnit test report (visible in the Artifacts section on Summary page)
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: JUnit-test-report
+        path: build/reports/tests/test
+        retention-days: 5
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +53,10 @@ jobs:
           DD_API_KEY: ${{ secrets.DD_API_KEY }}
           DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
         run: ./gradlew e2eTest --stacktrace
+      - name: Upload the E2E test report (visible in the Artifacts section on Summary page)
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: E2E-test-report
+          path: build/reports/tests/e2eTest
+          retention-days: 5
