@@ -1,7 +1,7 @@
 ---
 name: "📕 Documentation Issue"
 description: Report an issue in the Synthetic Test Support documentation
-title: "(short issue description)"
+title: "[Documentation]: "
 labels: [documentation, needs-triage]
 assignees: []
 body:
