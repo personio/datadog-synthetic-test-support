@@ -1,7 +1,7 @@
 ---
 name: "🐛 Bug Report"
 description: Report a bug
-title: "(short issue description)"
+title: "[Bug]: "
 labels: [bug, needs-triage]
 assignees: []
 body:
@@ -9,31 +9,36 @@ body:
     id: library-version
     attributes:
       label: Synthetic Test Support library version used
+      placeholder: "1.0.2"
     validations:
       required: true
   - type: input
     id: os-version
     attributes:
       label: OS name and version used
+      placeholder: "macOS Ventura 13.2"
     validations:
       required: true
   - type: input
     id: java-version
     attributes:
       label: Java version used
+      placeholder: "Eclipse Temurin 17"
     validations:
       required: true
   - type: input
     id: gradle-version
     attributes:
       label: Gradle version used
+      placeholder: "7.4.2"
     validations:
       required: true
   - type: input
     id: aws-sdk-version
     attributes:
       label: AWS SDK version used
-      value: "Fill in only if you're using AWS Secret Manager for fetching Datadog credentials"
+      description: Fill in only if you're using AWS Secret Manager for fetching Datadog credentials
+      placeholder: "2.19.17"
     validations:
       required: false
   - type: textarea
