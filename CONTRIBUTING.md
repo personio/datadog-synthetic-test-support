@@ -43,7 +43,7 @@ To contribute via pull requests, please follow the steps below:
 3. Develop and test your code changes. See the project's [README](README.md) for further information about working in this repository.
 4. Add necessary unit tests for the code changes and make sure that all tests pass locally.
 5. Run `./gradlew ktlintFormat` to autoformat your code.
-6. Commit to your branch using clear commit messages. Make sure to add brief descriptions of the changes to "Unreleased" section in [CHANGELOG](CHANGELOG.md).
+6. Commit to your branch using clear commit messages. Make sure to add brief descriptions of the changes to "Unreleased" section in [CHANGELOG](CHANGELOG.md) if needed, with a link to your PR.
 7. Send us a pull request against the project's `master` branch.
 8. Your branch may be merged once all configured checks pass, including:
     - The branch has passed the tests in CI.
