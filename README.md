@@ -140,3 +140,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## How to contribute and report issues
 
 Feel free to contribute! Just create a new issue or a new pull request following the [Contributing Guidelines](CONTRIBUTING.md).
+
+## License
+
+The library is licensed under the [MIT License](LICENSE), copyright 2023 Personio SE & Co. KG.
