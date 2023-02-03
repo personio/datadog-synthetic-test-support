@@ -119,7 +119,7 @@ Use assertions from `org.junit.jupiter.api`.
 Use `org.mockito.kotlin.mock` library.
 
 ## Releases
-Details about release process can be found in the project's [`README`](https://github.com/personio/datadog-synthetic-test-support#release-process).
+Details about release process can be found in the project's [README](https://github.com/personio/datadog-synthetic-test-support#release-process).
 
 [question]: https://github.com/personio/datadog-synthetic-test-support/discussions/new
 [issue]: https://github.com/personio/datadog-synthetic-test-support/issues/new/choose
