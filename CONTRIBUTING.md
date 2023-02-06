@@ -8,7 +8,7 @@ have all the necessary information to effectively respond to your bug report or 
 ## Getting Help
 
 If you have a question about the library or have encountered any problems using it, start a
-discussion using the [Question][question] form.
+discussion using the [Q&A][question] form.
 
 ## Reporting Bugs/Feature Requests
 
@@ -119,7 +119,7 @@ Use assertions from `org.junit.jupiter.api`.
 Use `org.mockito.kotlin.mock` library.
 
 ## Releases
-Details about release process can be found in the project's [README](https://github.com/personio/datadog-synthetic-test-support#release-process).
+Details about release process can be found in the project's [README](README.md#release-process).
 
-[question]: https://github.com/personio/datadog-synthetic-test-support/discussions/new
+[question]: https://github.com/personio/datadog-synthetic-test-support/discussions/new/choose
 [issue]: https://github.com/personio/datadog-synthetic-test-support/issues/new/choose
