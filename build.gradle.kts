@@ -6,9 +6,11 @@ plugins {
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
+    signing
 }
 
 group = "com.personio"
+version = System.getenv("VERSION")
 
 jacoco {
     toolVersion = "0.8.8"
@@ -75,18 +77,68 @@ val sourcesJar by tasks.creating(Jar::class) {
     from(sourceSets.main.get().allSource)
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
-    publications {
-        register("maven", MavenPublication::class) {
-            from(components["kotlin"])
-            artifact(javadocJar)
-            artifact(sourcesJar)
-            version =
-                if (project.hasProperty("release")) {
-                    "${project.version}"
-                } else {
-                    "${project.version}-SNAPSHOT"
-                }
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
         }
     }
+    publications {
+        register("maven", MavenPublication::class) {
+            from(components["java"])
+            pom {
+                groupId = "com.personio"
+                name.set("Datadog Synthetic test Support")
+                description.set("Kotlin library for managing Datadog Synthetic test as code")
+                url.set("https://github.com/personio/datadog-synthetic-test-support")
+                packaging = "jar"
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/personio/datadog-synthetic-test-support/blob/master/LICENSE")
+                    }
+                }
+                organization {
+                    name.set("Personio SE & Co. KG")
+                    url.set("https://personio.com")
+                }
+                developers {
+                    developer {
+                        id.set("personio")
+                        name.set("Test Solutions Squad")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/personio/datadog-synthetic-test-support")
+                    connection.set("scm:git:https://github.com/personio/datadog-synthetic-test-support.git")
+                    developerConnection.set("scm:git:ssh://github.com:personio/datadog-synthetic-test-support.git")
+                }
+                issueManagement {
+                    description.set("GitHub Issues")
+                    url.set("https://github.com/personio/datadog-synthetic-test-support/issues")
+                }
+                ciManagement {
+                    description.set("GitHub Actions")
+                    url.set("https://github.com/personio/datadog-synthetic-test-support/actions")
+                }
+            }
+        }
+    }
+}
+
+signing {
+    val signingKey = System.getenv("GPG_PRIVATE_KEY")
+    val signingPassword = System.getenv("GPG_PASSPHRASE")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications["maven"])
 }

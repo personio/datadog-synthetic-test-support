@@ -1,0 +1,57 @@
+name: Create release and publish to Maven Central
+
+on:
+  create:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release-version.outputs.RELEASE_VERSION }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Get Release version
+        id: release-version
+        run: |
+          echo "RELEASE_VERSION=$(echo ${{ github.ref_name }} | tr -d 'v')" >> $GITHUB_OUTPUT
+      - name: Prepare release notes from Changelog
+        id: prep
+        run: |
+          CHANGELOG=$(sed -n '/## \['"${{ steps.release-version.outputs.RELEASE_VERSION }}"'\]/, /^## /p' CHANGELOG.md | sed '1d;$d')
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ github.ref }} -t "Release ${{ steps.release-version.outputs.RELEASE_VERSION }}" --notes "${{ steps.prep.outputs.CHANGELOG }}"
+    if: "startsWith(github.ref, 'refs/tags/')"
+  publish:
+    name: Publish to Maven Central
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - name: Publish artifacts
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          VERSION: ${{ needs.create-release.outputs.version }}
+        run: ./gradlew publish
