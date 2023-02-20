@@ -487,7 +487,7 @@ class VariableTest {
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue,
+            duration = timestampValue
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))

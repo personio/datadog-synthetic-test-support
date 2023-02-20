@@ -27,7 +27,8 @@ fun BrowserTest.currentUrlAssertion(
     }
     type = SyntheticsStepType.ASSERT_CURRENT_URL
     params = AssertionParams(
-        check = check, value = expectedContent
+        check = check,
+        value = expectedContent
     )
     if (f != null) f()
 }

@@ -70,7 +70,7 @@ fun BrowserTest.navigateStep(
     f: (SyntheticsStep.() -> Unit)? = null
 ) = addStep(stepName) {
     type = SyntheticsStepType.GO_TO_URL
-    val target = if (url.isDatadogVariable()) url else {
+    val target = if (url.isDatadogVariable()) { url } else {
         runCatching { URL(url) }
             .recover { URL(config.request.url + url) }
             .getOrThrow()

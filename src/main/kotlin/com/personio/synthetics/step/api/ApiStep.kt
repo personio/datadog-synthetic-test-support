@@ -90,7 +90,7 @@ class ApiStep : SyntheticsStep() {
     fun url(url: String) = apply {
         withParamType<RequestParams> {
             apply {
-                val target = if (url.isDatadogVariable()) url else {
+                val target = if (url.isDatadogVariable()) { url } else {
                     runCatching { URL(url) }
                         .recover { URL(request.config.request.url + url) }
                         .getOrThrow()

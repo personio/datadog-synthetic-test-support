@@ -192,7 +192,7 @@ internal class ApiStepTest {
         browserTest.apiStep("Step", "POST") {
             extractBodyValue(
                 name = "name",
-                parserType = SyntheticsGlobalVariableParserType.RAW,
+                parserType = SyntheticsGlobalVariableParserType.RAW
             )
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
@@ -220,7 +220,7 @@ internal class ApiStepTest {
         browserTest.apiStep("Step", "POST") {
             extractBodyValue(
                 name = "name",
-                parserType = SyntheticsGlobalVariableParserType.RAW,
+                parserType = SyntheticsGlobalVariableParserType.RAW
             )
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams

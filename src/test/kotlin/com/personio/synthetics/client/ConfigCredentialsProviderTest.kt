@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class ConfigCredentialsProviderTest {
     private val credentials = Credentials(ddApiKey = "apiKey", ddAppKey = "appKey", null, null)
+
     @Test
     fun `getCredentials returns expected API credentials taken from the configuration file`() {
         val credentialsProvider = ConfigCredentialsProvider(credentials)
