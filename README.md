@@ -2,6 +2,16 @@
 
 This library provides a programmatic way to manage Datadog synthetic browser tests. This library contains all the necessary functions that are required to manage the synthetic browser tests with different steps and configurations.
 
+[![License](https://img.shields.io/badge/License-MIT-brightgreen)](https://github.com/personio/datadog-synthetic-test-support/blob/master/LICENSE)
+[![Version](https://img.shields.io/github/v/release/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/releases)
+[![Release date](https://img.shields.io/github/release-date/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/releases)
+![Downloads](https://img.shields.io/github/downloads/personio/datadog-synthetic-test-support/total)
+
+[![Verify Build](https://img.shields.io/github/actions/workflow/status/personio/datadog-synthetic-test-support/verify.yml?label=verify%20build)](https://github.com/personio/datadog-synthetic-test-support/actions/workflows/verify.yml)
+[![Release Build](https://img.shields.io/github/actions/workflow/status/personio/datadog-synthetic-test-support/release-and-publish.yml?label=release%20build)](https://github.com/personio/datadog-synthetic-test-support/actions/workflows/release-and-publish.yml)
+[![Open issues](https://img.shields.io/github/issues-raw/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/issues?q=is%3Aopen+is%3Aissue)
+[![Closed issues](https://img.shields.io/github/issues-closed-raw/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/issues?q=is%3Aissue+is%3Aclosed)
+
 ## Dependencies
 
 Synthetic Test Support library builds up on top of the Datadog's API [Java client library](https://github.com/DataDog/datadog-api-client-java/) and provides Kotlin implementation of functions to create and edit synthetic browser tests.
@@ -145,3 +155,12 @@ Feel free to contribute! Just create a new issue or a new pull request following
 ## License
 
 The library is licensed under the [MIT License](LICENSE), copyright 2023 Personio SE & Co. KG.
+
+![Top Language](https://img.shields.io/github/languages/top/personio/datadog-synthetic-test-support)
+![Code size](https://img.shields.io/github/languages/code-size/personio/datadog-synthetic-test-support)
+![Repo size](https://img.shields.io/github/repo-size/personio/datadog-synthetic-test-support)
+[![Contributors](https://img.shields.io/github/contributors/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/graphs/contributors)
+
+![Repo stars](https://img.shields.io/github/stars/personio/datadog-synthetic-test-support?style=social)
+![Forks](https://img.shields.io/github/forks/personio/datadog-synthetic-test-support?style=social)
+![Followers](https://img.shields.io/github/watchers/personio/datadog-synthetic-test-support?style=social)
