@@ -13,6 +13,7 @@ import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRespon
 
 internal class AwsSecretsManagerCredentialsProviderTest {
     private val credentials = Credentials(null, null, awsRegion = "awsRegion", datadogCredentialsAwsArn = "awsArn")
+
     @Test
     fun `getCredentials returns expected API credentials given the secret has the expected structure`() {
         val secretsManagerClient: SecretsManagerClient = mock()
@@ -39,7 +40,6 @@ internal class AwsSecretsManagerCredentialsProviderTest {
 
     @Test
     fun `getCredentials throws exception given the secret has no secret string`() {
-
         val secretsManagerClient: SecretsManagerClient = mock()
         val credentialsProvider = AwsSecretsManagerCredentialsProvider(credentials, secretsManagerClient)
         val getSecretValueResponse = GetSecretValueResponse.builder().build()

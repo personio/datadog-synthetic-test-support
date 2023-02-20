@@ -216,7 +216,7 @@ class E2ETest {
                 }
                 extractHeaderValue(
                     name = "SESSION",
-                    field = "set-cookie",
+                    field = "set-cookie"
                 )
                 waitBeforeDeclaringStepAsFailed(90.seconds)
                 continueWithTestIfStepFails()

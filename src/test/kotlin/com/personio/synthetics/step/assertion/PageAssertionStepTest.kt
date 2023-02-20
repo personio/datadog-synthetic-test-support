@@ -78,7 +78,7 @@ internal class PageAssertionStepTest {
         assertDoesNotThrow {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
-                check = SyntheticsCheckType.IS_EMPTY,
+                check = SyntheticsCheckType.IS_EMPTY
             )
         }
     }
@@ -88,7 +88,7 @@ internal class PageAssertionStepTest {
         assertDoesNotThrow {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
-                check = SyntheticsCheckType.NOT_IS_EMPTY,
+                check = SyntheticsCheckType.NOT_IS_EMPTY
             )
         }
     }
@@ -98,7 +98,7 @@ internal class PageAssertionStepTest {
         assertThrows<IllegalStateException> {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
-                check = SyntheticsCheckType.EQUALS,
+                check = SyntheticsCheckType.EQUALS
             )
         }
     }
