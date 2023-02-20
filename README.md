@@ -127,6 +127,7 @@ The following are some useful commands for working with the project.
 A new version will be released each time there are some crucial changes or a bunch of useful improvements.
 
 Release process is handled by the Code owners. 
+After the release workflow is triggered, a new version is automatically published to Maven Central.
 
 The list of releases is available on the [Releases](https://github.com/personio/datadog-synthetic-test-support/releases) page.
 Each release contains the list of changes from the Changelog file corresponding to the release version and zipped repository files.
