@@ -1,6 +1,6 @@
 # Synthetic Test Support
 
-This library provides a programmatic way to manage Datadog synthetic browser tests. This library contains all the necessary functions that are required to manage the synthetic browser tests with different steps and configurations.
+Datadog Synthetic test Support library provides a programmatic way to manage Datadog synthetic browser tests. The library contains all the necessary functions that are required to manage the synthetic browser tests with different steps and configurations.
 
 [![License](https://img.shields.io/badge/License-MIT-brightgreen)](https://github.com/personio/datadog-synthetic-test-support/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/v/release/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/releases)

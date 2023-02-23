@@ -124,11 +124,11 @@ publishing {
                     developerConnection.set("scm:git:ssh://github.com:personio/datadog-synthetic-test-support.git")
                 }
                 issueManagement {
-                    description.set("GitHub Issues")
+                    system.set("GitHub Issues")
                     url.set("https://github.com/personio/datadog-synthetic-test-support/issues")
                 }
                 ciManagement {
-                    description.set("GitHub Actions")
+                    system.set("GitHub Actions")
                     url.set("https://github.com/personio/datadog-synthetic-test-support/actions")
                 }
             }
