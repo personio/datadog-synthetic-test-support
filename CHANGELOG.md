@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Bug fixes
 
 ### Dependencies
+- Update kotlinx-serialization-json dependency from 1.4.1 to 1.5.0 ([#78](https://github.com/personio/datadog-synthetic-test-support/pull/78))
 
 ## [1.1.0] - 2023-02-21
 ### New features & improvements
