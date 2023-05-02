@@ -33,7 +33,7 @@ val e2eTest =
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
     val awsSdkVersion = "2.20.37"
-    val jacksonVersion = "2.14.2"
+    val jacksonVersion = "2.15.0"
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.apache.commons:commons-text:1.10.0")
