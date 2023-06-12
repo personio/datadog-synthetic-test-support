@@ -47,7 +47,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("org.mockito:mockito-inline:5.2.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.1")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
 }
 
 tasks {
