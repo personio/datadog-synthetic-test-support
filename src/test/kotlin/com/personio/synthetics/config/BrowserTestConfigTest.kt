@@ -5,11 +5,17 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.Timeframe
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import java.net.URL
+import java.time.DayOfWeek
+import java.time.LocalTime
+import java.time.ZoneId
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -42,6 +48,54 @@ internal class BrowserTestConfigTest {
     fun `testFrequency function throws exception for test frequency value bigger than 7 days`() {
         assertThrows(IllegalArgumentException::class.java) {
             browserTest.testFrequency(604801.seconds)
+        }
+    }
+
+    @Test
+    fun `advancedScheduling function sets the advanced scheduling in the test config`() {
+        browserTest.advancedScheduling(
+            Timeframe(
+                from = LocalTime.of(0, 1),
+                to = LocalTime.of(23, 59),
+                DayOfWeek.MONDAY,
+                DayOfWeek.SUNDAY
+            ),
+            timezone = ZoneId.of("Europe/Dublin")
+        )
+
+        assertEquals(1, browserTest.options.scheduling.timeframes[0].day)
+        assertEquals("00:01", browserTest.options.scheduling.timeframes[0].from)
+        assertEquals("23:59", browserTest.options.scheduling.timeframes[0].to)
+        assertEquals(7, browserTest.options.scheduling.timeframes[1].day)
+        assertEquals("00:01", browserTest.options.scheduling.timeframes[1].from)
+        assertEquals("23:59", browserTest.options.scheduling.timeframes[1].to)
+        assertEquals("Europe/Dublin", browserTest.options.scheduling.timezone)
+    }
+
+    @Test
+    fun `advancedScheduling function sets the advanced scheduling with default timezone in the test config`() {
+        browserTest.advancedScheduling(
+            Timeframe(
+                from = LocalTime.of(0, 1),
+                to = LocalTime.of(23, 59),
+                DayOfWeek.MONDAY
+            )
+        )
+
+        assertNotNull(browserTest.options.scheduling.timezone)
+        assertTrue(browserTest.options.scheduling.timezone.isNotEmpty())
+    }
+
+    @Test
+    fun `advancedScheduling function throws exception when from time is later than to time`() {
+        assertThrows(IllegalArgumentException::class.java) {
+            browserTest.advancedScheduling(
+                Timeframe(
+                    from = LocalTime.of(20, 0),
+                    to = LocalTime.of(9, 0),
+                    DayOfWeek.MONDAY
+                )
+            )
         }
     }
 

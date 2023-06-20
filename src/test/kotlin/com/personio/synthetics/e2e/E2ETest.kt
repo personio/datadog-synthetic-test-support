@@ -6,6 +6,7 @@ import com.datadog.api.client.v1.model.SyntheticsCheckType
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.client.syntheticBrowserTest
+import com.personio.synthetics.config.advancedScheduling
 import com.personio.synthetics.config.alertMessage
 import com.personio.synthetics.config.alphabeticPatternVariable
 import com.personio.synthetics.config.alphanumericPatternVariable
@@ -32,6 +33,7 @@ import com.personio.synthetics.model.assertion.FileSizeCheckType
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.Timeframe
 import com.personio.synthetics.step.api.apiStep
 import com.personio.synthetics.step.assertion.currentUrlAssertion
 import com.personio.synthetics.step.assertion.customJavascriptAssertion
@@ -58,6 +60,9 @@ import com.personio.synthetics.step.waitBeforeDeclaringStepAsFailed
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.net.URL
+import java.time.DayOfWeek
+import java.time.LocalTime
+import java.time.ZoneId
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
@@ -75,6 +80,16 @@ class E2ETest {
             browserAndDevice(SyntheticsDeviceID.CHROME_MOBILE_SMALL, SyntheticsDeviceID.FIREFOX_LAPTOP_LARGE)
             publicLocation(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
             testFrequency(6.minutes)
+            advancedScheduling(
+                Timeframe(
+                    from = LocalTime.of(0, 1),
+                    to = LocalTime.of(23, 59),
+                    DayOfWeek.MONDAY,
+                    DayOfWeek.TUESDAY,
+                    DayOfWeek.FRIDAY
+                ),
+                timezone = ZoneId.of("Europe/Dublin")
+            )
             retry(2, 600.milliseconds)
             minFailureDuration(120.minutes)
             minLocationFailed(2)

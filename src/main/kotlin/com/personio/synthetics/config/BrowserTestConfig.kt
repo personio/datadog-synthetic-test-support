@@ -1,12 +1,17 @@
 package com.personio.synthetics.config
 
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.Timeframe
 import java.net.URL
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
@@ -37,6 +42,31 @@ fun BrowserTest.testFrequency(frequency: Duration) = apply {
         "Frequency should be between 5 minutes and 7 days."
     }
     options.tickEvery = frequency.inWholeSeconds
+}
+
+/**
+ * Sets the advanced scheduling configuration for the synthetic browser test
+ * @param timeframes Time range and days when the test should be scheduled to run
+ * - from/to time -> pass LocalTime data type values where From value is earlier than To value
+ * - days -> pass comma separated DayOfWeek data type values
+ * @param timezone Timezone where the tests should be scheduled to run
+ * Pass ZoneId data type value, e.g. 'ZoneId.of("Europe/Berlin")'
+ * Offset value is set as the local timezone of the machine where the test creation runs, if the value is not explicitly set
+ * @return BrowserTest object with advanced scheduling configured
+ */
+fun BrowserTest.advancedScheduling(timeframes: Timeframe, timezone: ZoneId = ZoneId.systemDefault()) = apply {
+    require(timeframes.from < timeframes.to) {
+        "From time must be earlier than To time."
+    }
+    options.scheduling = SyntheticsTestOptionsScheduling()
+    options.scheduling.timeframes = timeframes.days.map {
+        SyntheticsTestOptionsSchedulingTimeframe().apply {
+            from = timeframes.from.truncatedTo(ChronoUnit.MINUTES).toString()
+            to = timeframes.to.truncatedTo(ChronoUnit.MINUTES).toString()
+            day = it.value
+        }
+    }
+    options.scheduling.timezone = timezone.toString()
 }
 
 /**
