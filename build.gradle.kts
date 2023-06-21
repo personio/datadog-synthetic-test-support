@@ -1,8 +1,8 @@
 plugins {
-    val kotlinVersion = "1.8.10"
+    val kotlinVersion = "1.8.22"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
-    id("org.jetbrains.dokka") version kotlinVersion
-    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    id("org.jetbrains.dokka") version "1.8.20"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
@@ -31,8 +31,8 @@ val e2eTest =
     }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.21")
-    val awsSdkVersion = "2.20.76"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.22")
+    val awsSdkVersion = "2.20.88"
     val jacksonVersion = "2.15.2"
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
