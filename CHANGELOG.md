@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Bug fixes
 
 ### Dependencies
+- Update secretsmanager dependency from 2.20.88 to 2.20.97 ([#103](https://github.com/personio/datadog-synthetic-test-support/pull/103))
 
 ## [1.2.0] - 2023-06-21
 ### New features & improvements
