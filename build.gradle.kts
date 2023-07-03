@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     val kotlinVersion = "1.8.22"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
@@ -64,6 +66,12 @@ tasks {
             xml.outputLocation.set(buildDir.resolve("test-results/test/xml/jacocoReport.xml"))
         }
     }
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+
 }
 
 val javadocJar by tasks.creating(Jar::class) {
