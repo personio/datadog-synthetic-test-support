@@ -71,7 +71,6 @@ tasks {
             jvmTarget = "17"
         }
     }
-
 }
 
 val javadocJar by tasks.creating(Jar::class) {
