@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     val kotlinVersion = "1.8.22"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
@@ -46,7 +48,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("org.mockito:mockito-inline:5.2.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
 }
 
@@ -62,6 +64,11 @@ tasks {
             xml.required.set(true)
             html.required.set(false)
             xml.outputLocation.set(buildDir.resolve("test-results/test/xml/jacocoReport.xml"))
+        }
+    }
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "17"
         }
     }
 }

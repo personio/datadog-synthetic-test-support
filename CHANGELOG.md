@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased] - yyyy-mm-dd
 
 ### Breaking changes
+- Set target JVM version to 17 ([#106](https://github.com/personio/datadog-synthetic-test-support/pull/106))
 
 ### New features & improvements
 
