@@ -4,7 +4,7 @@ plugins {
     val kotlinVersion = "1.9.0"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version "1.8.20"
-    id("org.jlleitschuh.gradle.ktlint") version "11.4.2"
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.0"
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
     jacoco
