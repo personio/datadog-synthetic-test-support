@@ -40,7 +40,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.apache.commons:commons-text:1.10.0")
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     api("javax.activation:activation:1.1.1")
     api("com.datadoghq:datadog-api-client:2.14.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
