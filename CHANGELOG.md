@@ -10,11 +10,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased] - yyyy-mm-dd
 
 ### Breaking changes
-- Set target JVM version to 17 ([#106](https://github.com/personio/datadog-synthetic-test-support/pull/106))
 
 ### New features & improvements
 
 ### Bug fixes
+
+### Dependencies
+
+## [2.0.0] - 2023-09-01
+### Breaking changes
+- Set target JVM version to 17 ([#106](https://github.com/personio/datadog-synthetic-test-support/pull/106))
 
 ### Dependencies
 - Update datadog-api-client dependency from 2.12.0 to 2.15.0 ([#105](https://github.com/personio/datadog-synthetic-test-support/pull/105), [#113](https://github.com/personio/datadog-synthetic-test-support/pull/113), [#117](https://github.com/personio/datadog-synthetic-test-support/pull/117))
