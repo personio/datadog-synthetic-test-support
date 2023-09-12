@@ -1,6 +1,6 @@
 # Synthetic Test Support
 
-Datadog Synthetic test Support library provides a programmatic way to manage Datadog synthetic browser tests. The library contains all the necessary functions that are required to manage the synthetic browser tests with different steps and configurations.
+Datadog Synthetic test Support library provides a programmatic way to manage Datadog synthetic browser and mutli-step API tests. The library contains all the necessary functions that are required to manage the synthetic tests with different steps and configurations.
 
 [![License](https://img.shields.io/badge/License-MIT-brightgreen)](https://github.com/personio/datadog-synthetic-test-support/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/v/release/personio/datadog-synthetic-test-support)](https://github.com/personio/datadog-synthetic-test-support/releases)
@@ -14,7 +14,7 @@ Datadog Synthetic test Support library provides a programmatic way to manage Dat
 
 ## Dependencies
 
-Synthetic Test Support library builds up on top of the Datadog's API [Java client library](https://github.com/DataDog/datadog-api-client-java/) and provides Kotlin implementation of functions to create and edit synthetic browser tests.
+Synthetic Test Support library builds up on top of the Datadog's API [Java client library](https://github.com/DataDog/datadog-api-client-java/) and provides Kotlin implementation of functions to create and edit synthetic tests.
 
 There are 2 ways to provide the API credentials to communicate with Datadog API:
 
@@ -106,15 +106,60 @@ Start using the library in a gradle project by following the steps below:
        }
     }
 ```
-   
-5. Create a new kotlin file with the `main` function and call the function created in Step 3 to publish the tests, for example like this:
+
+5. Implement your synthetic mutli-step API tests, for example like this:
+```kotlin
+    fun `add a multi-step API synthetic test`() {
+    syntheticBrowserTest("Test Login to the app") {
+        tags("env:qa")
+        baseUrl(URL("https://synthetic-test.personio.de"))
+        publicLocations(Location.FRANKFURT_AWS)
+        testFrequency(5.minutes)
+        retry(1, 600.milliseconds)
+        useGlobalVariable("PASSWORD")
+        steps {
+            step("Do http request") {
+                request {
+                    url("https://synthetic-test.personio.de")
+                    method(RequestMethod.POST)
+                    bodyType(SyntheticsTestRequestBodyType.APPLICATION_JSON)
+                    body(
+                        """
+                            {
+                                "key": "value",
+                            }
+                            """.trimIndent()
+                    )
+                    headers(
+                        mapOf(
+                            "Content-Type" to "application/json"
+                        )
+                    )
+                    assertions {
+                        statusCode(200)
+                        bodyContainsJsonPath("\$.success", "true")
+                        bodyContains("employee_id")
+                        headerContains("set-cookie", "cookie_name")
+                    }
+                    extract("COOKIE_VARIABLE") {
+                        headerRegex("set-cookie", "(?<=cookie_name\\=)[^;]+(?=;)")
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+6. Create a new kotlin file with the `main` function and call the function created in Steps 4-5 to publish the tests, for example like this:
 ```kotlin
     fun main() {
         `add a synthetic test`()
+        `add a multi-step API synthetic test`()
     }
 ```
 
-6. To publish the browser tests to Datadog, use the following command:
+7. To publish the tests to Datadog, use the following command:
 ```bash
    ./gradlew publishSyntheticTests`
 ```

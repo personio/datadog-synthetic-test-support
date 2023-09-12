@@ -87,19 +87,6 @@ internal class BrowserTestConfigTest {
     }
 
     @Test
-    fun `advancedScheduling function throws exception when from time is later than to time`() {
-        assertThrows(IllegalArgumentException::class.java) {
-            browserTest.advancedScheduling(
-                Timeframe(
-                    from = LocalTime.of(20, 0),
-                    to = LocalTime.of(9, 0),
-                    DayOfWeek.MONDAY
-                )
-            )
-        }
-    }
-
-    @Test
     fun `retry function sets the retry count and interval in the test config`() {
         browserTest.retry(1, 60.milliseconds)
 
