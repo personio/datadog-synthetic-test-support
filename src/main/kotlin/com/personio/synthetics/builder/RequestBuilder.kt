@@ -10,6 +10,7 @@ class RequestBuilder {
     private var body = ""
     private var followRedirects = false
     private var headers: Map<String, String> = mapOf()
+    private var ignoreServerCertificateError = false
 
     fun build(): SyntheticsTestRequest {
         return SyntheticsTestRequest()
@@ -18,6 +19,7 @@ class RequestBuilder {
             .bodyType(bodyType)
             .body(body)
             .followRedirects(followRedirects)
+            .allowInsecure(ignoreServerCertificateError)
             .headers(headers)
     }
 
@@ -67,6 +69,14 @@ class RequestBuilder {
      */
     fun followRedirects(value: Boolean) {
         followRedirects = value
+    }
+
+    /**
+     * Sets the need to ignore server certificate error
+     * @param value Whether Datadog should ignore service certificate error during request
+     */
+    fun ignoreServerCertificateError(value: Boolean) {
+        ignoreServerCertificateError = value
     }
 
     /**

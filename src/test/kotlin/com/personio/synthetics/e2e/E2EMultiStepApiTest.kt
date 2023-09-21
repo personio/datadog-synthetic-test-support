@@ -72,6 +72,7 @@ class E2EMultiStepApiTest {
                                 "Content-Type" to "application/json"
                             )
                         )
+                        ignoreServerCertificateError(true)
                         assertions {
                             statusCode(200)
                             bodyContainsJsonPath("\$.success", "true")

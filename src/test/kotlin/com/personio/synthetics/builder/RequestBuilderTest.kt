@@ -74,7 +74,7 @@ class RequestBuilderTest {
 
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
-    fun `followRedirects sets bodyType`(value: Boolean) {
+    fun `followRedirects sets followRedirects`(value: Boolean) {
         val sut = RequestBuilder()
         sut.followRedirects(value)
         val result = sut.build()
@@ -82,6 +82,19 @@ class RequestBuilderTest {
         assertEquals(
             value,
             result.followRedirects
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun `ignoreServerCertificateError sets allowInsecure`(value: Boolean) {
+        val sut = RequestBuilder()
+        sut.ignoreServerCertificateError(value)
+        val result = sut.build()
+
+        assertEquals(
+            value,
+            result.allowInsecure
         )
     }
 }
