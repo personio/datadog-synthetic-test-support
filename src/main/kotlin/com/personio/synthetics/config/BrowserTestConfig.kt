@@ -1,5 +1,11 @@
 package com.personio.synthetics.config
 
+/**
+ * Code here is mostly a copy of what is available in SyntheticTestBuilder,
+ * and will be deleted when 3.x.x is available.
+ * @see com.personio.synthetics.builder.SyntheticTestBuilder
+ */
+
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
@@ -116,6 +122,7 @@ fun BrowserTest.minLocationFailed(minLocationFailed: Long) = apply {
  * @param monitorName The monitor name of the test
  * @return BrowserTest object with monitor name set
  */
+
 fun BrowserTest.monitorName(monitorName: String) = apply {
     options.monitorName = monitorName
 }

@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased] - yyyy-mm-dd
 ### New features & improvements
 - Add support for Multi-Step API Synthetic Tests
+- Add deprecation warnings for BrowserTest
 
 ### Breaking changes
 
