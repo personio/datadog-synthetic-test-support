@@ -8,9 +8,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Dependencies: updates of dependency versions
 
 ## [Unreleased] - yyyy-mm-dd
-### New features & improvements
-- Add support for Multi-Step API Synthetic Tests
-- Add deprecation warnings for BrowserTest
 
 ### Breaking changes
 
@@ -19,6 +16,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Bug fixes
 
 ### Dependencies
+
+## [2.1.0] - 2023-09-22
+### Announcements
+- In the future releases some BrowserTest-related methods (test config, variables, etc) will be replaced by the common methods from SyntheticTestBuilder.
+
+### New features & improvements
+- Add support for Multi-Step API Synthetic Tests
+- Add deprecation warnings for BrowserTest
 
 ## [2.0.0] - 2023-09-01
 ### Breaking changes
