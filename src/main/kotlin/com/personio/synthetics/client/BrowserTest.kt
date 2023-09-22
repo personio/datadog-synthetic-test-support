@@ -19,7 +19,7 @@ import com.personio.synthetics.config.loadConfiguration
  * @param name Name of the test
  * @param steps Calls the added steps and configuration functions of the test
  */
-@Deprecated(message="Planned for removal in 3.x.x")
+@Deprecated(message = "Planned for removal in 3.x.x")
 inline fun syntheticBrowserTest(name: String, steps: BrowserTest.() -> Unit) {
     check(name.isNotBlank()) {
         "The test's name must not be empty."
@@ -46,7 +46,8 @@ fun getCredentialsProvider(): CredentialsProvider {
  * Deprecation notice: In future releases this class will be replaced by
  * SyntheticTestBuilder (or similar).
  */
-@Deprecated(message="Planned for removal in 3.x.x") class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsApiClient, private val defaultSettings: Defaults = Config.testConfig.defaults) : SyntheticsBrowserTest() {
+@Deprecated(message = "Planned for removal in 3.x.x")
+class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsApiClient, private val defaultSettings: Defaults = Config.testConfig.defaults) : SyntheticsBrowserTest() {
     init {
         name = testName
         locations = defaultSettings.runLocations
@@ -60,7 +61,9 @@ fun getCredentialsProvider(): CredentialsProvider {
      * it will update the test, else it will create a new test
      * @return SyntheticsBrowserTest object
      */
-    @PublishedApi @Deprecated(message="Planned for removal in 3.x.x") internal fun createBrowserTest(): SyntheticsBrowserTest {
+    @PublishedApi
+    @Deprecated(message = "Planned for removal in 3.x.x")
+    internal fun createBrowserTest(): SyntheticsBrowserTest {
         val testId = getTestId()
         return if (testId != null) {
             syntheticsApiClient.updateBrowserTest(testId, this)
