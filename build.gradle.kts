@@ -47,6 +47,7 @@ dependencies {
     testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
     testImplementation("org.mockito:mockito-inline:5.2.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")

@@ -55,9 +55,6 @@ fun BrowserTest.testFrequency(frequency: Duration) = apply {
  * @return BrowserTest object with advanced scheduling configured
  */
 fun BrowserTest.advancedScheduling(timeframes: Timeframe, timezone: ZoneId = ZoneId.systemDefault()) = apply {
-    require(timeframes.from < timeframes.to) {
-        "From time must be earlier than To time."
-    }
     options.scheduling = SyntheticsTestOptionsScheduling()
     options.scheduling.timeframes = timeframes.days.map {
         SyntheticsTestOptionsSchedulingTimeframe().apply {
