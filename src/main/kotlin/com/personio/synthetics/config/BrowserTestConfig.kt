@@ -1,8 +1,8 @@
 package com.personio.synthetics.config
 
 /**
- * Code here is mostly a copy of what is available in SyntheticTestBuilder,
- * and will be deleted when 3.x.x is available.
+ * This code will be deprecated in the future releases as it is a duplicate of SyntheticTestBuilder.
+ * Most functions are already available in SyntheticTestBuilder.
  * @see com.personio.synthetics.builder.SyntheticTestBuilder
  */
 
