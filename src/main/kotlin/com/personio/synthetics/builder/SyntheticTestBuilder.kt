@@ -87,7 +87,7 @@ abstract class SyntheticTestBuilder(
     }
 
     /**
-     * Sets the tags for the synthetic test
+     * Adds the tags for the synthetic test
      * @param tags List of tags
      */
     fun tags(vararg tags: String) {
@@ -277,6 +277,22 @@ abstract class SyntheticTestBuilder(
      */
     fun uuidVariable(name: String) {
         addLocalVariable(name, "{{ uuid }}")
+    }
+
+    /**
+     * Adds "env:<envName>" tag
+     * @param envName Environment name. Examples: prod, stage, dev.
+     */
+    fun env(envName: String) {
+        tags("env:$envName")
+    }
+
+    /**
+     * Adds "team:<teamName>" tag
+     * @param teamName Team name
+     */
+    fun team(teamName: String) {
+        tags("team:$teamName")
     }
 
     private fun getScaledDate(value: Duration): Pair<Long, String>? =

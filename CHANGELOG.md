@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
+- Add handy `env()` and `team()` functions for adding corresponding Datadog `key:value` tags  
 
 ### Bug fixes
 

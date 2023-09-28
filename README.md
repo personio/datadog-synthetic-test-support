@@ -111,8 +111,8 @@ Start using the library in a gradle project by following the steps below:
 ```kotlin
     fun `add a multi-step API synthetic test`() {
     syntheticMultiStepApiTest("Test Login to the app") {
-        tags("env:qa")
-        baseUrl(URL("https://synthetic-test.personio.de"))
+        env("qa")
+        team("team-one")
         publicLocations(Location.FRANKFURT_AWS)
         testFrequency(5.minutes)
         retry(1, 600.milliseconds)
