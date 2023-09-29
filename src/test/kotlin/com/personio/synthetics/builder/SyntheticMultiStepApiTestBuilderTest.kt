@@ -278,4 +278,26 @@ class SyntheticMultiStepApiTestBuilderTest {
             result.config.steps.count()
         )
     }
+
+    @Test
+    fun `env adds env tag`() {
+        sut.env("env1")
+        sut.env("env2")
+
+        val result = sut.build()
+
+        assertTrue(result.tags.contains("env:env1"))
+        assertTrue(result.tags.contains("env:env2"))
+    }
+
+    @Test
+    fun `team adds team tag`() {
+        sut.team("team-one")
+        sut.team("team-two")
+
+        val result = sut.build()
+
+        assertTrue(result.tags.contains("team:team-one"))
+        assertTrue(result.tags.contains("team:team-two"))
+    }
 }

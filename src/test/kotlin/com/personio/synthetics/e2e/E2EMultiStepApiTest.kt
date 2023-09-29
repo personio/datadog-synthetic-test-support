@@ -22,7 +22,7 @@ class E2EMultiStepApiTest {
         syntheticMultiStepApiTest("[Multi-Step] Synthetic-Test-As-Code") {
             alertMessage("Test failed", "@slack-test_slack_channel")
             recoveryMessage("Test recovered")
-            tags("env:qa")
+            env("qa")
             publicLocations(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
             testFrequency(1.minutes)
             advancedScheduling(
