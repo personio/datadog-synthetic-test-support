@@ -6,6 +6,7 @@ import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.domain.SyntheticTestParameters
@@ -34,6 +35,7 @@ abstract class SyntheticTestBuilder(
     protected var parameters: SyntheticTestParameters
     protected var options: SyntheticsTestOptions
     protected var locations: List<String> = defaults.runLocations
+    protected var status: SyntheticsTestPauseStatus = SyntheticsTestPauseStatus.PAUSED
 
     init {
         parameters = SyntheticTestParameters(
@@ -295,6 +297,10 @@ abstract class SyntheticTestBuilder(
         tags("team:$teamName")
     }
 
+    fun status(status: SyntheticsTestPauseStatus) {
+        this.status = status
+    }
+
     private fun getScaledDate(value: Duration): Pair<Long, String>? =
         value.getScaledValue(
             sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS, DurationUnit.MINUTES, DurationUnit.HOURS, DurationUnit.DAYS),
@@ -332,5 +338,6 @@ abstract class SyntheticTestBuilder(
             ?.id
 
     protected abstract fun addLocalVariable(name: String, pattern: String)
+
     abstract fun useGlobalVariable(name: String)
 }

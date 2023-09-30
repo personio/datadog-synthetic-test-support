@@ -7,7 +7,6 @@ import com.datadog.api.client.v1.model.SyntheticsAPITestType
 import com.datadog.api.client.v1.model.SyntheticsConfigVariable
 import com.datadog.api.client.v1.model.SyntheticsConfigVariableType
 import com.datadog.api.client.v1.model.SyntheticsTestDetailsSubType
-import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.builder.api.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
@@ -36,7 +35,7 @@ class SyntheticMultiStepApiTestBuilder(
             SyntheticsAPITestType.API
         )
             .tags(parameters.tags)
-            .status(SyntheticsTestPauseStatus.PAUSED)
+            .status(status)
             .subtype(SyntheticsTestDetailsSubType.MULTI)
 
     /**

@@ -3,6 +3,7 @@ package com.personio.synthetics.builder
 import com.datadog.api.client.v1.model.SyntheticsAPIStep
 import com.datadog.api.client.v1.model.SyntheticsConfigVariable
 import com.datadog.api.client.v1.model.SyntheticsConfigVariableType
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.builder.api.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
@@ -299,5 +300,19 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertTrue(result.tags.contains("team:team-one"))
         assertTrue(result.tags.contains("team:team-two"))
+    }
+
+    @Test
+    fun `status is set to PAUSED by default`() {
+        val result = sut.build()
+        assertEquals(SyntheticsTestPauseStatus.PAUSED, result.status)
+    }
+
+    @Test
+    fun `status sets status of a test`() {
+        sut.status(SyntheticsTestPauseStatus.LIVE)
+        val result = sut.build()
+
+        assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
     }
 }
