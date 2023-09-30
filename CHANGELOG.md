@@ -23,8 +23,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - In the future releases some BrowserTest-related methods (test config, variables, etc) will be replaced by the common methods from SyntheticTestBuilder.
 
 ### New features & improvements
-- Add support for Multi-Step API Synthetic Tests
-- Add deprecation warnings for BrowserTest
+- Add support for Multi-Step API Synthetic Tests ([#123](https://github.com/personio/datadog-synthetic-test-support/pull/123))
+- Add deprecation warnings for BrowserTest ([#124](https://github.com/personio/datadog-synthetic-test-support/pull/124))
 
 ## [2.0.0] - 2023-09-01
 ### Breaking changes
