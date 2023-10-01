@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix scroll parameters check to include values from -9999 to 9999 ([#140](https://github.com/personio/datadog-synthetic-test-support/pull/140))
 
 ### Dependencies
+- Update datadog-api-client dependency from 2.15.0 to 2.16.0 ([#130](https://github.com/personio/datadog-synthetic-test-support/pull/130))
 
 ## [2.1.0] - 2023-09-22
 ### Announcements
