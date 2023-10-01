@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Dependencies
 - Update datadog-api-client dependency from 2.15.0 to 2.16.0 ([#130](https://github.com/personio/datadog-synthetic-test-support/pull/130))
+- Update secretsmanager dependency from 2.20.139 to 2.20.157 ([#132](https://github.com/personio/datadog-synthetic-test-support/pull/132))
 
 ## [2.1.0] - 2023-09-22
 ### Announcements
