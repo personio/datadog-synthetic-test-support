@@ -6,6 +6,7 @@ import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.domain.SyntheticTestParameters
@@ -33,7 +34,7 @@ abstract class SyntheticTestBuilder(
 ) {
     protected var parameters: SyntheticTestParameters
     protected var options: SyntheticsTestOptions
-    protected var locations: List<String> = defaults.runLocations
+    protected var status: SyntheticsTestPauseStatus = SyntheticsTestPauseStatus.PAUSED
 
     init {
         parameters = SyntheticTestParameters(
@@ -171,8 +172,8 @@ abstract class SyntheticTestBuilder(
      * Allowed minimum location failed is between 1 and the number of locations where the test is configured to run
      */
     fun minLocationFailed(minLocationFailed: Long) {
-        require(minLocationFailed in 1..locations.count()) {
-            "Minimum location failed should be between 1 and the number of locations where the test is configured to run: ${locations.count()}."
+        require(minLocationFailed in 1..parameters.locations.count()) {
+            "Minimum location failed should be between 1 and the number of locations where the test is configured to run: ${parameters.locations.count()}."
         }
         options.minLocationFailed = minLocationFailed
     }
@@ -190,8 +191,8 @@ abstract class SyntheticTestBuilder(
      * @param monitorPriority The monitor priority of the test
      * Allowed monitor priority is one of [1, 2, 3, 4, 5]
      */
-    fun monitorPriority(monitorPriorities: MonitorPriority) {
-        options.monitorPriority = monitorPriorities.priorityValue
+    fun monitorPriority(monitorPriority: MonitorPriority) {
+        options.monitorPriority = monitorPriority.priorityValue
     }
 
     /**
@@ -295,6 +296,10 @@ abstract class SyntheticTestBuilder(
         tags("team:$teamName")
     }
 
+    fun status(status: SyntheticsTestPauseStatus) {
+        this.status = status
+    }
+
     private fun getScaledDate(value: Duration): Pair<Long, String>? =
         value.getScaledValue(
             sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS, DurationUnit.MINUTES, DurationUnit.HOURS, DurationUnit.DAYS),
@@ -332,5 +337,6 @@ abstract class SyntheticTestBuilder(
             ?.id
 
     protected abstract fun addLocalVariable(name: String, pattern: String)
+
     abstract fun useGlobalVariable(name: String)
 }

@@ -113,6 +113,7 @@ Start using the library in a gradle project by following the steps below:
     syntheticMultiStepApiTest("Test Login to the app") {
         env("qa")
         team("team-one")
+        status(SyntheticsTestPauseStatus.LIVE)
         publicLocations(Location.FRANKFURT_AWS)
         testFrequency(5.minutes)
         retry(1, 600.milliseconds)

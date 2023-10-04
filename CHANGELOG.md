@@ -12,7 +12,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Add handy `env()` and `team()` functions for adding corresponding Datadog `key:value` tags  
+- Add handy `env()` and `team()` functions for adding corresponding Datadog `key:value` tags ([#126](https://github.com/personio/datadog-synthetic-test-support/pull/126))
+- Add minimum working implementation of a refactored browser test support ([#129](https://github.com/personio/datadog-synthetic-test-support/pull/129))
+- Add `status()` function to set the SyntheticTestPauseStatus property ([#127](https://github.com/personio/datadog-synthetic-test-support/pull/127))
 
 ### Bug fixes
 
