@@ -1,6 +1,8 @@
 package com.personio.synthetics.dsl
 
 import com.datadog.api.client.v1.model.SyntheticsAPITest
+import com.datadog.api.client.v1.model.SyntheticsBrowserTest
+import com.personio.synthetics.builder.SyntheticBrowserTestBuilder
 import com.personio.synthetics.builder.SyntheticMultiStepApiTestBuilder
 import com.personio.synthetics.client.AwsSecretsManagerCredentialsProvider
 import com.personio.synthetics.client.ConfigCredentialsProvider
@@ -36,6 +38,26 @@ fun syntheticMultiStepApiTest(name: String, init: SyntheticMultiStepApiTestBuild
         client.updateAPITest(testId, test)
     } else {
         client.createSyntheticsAPITest(test)
+    }
+}
+
+fun syntheticBrowserTest(name: String, init: SyntheticBrowserTestBuilder.() -> Unit): SyntheticsBrowserTest {
+    check(name.isNotBlank()) {
+        "The test's name must not be empty."
+    }
+
+    val (client, defaults) = getSyntheticsApiClientAndDefaults()
+
+    val test = SyntheticBrowserTestBuilder(name, defaults, client)
+        .apply(init)
+        .build()
+
+    val testId = getTestId(client, name)
+
+    return if (testId != null) {
+        client.updateBrowserTest(testId, test)
+    } else {
+        client.createSyntheticsBrowserTest(test)
     }
 }
 
