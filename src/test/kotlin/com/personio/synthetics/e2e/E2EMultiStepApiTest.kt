@@ -1,5 +1,6 @@
 package com.personio.synthetics.e2e
 
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.datadog.api.client.v1.model.SyntheticsTestRequestBodyType
 import com.personio.synthetics.builder.RequestMethod
 import com.personio.synthetics.dsl.syntheticMultiStepApiTest
@@ -23,6 +24,7 @@ class E2EMultiStepApiTest {
             alertMessage("Test failed", "@slack-test_slack_channel")
             recoveryMessage("Test recovered")
             env("qa")
+            status(SyntheticsTestPauseStatus.PAUSED)
             publicLocations(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
             testFrequency(1.minutes)
             advancedScheduling(
