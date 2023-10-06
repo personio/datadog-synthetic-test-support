@@ -162,7 +162,7 @@ Start using the library in a gradle project by following the steps below:
 
 7. To publish the tests to Datadog, use the following command:
 ```bash
-   ./gradlew publishSyntheticTests`
+   ./gradlew publishSyntheticTests
 ```
 
 Note:
