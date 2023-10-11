@@ -25,12 +25,12 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 class SyntheticMultiStepApiTestBuilderTest {
-    private lateinit var sut: SyntheticMultiStepApiTestBuilder
+    private lateinit var testBuilder: SyntheticMultiStepApiTestBuilder
 
     @BeforeEach
     fun prepareSut() {
         val apiClientMock = Mockito.mock(SyntheticsApiClient::class.java)
-        sut = SyntheticMultiStepApiTestBuilder(
+        testBuilder = SyntheticMultiStepApiTestBuilder(
             "any_name",
             getConfigFromFile("config-unit-test.yaml").defaults,
             apiClientMock
@@ -39,8 +39,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `monitorName sets monitor name`() {
-        sut.monitorName("any_name")
-        val result = sut.build()
+        testBuilder.monitorName("any_name")
+        val result = testBuilder.build()
 
         assertEquals(
             "any_name",
@@ -50,8 +50,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `alertMessage appends formatted alert message`() {
-        sut.alertMessage("any_failure_message", "any_alert_medium")
-        val result = sut.build()
+        testBuilder.alertMessage("any_failure_message", "any_alert_medium")
+        val result = testBuilder.build()
 
         assertEquals(
             "any_alert_medium {{#is_alert}} any_failure_message {{/is_alert}} ",
@@ -61,8 +61,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `recoveryMessage appends formatted recovery message`() {
-        sut.recoveryMessage("any_recovery_message")
-        val result = sut.build()
+        testBuilder.recoveryMessage("any_recovery_message")
+        val result = testBuilder.build()
 
         assertEquals(
             " {{#is_recovery}} any_recovery_message {{/is_recovery}} ",
@@ -72,8 +72,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `tags sets tags`() {
-        sut.tags("any_tag1", "any_tag2")
-        val result = sut.build()
+        testBuilder.tags("any_tag1", "any_tag2")
+        val result = testBuilder.build()
 
         assertEquals(
             listOf("any_tag1", "any_tag2"),
@@ -83,8 +83,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `publicLocations sets locations`() {
-        sut.publicLocations(Location.FRANKFURT_AWS, Location.LONDON_AWS)
-        val result = sut.build()
+        testBuilder.publicLocations(Location.FRANKFURT_AWS, Location.LONDON_AWS)
+        val result = testBuilder.build()
 
         assertEquals(
             listOf(Location.FRANKFURT_AWS.value, Location.LONDON_AWS.value),
@@ -94,8 +94,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `testFrequency sets options tickEvery`() {
-        sut.testFrequency(5.minutes)
-        val result = sut.build()
+        testBuilder.testFrequency(5.minutes)
+        val result = testBuilder.build()
 
         assertEquals(
             5.minutes.inWholeSeconds,
@@ -106,20 +106,20 @@ class SyntheticMultiStepApiTestBuilderTest {
     @Test
     fun `testFrequency throws IllegalArgumentException when frequency is less than 30 seconds`() {
         assertThrows<IllegalArgumentException> {
-            sut.testFrequency(29.seconds)
+            testBuilder.testFrequency(29.seconds)
         }
     }
 
     @Test
     fun `testFrequency throws IllegalArgumentException when frequency is more than 7 days`() {
         assertThrows<IllegalArgumentException> {
-            sut.testFrequency((604800 + 1).seconds) // 7 days + 1 second
+            testBuilder.testFrequency((604800 + 1).seconds) // 7 days + 1 second
         }
     }
 
     @Test
     fun `advancedScheduling sets the advanced scheduling configuration`() {
-        sut.advancedScheduling(
+        testBuilder.advancedScheduling(
             Timeframe(
                 from = LocalTime.of(0, 1),
                 to = LocalTime.of(23, 59),
@@ -128,7 +128,7 @@ class SyntheticMultiStepApiTestBuilderTest {
             ),
             timezone = ZoneId.of("Europe/Dublin")
         )
-        val result = sut.build()
+        val result = testBuilder.build()
 
         assertEquals(1, result.options.scheduling.timeframes[0].day)
         assertEquals("00:01", result.options.scheduling.timeframes[0].from)
@@ -141,14 +141,14 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `advancedScheduling function sets the advanced scheduling with default timezone in the test config`() {
-        sut.advancedScheduling(
+        testBuilder.advancedScheduling(
             Timeframe(
                 from = LocalTime.of(0, 1),
                 to = LocalTime.of(23, 59),
                 DayOfWeek.MONDAY
             )
         )
-        val result = sut.build()
+        val result = testBuilder.build()
 
         assertNotNull(result.options.scheduling.timezone)
         assertTrue(result.options.scheduling.timezone.isNotEmpty())
@@ -156,8 +156,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `uuidVariable adds variable of UUID pattern`() {
-        sut.uuidVariable("any_name")
-        val result = sut.build()
+        testBuilder.uuidVariable("any_name")
+        val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
@@ -172,8 +172,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `timestampPatternVariable adds variable of timestamp pattern`() {
-        sut.timestampPatternVariable("any_name", 5.minutes, "prefix-", "-suffix")
-        val result = sut.build()
+        testBuilder.timestampPatternVariable("any_name", 5.minutes, "prefix-", "-suffix")
+        val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
@@ -188,8 +188,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `datePatternVariable adds variable of timestamp pattern`() {
-        sut.datePatternVariable("any_name", 5.days, "YYYY-MM-DD", "prefix-", "-suffix")
-        val result = sut.build()
+        testBuilder.datePatternVariable("any_name", 5.days, "YYYY-MM-DD", "prefix-", "-suffix")
+        val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
@@ -204,8 +204,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `alphanumericPatternVariable adds variable of timestamp pattern`() {
-        sut.alphanumericPatternVariable("any_name", 10, "prefix-", "-suffix")
-        val result = sut.build()
+        testBuilder.alphanumericPatternVariable("any_name", 10, "prefix-", "-suffix")
+        val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
@@ -220,8 +220,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `alphabeticPatternVariable adds variable of timestamp pattern`() {
-        sut.alphabeticPatternVariable("any_name", 10, "prefix-", "-suffix")
-        val result = sut.build()
+        testBuilder.alphabeticPatternVariable("any_name", 10, "prefix-", "-suffix")
+        val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
@@ -236,8 +236,8 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `numericPatternVariable adds variable of timestamp pattern`() {
-        sut.numericPatternVariable("any_name", 10, "prefix-", "-suffix")
-        val result = sut.build()
+        testBuilder.numericPatternVariable("any_name", 10, "prefix-", "-suffix")
+        val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
@@ -252,13 +252,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `steps sets provided list of steps`() {
-        sut.steps(
+        testBuilder.steps(
             listOf(
                 SyntheticsAPIStep(),
                 SyntheticsAPIStep()
             )
         )
-        val result = sut.build()
+        val result = testBuilder.build()
 
         assertEquals(
             2,
@@ -271,8 +271,8 @@ class SyntheticMultiStepApiTestBuilderTest {
         val stepsBuilderMock = Mockito.mock(StepsBuilder::class.java)
         whenever(stepsBuilderMock.build())
             .thenReturn(listOf(SyntheticsAPIStep(), SyntheticsAPIStep()))
-        sut.steps(stepsBuilderMock) {}
-        val result = sut.build()
+        testBuilder.steps(stepsBuilderMock) {}
+        val result = testBuilder.build()
 
         assertEquals(
             2,
@@ -282,10 +282,10 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `env adds env tag`() {
-        sut.env("env1")
-        sut.env("env2")
+        testBuilder.env("env1")
+        testBuilder.env("env2")
 
-        val result = sut.build()
+        val result = testBuilder.build()
 
         assertTrue(result.tags.contains("env:env1"))
         assertTrue(result.tags.contains("env:env2"))
@@ -293,10 +293,10 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `team adds team tag`() {
-        sut.team("team-one")
-        sut.team("team-two")
+        testBuilder.team("team-one")
+        testBuilder.team("team-two")
 
-        val result = sut.build()
+        val result = testBuilder.build()
 
         assertTrue(result.tags.contains("team:team-one"))
         assertTrue(result.tags.contains("team:team-two"))
@@ -304,14 +304,14 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `status is set to PAUSED by default`() {
-        val result = sut.build()
+        val result = testBuilder.build()
         assertEquals(SyntheticsTestPauseStatus.PAUSED, result.status)
     }
 
     @Test
     fun `status sets status of a test`() {
-        sut.status(SyntheticsTestPauseStatus.LIVE)
-        val result = sut.build()
+        testBuilder.status(SyntheticsTestPauseStatus.LIVE)
+        val result = testBuilder.build()
 
         assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
     }

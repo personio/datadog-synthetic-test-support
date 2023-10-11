@@ -7,13 +7,14 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class RequestBuilderTest {
+    private var requestBuilder = RequestBuilder()
+
     @Test
     fun `headers appends given headers`() {
-        val sut = RequestBuilder()
-        sut.headers(
+        requestBuilder.headers(
             mapOf("any_header" to "any_value")
         )
-        val result = sut.build()
+        val result = requestBuilder.build()
 
         assertEquals(
             mapOf("any_header" to "any_value"),
@@ -23,9 +24,8 @@ class RequestBuilderTest {
 
     @Test
     fun `cookies add a Cookie header`() {
-        val sut = RequestBuilder()
-        sut.cookies("any_cookie")
-        val result = sut.build()
+        requestBuilder.cookies("any_cookie")
+        val result = requestBuilder.build()
 
         assertEquals(
             mapOf("Cookie" to "any_cookie"),
@@ -35,36 +35,32 @@ class RequestBuilderTest {
 
     @Test
     fun `url sets url`() {
-        val sut = RequestBuilder()
-        sut.url("any_url")
-        val result = sut.build()
+        requestBuilder.url("any_url")
+        val result = requestBuilder.build()
 
         assertEquals("any_url", result.url)
     }
 
     @Test
     fun `method sets http method`() {
-        val sut = RequestBuilder()
-        sut.method(RequestMethod.POST)
-        val result = sut.build()
+        requestBuilder.method(RequestMethod.POST)
+        val result = requestBuilder.build()
 
         assertEquals("POST", result.method)
     }
 
     @Test
     fun `body sets body`() {
-        val sut = RequestBuilder()
-        sut.body("any_body")
-        val result = sut.build()
+        requestBuilder.body("any_body")
+        val result = requestBuilder.build()
 
         assertEquals("any_body", result.body)
     }
 
     @Test
     fun `bodyType sets bodyType`() {
-        val sut = RequestBuilder()
-        sut.bodyType(SyntheticsTestRequestBodyType.APPLICATION_JSON)
-        val result = sut.build()
+        requestBuilder.bodyType(SyntheticsTestRequestBodyType.APPLICATION_JSON)
+        val result = requestBuilder.build()
 
         assertEquals(
             SyntheticsTestRequestBodyType.APPLICATION_JSON,
@@ -75,9 +71,8 @@ class RequestBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `followRedirects sets followRedirects`(value: Boolean) {
-        val sut = RequestBuilder()
-        sut.followRedirects(value)
-        val result = sut.build()
+        requestBuilder.followRedirects(value)
+        val result = requestBuilder.build()
 
         assertEquals(
             value,
@@ -88,9 +83,8 @@ class RequestBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `ignoreServerCertificateError sets allowInsecure`(value: Boolean) {
-        val sut = RequestBuilder()
-        sut.ignoreServerCertificateError(value)
-        val result = sut.build()
+        requestBuilder.ignoreServerCertificateError(value)
+        val result = requestBuilder.build()
 
         assertEquals(
             value,
