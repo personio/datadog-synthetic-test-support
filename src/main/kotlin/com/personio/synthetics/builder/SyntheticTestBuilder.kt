@@ -25,7 +25,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 
 /**
- * An abstract class that wraps common methods for Synthetic Browser and API tests
+ * An abstract class that wraps common functions for Synthetic Browser and API tests
  */
 abstract class SyntheticTestBuilder(
     open val name: String,
@@ -101,6 +101,18 @@ abstract class SyntheticTestBuilder(
      */
     fun publicLocations(vararg locations: Location) {
         parameters.locations = locations.map { it.value }
+    }
+
+    /**
+     * Sets the locations for the synthetic test
+     * @param locationItems List of locations
+     */
+    @Deprecated(
+        message = "The function is deprecated. Please use `publicLocations` instead.",
+        replaceWith = ReplaceWith("publicLocations(*locationItems)")
+    )
+    fun publicLocation(vararg locationItems: Location) {
+        parameters.locations = locationItems.map { it.value }
     }
 
     /**

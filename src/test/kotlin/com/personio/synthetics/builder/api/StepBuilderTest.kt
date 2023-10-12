@@ -23,7 +23,7 @@ import org.mockito.kotlin.whenever
 class StepBuilderTest {
     @Test
     fun `extract sets the extracted values properly`() {
-        val sut = StepBuilder(
+        val stepBuilder = StepBuilder(
             "any_name",
             makeRequestBuilderHappyPathMock(),
             makeAssertionBuilderMock(),
@@ -31,24 +31,24 @@ class StepBuilderTest {
                 SyntheticsParsingOptions()
             )
         )
-        sut.request { }
-        sut.extract("any_variable_name") {}
-        val result = sut.build()
+        stepBuilder.request { }
+        stepBuilder.extract("any_variable_name") {}
+        val result = stepBuilder.build()
 
         assertEquals(1, result.extractedValues.count())
     }
 
     @Test
     fun `extract sets the extracted values to null when no parsing options provided`() {
-        val sut = StepBuilder(
+        val stepBuilder = StepBuilder(
             "any_name",
             makeRequestBuilderHappyPathMock(),
             makeAssertionBuilderMock(),
             makeParsingOptionsBuilderMock()
         )
-        sut.request { }
-        sut.extract("any_variable_name") {}
-        val result = sut.build()
+        stepBuilder.request { }
+        stepBuilder.extract("any_variable_name") {}
+        val result = stepBuilder.build()
 
         assertNull(result.extractedValues)
     }
@@ -56,10 +56,10 @@ class StepBuilderTest {
     @Test
     fun `request sets the request in SyntheticsAPIStep`() {
         val requestBuilderMock = makeRequestBuilderHappyPathMock()
-        val sut = StepBuilder("any_name", requestBuilderMock)
-        sut.request { }
+        val stepBuilder = StepBuilder("any_name", requestBuilderMock)
+        stepBuilder.request { }
 
-        val result = sut.build()
+        val result = stepBuilder.build()
         verify(requestBuilderMock, times(1)).build()
         assertNotNull(result.request)
     }
@@ -69,10 +69,10 @@ class StepBuilderTest {
         val assertionsMock = makeAssertionBuilderMock(
             listOf(SyntheticsAssertion(), SyntheticsAssertion())
         )
-        val sut = StepBuilder("any_name", RequestBuilder(), assertionsMock)
-        sut.assertions { }
-        sut.request { }
-        val result = sut.build()
+        val stepBuilder = StepBuilder("any_name", RequestBuilder(), assertionsMock)
+        stepBuilder.assertions { }
+        stepBuilder.request { }
+        val result = stepBuilder.build()
 
         verify(assertionsMock, times(1)).build()
         assertEquals(2, result.assertions.count())
@@ -80,18 +80,18 @@ class StepBuilderTest {
 
     @Test
     fun `build sets HTTP step subtype`() {
-        val sut = StepBuilder("any_name", RequestBuilder())
-        sut.request { }
-        val result = sut.build()
+        val stepBuilder = StepBuilder("any_name", RequestBuilder())
+        stepBuilder.request { }
+        val result = stepBuilder.build()
 
         assertEquals(SyntheticsAPIStepSubtype.HTTP, result.subtype)
     }
 
     @Test
     fun `build sets step name properly`() {
-        val sut = StepBuilder("any_name", RequestBuilder())
-        sut.request { }
-        val result = sut.build()
+        val stepBuilder = StepBuilder("any_name", RequestBuilder())
+        stepBuilder.request { }
+        val result = stepBuilder.build()
 
         assertEquals("any_name", result.name)
     }
@@ -99,10 +99,10 @@ class StepBuilderTest {
     @Test
     fun `build sets empty assertions by default`() {
         val assertionsMock = makeAssertionBuilderMock()
-        val sut = StepBuilder("any_name", RequestBuilder(), assertionsMock)
-        sut.assertions { }
-        sut.request { }
-        val result = sut.build()
+        val stepBuilder = StepBuilder("any_name", RequestBuilder(), assertionsMock)
+        stepBuilder.assertions { }
+        stepBuilder.request { }
+        val result = stepBuilder.build()
 
         verify(assertionsMock, times(1)).build()
         assertTrue(result.assertions.isEmpty())
@@ -113,20 +113,20 @@ class StepBuilderTest {
         val requestBuilderMock = Mockito.mock(RequestBuilder::class.java)
         whenever(requestBuilderMock.build())
             .thenReturn(null)
-        val sut = StepBuilder("any_name", requestBuilderMock)
+        val stepBuilder = StepBuilder("any_name", requestBuilderMock)
 
         assertThrows<IllegalStateException> {
-            sut.build()
+            stepBuilder.build()
         }
     }
 
     @Test
     fun `build sets isCritical to null when allowFailure is false`() {
-        val sut = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
-        sut.allowFailure = false
-        sut.isCritical = true
-        sut.request { }
-        val result = sut.build()
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        stepBuilder.allowFailure = false
+        stepBuilder.isCritical = true
+        stepBuilder.request { }
+        val result = stepBuilder.build()
 
         assertNull(result.isCritical)
     }
@@ -134,11 +134,11 @@ class StepBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `build sets isCritical to the provided value when allowFailure is true`(isCritical: Boolean) {
-        val sut = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
-        sut.allowFailure = true
-        sut.isCritical = isCritical
-        sut.request { }
-        val result = sut.build()
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        stepBuilder.allowFailure = true
+        stepBuilder.isCritical = isCritical
+        stepBuilder.request { }
+        val result = stepBuilder.build()
 
         assertEquals(isCritical, result.isCritical)
     }

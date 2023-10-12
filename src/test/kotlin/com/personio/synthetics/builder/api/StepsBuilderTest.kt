@@ -9,10 +9,10 @@ import org.mockito.kotlin.whenever
 class StepsBuilderTest {
     @Test
     fun `step adds a step to the list`() {
-        val sut = StepsBuilder()
-        sut.step("any_name", makeStepBuilderMock(SyntheticsAPIStep())) {}
-        sut.step("any_name", makeStepBuilderMock(SyntheticsAPIStep())) {}
-        val result = sut.build()
+        val stepsBuilder = StepsBuilder()
+        stepsBuilder.step("any_name", makeStepBuilderMock(SyntheticsAPIStep())) {}
+        stepsBuilder.step("any_name", makeStepBuilderMock(SyntheticsAPIStep())) {}
+        val result = stepsBuilder.build()
 
         assertEquals(2, result.count())
     }

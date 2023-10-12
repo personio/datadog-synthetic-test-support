@@ -11,11 +11,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class AssertionsBuilderTest {
+    private val assertionsBuilder = AssertionsBuilder()
+
     @Test
     fun `statusCode adds assertion that checks if the status code equals to the provided value`() {
-        val sut = AssertionsBuilder()
-        sut.statusCode(200)
-        val result = sut.build()
+        assertionsBuilder.statusCode(200)
+        val result = assertionsBuilder.build()
 
         assertEquals(
             SyntheticsAssertion(
@@ -30,9 +31,8 @@ class AssertionsBuilderTest {
 
     @Test
     fun `headerContains adds assertion that checks if the header contains the value`() {
-        val sut = AssertionsBuilder()
-        sut.headerContains("any_header", "any_value")
-        val result = sut.build()
+        assertionsBuilder.headerContains("any_header", "any_value")
+        val result = assertionsBuilder.build()
 
         assertEquals(
             SyntheticsAssertion(
@@ -48,9 +48,8 @@ class AssertionsBuilderTest {
 
     @Test
     fun `bodyContainsJsonPath adds assertion that validates the value stored in the given json path against the value provided`() {
-        val sut = AssertionsBuilder()
-        sut.bodyContainsJsonPath("any_json_path", "any_value")
-        val result = sut.build()
+        assertionsBuilder.bodyContainsJsonPath("any_json_path", "any_value")
+        val result = assertionsBuilder.build()
 
         assertEquals(
             SyntheticsAssertion(
@@ -71,9 +70,8 @@ class AssertionsBuilderTest {
 
     @Test
     fun `bodyContains adds assertion that checks if the body contains the given raw value`() {
-        val sut = AssertionsBuilder()
-        sut.bodyContains("any_value")
-        val result = sut.build()
+        assertionsBuilder.bodyContains("any_value")
+        val result = assertionsBuilder.build()
 
         assertEquals(
             SyntheticsAssertion(
@@ -88,12 +86,11 @@ class AssertionsBuilderTest {
 
     @Test
     fun `build returns list of assertions`() {
-        val sut = AssertionsBuilder()
-        sut.statusCode(200)
-        sut.headerContains("any_header", "any_value")
-        sut.bodyContainsJsonPath("any_json_path", "any_value")
-        sut.bodyContains("any_value")
-        val result = sut.build()
+        assertionsBuilder.statusCode(200)
+        assertionsBuilder.headerContains("any_header", "any_value")
+        assertionsBuilder.bodyContainsJsonPath("any_json_path", "any_value")
+        assertionsBuilder.bodyContains("any_value")
+        val result = assertionsBuilder.build()
 
         assertEquals(4, result.count())
     }
