@@ -1,5 +1,6 @@
 package com.personio.synthetics.e2e
 
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.personio.synthetics.dsl.syntheticBrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
@@ -24,6 +25,7 @@ class E2EBrowserTest {
             env("qa")
             tags("synthetics-api")
             baseUrl(URL("https://synthetic-test.personio.de"))
+            browsersAndDevices(SyntheticsDeviceID.CHROME_MOBILE_SMALL, SyntheticsDeviceID.FIREFOX_LAPTOP_LARGE)
             publicLocations(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
             testFrequency(6.minutes)
             advancedScheduling(
