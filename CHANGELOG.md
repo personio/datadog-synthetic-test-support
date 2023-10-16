@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `status()` function to set the SyntheticTestPauseStatus property ([#127](https://github.com/personio/datadog-synthetic-test-support/pull/127))
 - Add `testFrequency()` function to set the test execution frequency in browser tests ([#137](https://github.com/personio/datadog-synthetic-test-support/pull/137))
 - Add `browsersAndDevices()` function to set the device ids for browser tests ([#139](https://github.com/personio/datadog-synthetic-test-support/pull/139))
+- Add `tags()` function to set the tags for browser tests ([#138](https://github.com/personio/datadog-synthetic-test-support/pull/138))
 
 ### Bug fixes
 - Fix scroll parameters check to include values from -9999 to 9999 ([#140](https://github.com/personio/datadog-synthetic-test-support/pull/140))

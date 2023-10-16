@@ -82,6 +82,17 @@ class SyntheticMultiStepApiTestBuilderTest {
     }
 
     @Test
+    fun `tags (list) sets tags`() {
+        testBuilder.tags(listOf("any_tag1", "any_tag2"))
+        val result = testBuilder.build()
+
+        assertEquals(
+            listOf("any_tag1", "any_tag2"),
+            result.tags
+        )
+    }
+
+    @Test
     fun `publicLocations sets locations`() {
         testBuilder.publicLocations(Location.FRANKFURT_AWS, Location.LONDON_AWS)
         val result = testBuilder.build()

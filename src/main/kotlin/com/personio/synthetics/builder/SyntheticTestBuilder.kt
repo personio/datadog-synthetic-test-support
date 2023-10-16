@@ -96,6 +96,18 @@ abstract class SyntheticTestBuilder(
     }
 
     /**
+     * Adds the tags for the synthetic test
+     * @param tags List of tags
+     */
+    @Deprecated(
+        message = "The function is deprecated. Please use `tags` instead.",
+        replaceWith = ReplaceWith("tags(*tags.toTypedArray())")
+    )
+    fun tags(tags: List<String>) {
+        parameters.tags.addAll(tags)
+    }
+
+    /**
      * Sets the locations for the synthetic test
      * @param locations List of locations
      */
