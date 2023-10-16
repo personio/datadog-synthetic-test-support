@@ -116,11 +116,11 @@ abstract class SyntheticTestBuilder(
     }
 
     /**
-     * Sets the test frequency for the synthetic test
+     * Sets the test execution frequency for the synthetic test
      * @param frequency The frequency of the test
      * Allowed test frequency is between 30 seconds and 7 days
      */
-    fun testFrequency(frequency: Duration) {
+    open fun testFrequency(frequency: Duration) {
         require(frequency in 30.seconds..7.days) {
             "Frequency should be between 30 seconds and 1 week."
         }

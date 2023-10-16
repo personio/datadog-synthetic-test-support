@@ -10,6 +10,9 @@ import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
 import java.net.URL
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * A builder for creating SyntheticsBrowserTest instances
@@ -47,6 +50,18 @@ class SyntheticBrowserTestBuilder(
                 .method("GET")
                 .url(url.toString())
         )
+    }
+
+    /**
+     * Sets the test execution frequency for the synthetic browser test
+     * @param frequency The frequency of the test
+     * Allowed test frequency is between 5 minutes and 7 days
+     */
+    override fun testFrequency(frequency: Duration) {
+        require(frequency in 5.minutes..7.days) {
+            "Frequency should be between 5 minutes and 7 days."
+        }
+        options.tickEvery = frequency.inWholeSeconds
     }
 
     override fun addLocalVariable(name: String, pattern: String) {

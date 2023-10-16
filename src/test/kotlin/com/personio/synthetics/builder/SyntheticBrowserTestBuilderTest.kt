@@ -3,11 +3,14 @@ package com.personio.synthetics.builder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
 import com.personio.synthetics.model.config.Location
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import java.net.URL
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.minutes
 
 class SyntheticBrowserTestBuilderTest {
     private lateinit var testBuilder: SyntheticBrowserTestBuilder
@@ -27,7 +30,7 @@ class SyntheticBrowserTestBuilderTest {
         testBuilder.baseUrl(URL("https://synthetic-test.personio.de"))
         val result = testBuilder.build()
 
-        Assertions.assertEquals(
+        assertEquals(
             "https://synthetic-test.personio.de",
             result.config.request.url
         )
@@ -38,7 +41,7 @@ class SyntheticBrowserTestBuilderTest {
         testBuilder.publicLocations(Location.TOKYO_AWS, Location.LONDON_AWS)
         val result = testBuilder.build()
 
-        Assertions.assertEquals(
+        assertEquals(
             listOf(Location.TOKYO_AWS.value, Location.LONDON_AWS.value),
             result.locations
         )
@@ -49,9 +52,34 @@ class SyntheticBrowserTestBuilderTest {
         testBuilder.publicLocation(Location.TOKYO_AWS, Location.LONDON_AWS)
         val result = testBuilder.build()
 
-        Assertions.assertEquals(
+        assertEquals(
             listOf(Location.TOKYO_AWS.value, Location.LONDON_AWS.value),
             result.locations
+        )
+    }
+
+    @Test
+    fun `testFrequency throws IllegalArgumentException if frequency is less than 5 minutes`() {
+        assertThrows<IllegalArgumentException> {
+            testBuilder.testFrequency(4.minutes)
+        }
+    }
+
+    @Test
+    fun `testFrequency throws IllegalArgumentException if frequency is more than 7 days`() {
+        assertThrows<IllegalArgumentException> {
+            testBuilder.testFrequency(8.days)
+        }
+    }
+
+    @Test
+    fun `testFrequency sets frequency in whole seconds`() {
+        testBuilder.testFrequency(7.days)
+        val result = testBuilder.build()
+
+        assertEquals(
+            7.days.inWholeSeconds,
+            result.options.tickEvery
         )
     }
 }
