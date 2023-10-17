@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `testFrequency()` function to set the test execution frequency in browser tests ([#137](https://github.com/personio/datadog-synthetic-test-support/pull/137))
 
 ### Bug fixes
+- Fix scroll parameters check to include values from -9999 to 9999 ([#140](https://github.com/personio/datadog-synthetic-test-support/pull/140))
 
 ### Dependencies
 
