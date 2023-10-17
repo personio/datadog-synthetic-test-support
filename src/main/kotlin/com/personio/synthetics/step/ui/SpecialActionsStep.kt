@@ -44,8 +44,8 @@ fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): 
         f()
         with(params as SpecialActionsParams) {
             check(
-                (x in 0..9999 && y in 0..9999) || (element != null)
-            ) { "Either set x,y coordinates within(0,9999) pixels or target element for step:'$stepName'." }
+                (x in -9999..9999 && y in -9999..9999) || (element != null)
+            ) { "Either set x,y coordinates within(-9999,9999) pixels or target element for step:'$stepName'." }
         }
     }
 

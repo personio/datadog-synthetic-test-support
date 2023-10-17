@@ -143,20 +143,20 @@ internal class SpecialActionsStepTest {
     }
 
     @Test
-    fun `scrollStep throws exception for x coordinate less than 0 pixels`() {
+    fun `scrollStep throws exception for x coordinate less than -9999 pixels`() {
         assertThrows<IllegalStateException> {
             browserTest.scrollStep("Step") {
                 verticalScroll(1)
-                horizontalScroll(-1)
+                horizontalScroll(-10000)
             }
         }
     }
 
     @Test
-    fun `scrollStep throws exception for y coordinate less than 0 pixels`() {
+    fun `scrollStep throws exception for y coordinate less than -9999 pixels`() {
         assertThrows<IllegalStateException> {
             browserTest.scrollStep("Step") {
-                verticalScroll(-1)
+                verticalScroll(-10000)
                 horizontalScroll(1)
             }
         }
