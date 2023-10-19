@@ -17,6 +17,8 @@ import kotlin.time.Duration.Companion.minutes
 
 /**
  * A builder for creating SyntheticsBrowserTest instances
+ * The builder is still in progress, don't use it for the browser test creation
+ * Follow [E2ETest][https://github.com/personio/datadog-synthetic-test-support/blob/master/src/test/kotlin/com/personio/synthetics/e2e/E2ETest.kt] example to create a browser synthetic test
  */
 class SyntheticBrowserTestBuilder(
     override val name: String,
