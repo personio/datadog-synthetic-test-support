@@ -1,5 +1,6 @@
 package com.personio.synthetics.builder
 
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
 import com.personio.synthetics.model.config.Location
@@ -80,6 +81,28 @@ class SyntheticBrowserTestBuilderTest {
         assertEquals(
             7.days.inWholeSeconds,
             result.options.tickEvery
+        )
+    }
+
+    @Test
+    fun `browserAndDevice sets deviceIds`() {
+        testBuilder.browserAndDevice(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET)
+        val result = testBuilder.build()
+
+        assertEquals(
+            result.options.deviceIds,
+            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET)
+        )
+    }
+
+    @Test
+    fun `browsersAndDevices sets deviceIds`() {
+        testBuilder.browsersAndDevices(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET)
+        val result = testBuilder.build()
+
+        assertEquals(
+            result.options.deviceIds,
+            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET)
         )
     }
 }

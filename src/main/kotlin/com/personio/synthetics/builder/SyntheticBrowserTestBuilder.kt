@@ -5,6 +5,7 @@ import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
 import com.datadog.api.client.v1.model.SyntheticsBrowserTestType
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
+import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.client.SyntheticsApiClient
@@ -62,6 +63,26 @@ class SyntheticBrowserTestBuilder(
             "Frequency should be between 5 minutes and 7 days."
         }
         options.tickEvery = frequency.inWholeSeconds
+    }
+
+    /**
+     * Sets the browsers and devices for the synthetic browser test
+     * @param deviceIds Pass comma separated browsers and devices to the test config derived from SyntheticsDeviceID class
+     */
+    fun browsersAndDevices(vararg deviceIds: SyntheticsDeviceID) {
+        options.deviceIds = deviceIds.map { it }
+    }
+
+    /**
+     * Sets the browsers and devices for the synthetic browser test
+     * @param deviceIds Pass comma separated browsers and devices to the test config derived from SyntheticsDeviceID class
+     */
+    @Deprecated(
+        message = "The function is deprecated. Please use `browsersAndDevices` instead.",
+        replaceWith = ReplaceWith("browsersAndDevices(*deviceIds)")
+    )
+    fun browserAndDevice(vararg deviceIds: SyntheticsDeviceID) {
+        options.deviceIds = deviceIds.map { it }
     }
 
     override fun addLocalVariable(name: String, pattern: String) {
