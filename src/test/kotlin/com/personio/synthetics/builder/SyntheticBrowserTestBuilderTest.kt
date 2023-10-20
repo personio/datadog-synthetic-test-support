@@ -1,10 +1,12 @@
 package com.personio.synthetics.builder
 
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
 import com.personio.synthetics.model.config.Location
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -104,5 +106,19 @@ class SyntheticBrowserTestBuilderTest {
             listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
             result.options.deviceIds
         )
+    }
+
+    @Test
+    fun `status sets status of a test`() {
+        testBuilder.status(SyntheticsTestPauseStatus.LIVE)
+        val result = testBuilder.build()
+
+        assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
+    }
+
+    @Test
+    fun `build specifies no status by default`() {
+        val result = testBuilder.build()
+        assertNull(result.status)
     }
 }

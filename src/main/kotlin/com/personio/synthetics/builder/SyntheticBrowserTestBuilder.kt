@@ -6,7 +6,6 @@ import com.datadog.api.client.v1.model.SyntheticsBrowserTestType
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
-import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
@@ -31,8 +30,8 @@ class SyntheticBrowserTestBuilder(
      * Builds a synthetic browser test
      * @return SyntheticsBrowserTest object that contains a browser test
      */
-    fun build(): SyntheticsBrowserTest =
-        SyntheticsBrowserTest(
+    fun build(): SyntheticsBrowserTest {
+        val test = SyntheticsBrowserTest(
             config,
             parameters.locations,
             parameters.message,
@@ -41,7 +40,13 @@ class SyntheticBrowserTestBuilder(
             SyntheticsBrowserTestType.BROWSER
         )
             .tags(parameters.tags)
-            .status(SyntheticsTestPauseStatus.PAUSED)
+
+        status?.let {
+            test.status(it)
+        }
+
+        return test
+    }
 
     /**
      * Sets the base url for the synthetic browser test

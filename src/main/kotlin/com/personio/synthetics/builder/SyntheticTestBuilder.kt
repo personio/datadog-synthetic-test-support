@@ -34,7 +34,7 @@ abstract class SyntheticTestBuilder(
 ) {
     protected var parameters: SyntheticTestParameters
     protected var options: SyntheticsTestOptions
-    protected var status: SyntheticsTestPauseStatus = SyntheticsTestPauseStatus.PAUSED
+    protected var status: SyntheticsTestPauseStatus? = null
 
     init {
         parameters = SyntheticTestParameters(
@@ -320,6 +320,10 @@ abstract class SyntheticTestBuilder(
         tags("team:$teamName")
     }
 
+    /**
+     * Sets a synthetic test status
+     * @param status Synthetic test status
+     */
     fun status(status: SyntheticsTestPauseStatus) {
         this.status = status
     }

@@ -25,8 +25,8 @@ class SyntheticMultiStepApiTestBuilder(
      * Builds a synthetic API test
      * @return SyntheticsAPITest object that contains an API test
      */
-    fun build(): SyntheticsAPITest =
-        SyntheticsAPITest(
+    fun build(): SyntheticsAPITest {
+        val test = SyntheticsAPITest(
             config,
             parameters.locations,
             parameters.message,
@@ -35,8 +35,14 @@ class SyntheticMultiStepApiTestBuilder(
             SyntheticsAPITestType.API
         )
             .tags(parameters.tags)
-            .status(status)
             .subtype(SyntheticsTestDetailsSubType.MULTI)
+
+        status?.let {
+            test.status(it)
+        }
+
+        return test
+    }
 
     /**
      * Specifies API steps for a test using a DSL
