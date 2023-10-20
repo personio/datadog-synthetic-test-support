@@ -90,8 +90,8 @@ class SyntheticBrowserTestBuilderTest {
         val result = testBuilder.build()
 
         assertEquals(
-            result.options.deviceIds,
-            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET)
+            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
+            result.options.deviceIds
         )
     }
 
@@ -101,8 +101,8 @@ class SyntheticBrowserTestBuilderTest {
         val result = testBuilder.build()
 
         assertEquals(
-            result.options.deviceIds,
-            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET)
+            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
+            result.options.deviceIds
         )
     }
 }
