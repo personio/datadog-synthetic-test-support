@@ -12,11 +12,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Make the test `status` not set by default ([#144](https://github.com/personio/datadog-synthetic-test-support/pull/144))
 
 ### Bug fixes
 
 ### Dependencies
+
+## [2.3.0] - 2023-10-23
+### New features & improvements
+- Make the test `status` not set by default ([#144](https://github.com/personio/datadog-synthetic-test-support/pull/144))
 
 ## [2.2.0] - 2023-10-20
 ### New features & improvements
