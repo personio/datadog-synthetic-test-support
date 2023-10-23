@@ -11,6 +11,7 @@ import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.Timeframe
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -314,16 +315,16 @@ class SyntheticMultiStepApiTestBuilderTest {
     }
 
     @Test
-    fun `status is set to PAUSED by default`() {
-        val result = testBuilder.build()
-        assertEquals(SyntheticsTestPauseStatus.PAUSED, result.status)
-    }
-
-    @Test
     fun `status sets status of a test`() {
         testBuilder.status(SyntheticsTestPauseStatus.LIVE)
         val result = testBuilder.build()
 
         assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
+    }
+
+    @Test
+    fun `build specifies no status by default`() {
+        val result = testBuilder.build()
+        assertNull(result.status)
     }
 }
