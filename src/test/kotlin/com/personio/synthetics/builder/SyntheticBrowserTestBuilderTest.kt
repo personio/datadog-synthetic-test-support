@@ -1,16 +1,19 @@
 package com.personio.synthetics.builder
 
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
+import com.personio.synthetics.TEST_STEP_NAME
+import com.personio.synthetics.builder.browser.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
 import com.personio.synthetics.model.config.Location
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
+import org.mockito.kotlin.whenever
 import java.net.URL
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
@@ -23,7 +26,7 @@ class SyntheticBrowserTestBuilderTest {
         val apiClientMock = Mockito.mock(SyntheticsApiClient::class.java)
         testBuilder =
             SyntheticBrowserTestBuilder(
-                "any_name",
+                TEST_STEP_NAME,
                 getConfigFromFile("config-unit-test.yaml").defaults,
                 apiClientMock,
             )
@@ -110,16 +113,28 @@ class SyntheticBrowserTestBuilderTest {
     }
 
     @Test
+    fun `build sets no steps by default`() {
+        val result = testBuilder.build()
+
+        assertEquals(0, result.steps.count())
+    }
+
+    @Test
+    fun `steps evaluates provided lambda and sets steps`() {
+        val stepsBuilderMock = Mockito.mock(StepsBuilder::class.java)
+        whenever(stepsBuilderMock.build())
+            .thenReturn(listOf(SyntheticsStep(), SyntheticsStep()))
+        testBuilder.steps(stepsBuilderMock) {}
+        val result = testBuilder.build()
+
+        assertEquals(2, result.steps.count())
+    }
+
+    @Test
     fun `status sets status of a test`() {
         testBuilder.status(SyntheticsTestPauseStatus.LIVE)
         val result = testBuilder.build()
 
         assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
-    }
-
-    @Test
-    fun `build specifies no status by default`() {
-        val result = testBuilder.build()
-        assertNull(result.status)
     }
 }

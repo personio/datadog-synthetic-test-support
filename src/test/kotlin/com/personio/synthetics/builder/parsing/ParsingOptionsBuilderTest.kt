@@ -4,6 +4,7 @@ import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParseTestOptionsT
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsVariableParser
+import com.personio.synthetics.TEST_STEP_NAME
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,15 +17,15 @@ class ParsingOptionsBuilderTest {
     @Test
     fun `variable sets variable name`() {
         parsingOptionsBuilder.bodyJsonPath("any")
-        parsingOptionsBuilder.variable("any_name")
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
 
-        assertEquals("any_name", parsingOptionsBuilder.build()!!.name)
+        assertEquals(TEST_STEP_NAME, parsingOptionsBuilder.build()!!.name)
     }
 
     @Test
     fun `build throws IllegalArgumentException when no parsing options set`() {
         val parsingOptionsBuilder = ParsingOptionsBuilder()
-        parsingOptionsBuilder.variable("any_name")
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
 
         assertThrows<IllegalStateException> {
             parsingOptionsBuilder.build()
@@ -41,12 +42,12 @@ class ParsingOptionsBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `bodyJsonPath returns parsing options with JSON_PATH parser type and HTTP_BODY type`(secure: Boolean) {
-        parsingOptionsBuilder.variable("any_name")
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
         parsingOptionsBuilder.bodyJsonPath("any_json_path", secure)
 
         assertEquals(
             SyntheticsParsingOptions()
-                .name("any_name")
+                .name(TEST_STEP_NAME)
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.JSON_PATH)
@@ -61,12 +62,12 @@ class ParsingOptionsBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `bodyRegex returns parsing options with REGEX parser type and HTTP_BODY type`(secure: Boolean) {
-        parsingOptionsBuilder.variable("any_name")
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
         parsingOptionsBuilder.bodyRegex("any_regex", secure)
 
         assertEquals(
             SyntheticsParsingOptions()
-                .name("any_name")
+                .name(TEST_STEP_NAME)
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
@@ -81,12 +82,12 @@ class ParsingOptionsBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `header returns parsing options with RAW parser type and HTTP_HEADER type`(secure: Boolean) {
-        parsingOptionsBuilder.variable("any_name")
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
         parsingOptionsBuilder.header("any_header_name", secure)
 
         assertEquals(
             SyntheticsParsingOptions()
-                .name("any_name")
+                .name(TEST_STEP_NAME)
                 .field("any_header_name")
                 .parser(
                     SyntheticsVariableParser()
@@ -101,12 +102,12 @@ class ParsingOptionsBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `headerRegex returns parsing options with REGEX parser type and HTTP_HEADER type`(secure: Boolean) {
-        parsingOptionsBuilder.variable("any_name")
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
         parsingOptionsBuilder.headerRegex("any_header_name", "any_regex", secure)
 
         assertEquals(
             SyntheticsParsingOptions()
-                .name("any_name")
+                .name(TEST_STEP_NAME)
                 .field("any_header_name")
                 .parser(
                     SyntheticsVariableParser()

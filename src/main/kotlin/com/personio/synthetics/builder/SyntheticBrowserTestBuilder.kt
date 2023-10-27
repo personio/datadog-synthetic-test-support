@@ -6,7 +6,9 @@ import com.datadog.api.client.v1.model.SyntheticsBrowserTestType
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
+import com.personio.synthetics.builder.browser.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
 import java.net.URL
@@ -25,6 +27,7 @@ class SyntheticBrowserTestBuilder(
     apiClient: SyntheticsApiClient,
 ) : SyntheticTestBuilder(name, defaults, apiClient) {
     private val config = SyntheticsBrowserTestConfig()
+    private var steps: MutableList<SyntheticsStep> = mutableListOf()
 
     /**
      * Builds a synthetic browser test
@@ -40,6 +43,7 @@ class SyntheticBrowserTestBuilder(
                 options,
                 SyntheticsBrowserTestType.BROWSER,
             )
+                .steps(steps)
                 .tags(parameters.tags)
 
         status?.let {
@@ -91,6 +95,13 @@ class SyntheticBrowserTestBuilder(
     )
     fun browserAndDevice(vararg deviceIds: SyntheticsDeviceID) {
         options.deviceIds = deviceIds.map { it }
+    }
+
+    fun steps(
+        stepsBuilder: StepsBuilder = StepsBuilder(),
+        init: StepsBuilder.() -> Unit,
+    ) {
+        steps = stepsBuilder.apply(init).build().toMutableList()
     }
 
     override fun addLocalVariable(
