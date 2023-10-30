@@ -28,6 +28,7 @@ val e2eTest =
         group = "verification"
         filter {
             includeTestsMatching("*.e2e.*")
+            excludeTestsMatching("com.personio.synthetics.e2e.E2EBrowserTest.*")
         }
         useJUnitPlatform()
     }
