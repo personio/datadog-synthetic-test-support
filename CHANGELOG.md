@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
--  Refactor the Browser tests to use the builder approach ([#188](https://github.com/personio/datadog-synthetic-test-support/pull/188))
+-  Refactor the Browser tests to use the builder approach ([#188](https://github.com/personio/datadog-synthetic-test-support/pull/188), [#189](https://github.com/personio/datadog-synthetic-test-support/pull/189))
 
 ### Bug fixes
 

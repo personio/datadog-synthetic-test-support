@@ -135,6 +135,6 @@ class SyntheticBrowserTestBuilderTest {
         testBuilder.status(SyntheticsTestPauseStatus.LIVE)
         val result = testBuilder.build()
 
-        assertEquals(0, result.steps.count())
+        assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
     }
 }
