@@ -55,6 +55,7 @@ class E2EBrowserTest {
             steps {
                 typeText("Type text", "new_text", TargetElement("#my-element"))
                 click("Click", TargetElement("#my-element"))
+                hover("Hover", TargetElement("#my-element"))
             }
         }
     }

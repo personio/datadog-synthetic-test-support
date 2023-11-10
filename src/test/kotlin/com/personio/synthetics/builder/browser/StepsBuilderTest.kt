@@ -3,6 +3,7 @@ package com.personio.synthetics.builder.browser
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.model.actions.ActionsParams
+import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -46,6 +47,27 @@ class StepsBuilderTest {
                 .params(
                     ActionsParams(
                         element = TargetElement("any_locator").getElementObject()
+                    )
+                ),
+            result.first()
+        )
+    }
+
+    @Test
+    fun `hover adds hover step`() {
+        val sut = StepsBuilder()
+        sut.hover("any_name", TargetElement("any_locator"))
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.HOVER)
+                .params(
+                    SpecialActionsParams(
+                        element = TargetElement("any_locator").getSpecialActionsElementObject()
                     )
                 ),
             result.first()
