@@ -95,9 +95,6 @@ class SyntheticBrowserTestBuilder(
         steps = stepsBuilder.apply(init).build().toMutableList()
     }
 
-    fun assertThat(assertionsBuilder: AssertionsBuilder = AssertionsBuilder(), init: AssertionsBuilder.() -> Unit) {
-    }
-
     override fun addLocalVariable(name: String, pattern: String) {
         config.addVariablesItem(
             SyntheticsBrowserVariable()
