@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     val kotlinVersion = "1.9.20"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
-    id("org.jetbrains.dokka") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.10"
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     kotlin("plugin.serialization") version kotlinVersion
     `maven-publish`
