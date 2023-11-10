@@ -2,6 +2,7 @@ package com.personio.synthetics.builder.browser
 
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
+import com.personio.synthetics.model.Params
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
@@ -90,6 +91,18 @@ class StepsBuilder {
             stepName = stepName,
             type = SyntheticsStepType.WAIT,
             params = WaitParams(value = duration.inWholeSeconds.toInt()),
+        )
+    }
+
+    /**
+     * Adds a new refresh step to the synthetic browser test
+     * @param stepName Name of the step
+     */
+    fun refresh(stepName: String) {
+        addStep(
+            stepName = stepName,
+            type = SyntheticsStepType.REFRESH,
+            params = Params(),
         )
     }
 

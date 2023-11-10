@@ -54,6 +54,7 @@ class E2EBrowserTest {
                 click("Click", TargetElement("#my-element"))
                 hover("Hover", TargetElement("#my-element"))
                 wait("Wait", 3.seconds)
+                refresh("Refresh")
             }
         }
     }
