@@ -4,9 +4,11 @@ import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
+import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 class StepsBuilderTest {
     @Test
@@ -70,6 +72,23 @@ class StepsBuilderTest {
                         element = TargetElement("any_locator").getSpecialActionsElementObject()
                     )
                 ),
+            result.first()
+        )
+    }
+
+    @Test
+    fun `wait adds wait step`() {
+        val sut = StepsBuilder()
+        sut.wait("any_name", 5.seconds)
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.WAIT)
+                .params(WaitParams(5)),
             result.first()
         )
     }

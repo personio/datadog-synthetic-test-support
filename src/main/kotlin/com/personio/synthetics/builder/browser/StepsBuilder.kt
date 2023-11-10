@@ -4,7 +4,9 @@ import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
+import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.step.ui.model.TargetElement
+import kotlin.time.Duration
 
 private const val DEFAULT_TEXT_DELAY_MILLIS: Long = 25
 
@@ -44,6 +46,14 @@ class StepsBuilder {
             params = SpecialActionsParams(
                 element = targetElement.getSpecialActionsElementObject()
             )
+        )
+    }
+
+    fun wait(name: String, duration: Duration) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.WAIT,
+            params = WaitParams(value = duration.inWholeSeconds.toInt())
         )
     }
 
