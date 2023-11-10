@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Bug fixes
 
 ### Dependencies
+- Update commons-text dependency from 1.10.0 to 1.11.0 ([#151](https://github.com/personio/datadog-synthetic-test-support/pull/151))
 - Update kotlin-stdlib dependency from 1.9.10 to 1.9.20 ([#149](https://github.com/personio/datadog-synthetic-test-support/pull/149))
 
 ## [2.3.0] - 2023-10-23
