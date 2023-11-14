@@ -2,12 +2,15 @@ package com.personio.synthetics.builder.browser
 
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
+import com.personio.synthetics.builder.browser.step.ScrollBuilder
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import org.mockito.kotlin.whenever
 import kotlin.time.Duration.Companion.seconds
 
 class StepsBuilderTest {
@@ -120,5 +123,28 @@ class StepsBuilderTest {
                 .params(ActionsParams(value = "any_url")),
             result.first()
         )
+    }
+
+    @Test
+    fun `scroll adds scroll step`() {
+        val sut = StepsBuilder()
+        sut.scroll("any_name", makeScrollBuilderMock(10 to 15)) {}
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.SCROLL)
+                .params(SpecialActionsParams(x = 10, y = 15)),
+            result.first()
+        )
+    }
+
+    private fun makeScrollBuilderMock(coordinates: Pair<Int, Int>): ScrollBuilder {
+        val mock = Mockito.mock(ScrollBuilder::class.java)
+        whenever(mock.build()).thenReturn(coordinates)
+        return mock
     }
 }

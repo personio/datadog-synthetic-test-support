@@ -60,6 +60,13 @@ class E2EBrowserTest {
                 wait("Wait", 3.seconds)
                 refresh("Refresh")
                 goto("Go to URL", "https://synthetic-test.personio.de/test")
+
+                scroll("Scroll to test element") {
+                    up(10)
+                    down(5)
+                    left(20)
+                    right(20)
+                }
             }
         }
     }

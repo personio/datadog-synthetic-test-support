@@ -2,6 +2,7 @@ package com.personio.synthetics.builder.browser
 
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
+import com.personio.synthetics.builder.browser.step.ScrollBuilder
 import com.personio.synthetics.model.Params
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
@@ -71,6 +72,19 @@ class StepsBuilder {
             name = name,
             type = SyntheticsStepType.GO_TO_URL,
             params = ActionsParams(value = url)
+        )
+    }
+
+    fun scroll(name: String, scrollBuilder: ScrollBuilder = ScrollBuilder(), init: ScrollBuilder.() -> Unit) {
+        val coordinates = scrollBuilder.apply(init).build()
+
+        addStep(
+            name = name,
+            type = SyntheticsStepType.SCROLL,
+            params = SpecialActionsParams(
+                x = coordinates.first,
+                y = coordinates.second
+            )
         )
     }
 
