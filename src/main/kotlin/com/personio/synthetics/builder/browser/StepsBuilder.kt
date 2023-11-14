@@ -66,6 +66,14 @@ class StepsBuilder {
         )
     }
 
+    fun goto(name: String, url: String) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.GO_TO_URL,
+            params = ActionsParams(value = url)
+        )
+    }
+
     private fun addStep(name: String, type: SyntheticsStepType, params: Any) {
         steps += SyntheticsStep()
             .name(name)

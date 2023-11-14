@@ -59,6 +59,7 @@ class E2EBrowserTest {
                 hover("Hover", TargetElement("#my-element"))
                 wait("Wait", 3.seconds)
                 refresh("Refresh")
+                goto("Go to URL", "https://synthetic-test.personio.de/test")
             }
         }
     }

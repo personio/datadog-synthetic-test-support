@@ -104,4 +104,21 @@ class StepsBuilderTest {
         assertEquals(SyntheticsStepType.REFRESH, result.first().type)
         assertEquals("any_name", result.first().name)
     }
+
+    @Test
+    fun `goto adds go to URL step`() {
+        val sut = StepsBuilder()
+        sut.goto("any_name", "any_url")
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.GO_TO_URL)
+                .params(ActionsParams(value = "any_url")),
+            result.first()
+        )
+    }
 }
