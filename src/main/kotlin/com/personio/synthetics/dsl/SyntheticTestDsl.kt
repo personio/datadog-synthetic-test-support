@@ -69,24 +69,20 @@ fun syntheticBrowserTest(
     }
 }
 
-private fun getTestId(
-    syntheticsApiClient: SyntheticsApiClient,
-    name: String,
-) = syntheticsApiClient.listTests()
-    .tests
-    .orEmpty()
-    .filterNotNull()
-    .find { it.name.equals(name) }
-    ?.publicId
+private fun getTestId(syntheticsApiClient: SyntheticsApiClient, name: String) =
+    syntheticsApiClient.listTests()
+        .tests
+        .orEmpty()
+        .filterNotNull()
+        .find { it.name == name }
+        ?.publicId
 
 private fun getCredentialsProvider(credentials: Credentials): CredentialsProvider {
     return credentials.let {
         when {
             !it.datadogCredentialsAwsArn.isNullOrEmpty() -> AwsSecretsManagerCredentialsProvider(it)
             !it.ddApiKey.isNullOrEmpty() && !it.ddAppKey.isNullOrEmpty() -> ConfigCredentialsProvider(it)
-            else -> throw IllegalStateException(
-                "Please set the required config values for credentials in the \"configuration.yaml\" under resources.",
-            )
+            else -> error("Please set the required config values for credentials in the \"configuration.yaml\" under resources.")
         }
     }
 }
