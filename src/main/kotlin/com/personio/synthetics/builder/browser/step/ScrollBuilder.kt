@@ -8,19 +8,11 @@ class ScrollBuilder {
         return x to y
     }
 
-    fun up(value: Int) {
-        y += value
-    }
-
-    fun down(value: Int) {
-        up(-value)
-    }
-
-    fun left(value: Int) {
-        right(-value)
-    }
-
-    fun right(value: Int) {
+    fun horizontal(value: Int) {
         x += value
+    }
+
+    fun vertical(value: Int) {
+        y += value
     }
 }

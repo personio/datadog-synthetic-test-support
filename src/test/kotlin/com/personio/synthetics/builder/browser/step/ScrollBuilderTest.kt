@@ -7,30 +7,16 @@ class ScrollBuilderTest {
     private val sut = ScrollBuilder()
 
     @Test
-    fun `up increases y`() {
-        sut.up(10)
+    fun `vertical adjusts y`() {
+        sut.vertical(10)
 
         assertEquals(10, sut.build().second)
     }
 
     @Test
-    fun `down decreases y`() {
-        sut.down(10)
-
-        assertEquals(-10, sut.build().second)
-    }
-
-    @Test
-    fun `right increases x`() {
-        sut.right(10)
+    fun `horizontal increases x`() {
+        sut.horizontal(10)
 
         assertEquals(10, sut.build().first)
-    }
-
-    @Test
-    fun `left decreases x`() {
-        sut.left(10)
-
-        assertEquals(-10, sut.build().first)
     }
 }

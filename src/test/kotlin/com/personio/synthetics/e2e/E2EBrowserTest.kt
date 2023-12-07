@@ -62,10 +62,8 @@ class E2EBrowserTest {
                 goto("Go to URL", "https://synthetic-test.personio.de/test")
 
                 scroll("Scroll using coordinates") {
-                    up(10)
-                    down(5)
-                    left(20)
-                    right(20)
+                    horizontal(10)
+                    vertical(20)
                 }
             }
         }
