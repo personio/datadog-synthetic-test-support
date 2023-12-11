@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Dependencies
 - Update commons-text dependency from 1.10.0 to 1.11.0 ([#151](https://github.com/personio/datadog-synthetic-test-support/pull/151))
+- Update datadog-api-client dependency from 2.16.0 to 2.18.0 ([#164](https://github.com/personio/datadog-synthetic-test-support/pull/164))
 - Update kotlin-stdlib dependency from 1.9.10 to 1.9.21 ([#149](https://github.com/personio/datadog-synthetic-test-support/pull/149), [#163](https://github.com/personio/datadog-synthetic-test-support/pull/163))
 - Update jackson-dataformat-yaml dependency from 2.15.2 to 2.15.3 ([#153](https://github.com/personio/datadog-synthetic-test-support/pull/153))
 - Update jackson-module-kotlin dependency from 2.15.2 to 2.15.3 ([#153](https://github.com/personio/datadog-synthetic-test-support/pull/153))
