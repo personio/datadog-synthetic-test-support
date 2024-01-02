@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
+- Add `bodyDoesNotContain()` assertion function to check if a response body doesn't contain specific values
 
 ### Bug fixes
 
