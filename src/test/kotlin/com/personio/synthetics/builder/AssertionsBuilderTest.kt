@@ -85,6 +85,22 @@ class AssertionsBuilderTest {
     }
 
     @Test
+    fun `bodyDoesNotContains adds assertion that checks if the body does not contain the given raw value`() {
+        assertionsBuilder.bodyDoesNotContain("any_value")
+        val result = assertionsBuilder.build()
+
+        assertEquals(
+            SyntheticsAssertion(
+                SyntheticsAssertionTarget()
+                    .operator(SyntheticsAssertionOperator.DOES_NOT_CONTAIN)
+                    .target("any_value")
+                    .type(SyntheticsAssertionType.BODY)
+            ),
+            result.first()
+        )
+    }
+
+    @Test
     fun `build returns list of assertions`() {
         assertionsBuilder.statusCode(200)
         assertionsBuilder.headerContains("any_header", "any_value")
