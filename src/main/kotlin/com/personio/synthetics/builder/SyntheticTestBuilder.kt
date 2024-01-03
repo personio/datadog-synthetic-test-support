@@ -30,32 +30,34 @@ import kotlin.time.DurationUnit
 abstract class SyntheticTestBuilder(
     open val name: String,
     defaults: Defaults,
-    private val apiClient: SyntheticsApiClient
+    private val apiClient: SyntheticsApiClient,
 ) {
     protected var parameters: SyntheticTestParameters
     protected var options: SyntheticsTestOptions
     protected var status: SyntheticsTestPauseStatus? = null
 
     init {
-        parameters = SyntheticTestParameters(
-            message = "",
-            locations = defaults.runLocations,
-            tags = mutableListOf()
-        )
+        parameters =
+            SyntheticTestParameters(
+                message = "",
+                locations = defaults.runLocations,
+                tags = mutableListOf(),
+            )
 
-        options = SyntheticsTestOptions()
-            .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
-            .tickEvery(defaults.testFrequency / 1000)
-            .minFailureDuration(defaults.minFailureDuration / 1000)
-            .minLocationFailed(defaults.minLocationFailed)
-            .retry(
-                SyntheticsTestOptionsRetry()
-                    .count(defaults.retryCount)
-                    .interval(defaults.retryInterval)
-            )
-            .monitorOptions(
-                SyntheticsTestOptionsMonitorOptions()
-            )
+        options =
+            SyntheticsTestOptions()
+                .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
+                .tickEvery(defaults.testFrequency / 1000)
+                .minFailureDuration(defaults.minFailureDuration / 1000)
+                .minLocationFailed(defaults.minLocationFailed)
+                .retry(
+                    SyntheticsTestOptionsRetry()
+                        .count(defaults.retryCount)
+                        .interval(defaults.retryInterval),
+                )
+                .monitorOptions(
+                    SyntheticsTestOptionsMonitorOptions(),
+                )
     }
 
     /**
@@ -75,7 +77,10 @@ abstract class SyntheticTestBuilder(
      * Example: Slack channel -> @slack-test_slack_channel
      * Email -> @firstName.lastName@domain.com
      */
-    fun alertMessage(failureMessage: String, vararg alertMedium: String) {
+    fun alertMessage(
+        failureMessage: String,
+        vararg alertMedium: String,
+    ) {
         parameters.message += "${alertMedium.joinToString(" ")} {{#is_alert}} $failureMessage {{/is_alert}} "
     }
 
@@ -101,7 +106,7 @@ abstract class SyntheticTestBuilder(
      */
     @Deprecated(
         message = "The function is deprecated. Please use `tags` instead.",
-        replaceWith = ReplaceWith("tags(*tags.toTypedArray())")
+        replaceWith = ReplaceWith("tags(*tags.toTypedArray())"),
     )
     fun tags(tags: List<String>) {
         parameters.tags.addAll(tags)
@@ -121,7 +126,7 @@ abstract class SyntheticTestBuilder(
      */
     @Deprecated(
         message = "The function is deprecated. Please use `publicLocations` instead.",
-        replaceWith = ReplaceWith("publicLocations(*locationItems)")
+        replaceWith = ReplaceWith("publicLocations(*locationItems)"),
     )
     fun publicLocation(vararg locationItems: Location) {
         parameters.locations = locationItems.map { it.value }
@@ -148,15 +153,19 @@ abstract class SyntheticTestBuilder(
      * Pass ZoneId data type value, e.g. 'ZoneId.of("Europe/Berlin")'
      * Offset value is set as the local timezone of the machine where the test creation runs, if the value is not explicitly set
      */
-    fun advancedScheduling(timeframe: Timeframe, timezone: ZoneId = ZoneId.systemDefault()) {
+    fun advancedScheduling(
+        timeframe: Timeframe,
+        timezone: ZoneId = ZoneId.systemDefault(),
+    ) {
         options.scheduling = SyntheticsTestOptionsScheduling()
-        options.scheduling.timeframes = timeframe.days.map {
-            SyntheticsTestOptionsSchedulingTimeframe().apply {
-                from = timeframe.from.truncatedTo(ChronoUnit.MINUTES).toString()
-                to = timeframe.to.truncatedTo(ChronoUnit.MINUTES).toString()
-                day = it.value
+        options.scheduling.timeframes =
+            timeframe.days.map {
+                SyntheticsTestOptionsSchedulingTimeframe().apply {
+                    from = timeframe.from.truncatedTo(ChronoUnit.MINUTES).toString()
+                    to = timeframe.to.truncatedTo(ChronoUnit.MINUTES).toString()
+                    day = it.value
+                }
             }
-        }
         options.scheduling.timezone = timezone.toString()
     }
 
@@ -167,7 +176,10 @@ abstract class SyntheticTestBuilder(
      * @param retryInterval The retry interval for the test
      * Allowed retry interval is between 0 and 15 minutes
      */
-    fun retry(retryCount: Long, retryInterval: Duration) {
+    fun retry(
+        retryCount: Long,
+        retryInterval: Duration,
+    ) {
         require(retryCount in 0..2) {
             "Retry count should be between 0 and 2."
         }
@@ -197,7 +209,8 @@ abstract class SyntheticTestBuilder(
      */
     fun minLocationFailed(minLocationFailed: Long) {
         require(minLocationFailed in 1..parameters.locations.count()) {
-            "Minimum location failed should be between 1 and the number of locations where the test is configured to run: ${parameters.locations.count()}."
+            "Minimum location failed should be between 1 and the number of locations where the test is " +
+                "configured to run: ${parameters.locations.count()}."
         }
         options.minLocationFailed = minLocationFailed
     }
@@ -224,7 +237,10 @@ abstract class SyntheticTestBuilder(
      * @param name Name of the variable. The name would be converted to upper case letters
      * @param value Supply the text to be set for the variable
      */
-    fun textVariable(name: String, value: String) = apply {
+    fun textVariable(
+        name: String,
+        value: String,
+    ) = apply {
         addLocalVariable(name, value)
     }
 
@@ -236,7 +252,12 @@ abstract class SyntheticTestBuilder(
      * @param prefix String to be appended before the pattern
      * @param suffix String to be appended after the pattern
      */
-    fun numericPatternVariable(name: String, characterLength: Int, prefix: String = "", suffix: String = "") {
+    fun numericPatternVariable(
+        name: String,
+        characterLength: Int,
+        prefix: String = "",
+        suffix: String = "",
+    ) {
         addLocalVariable(name, "$prefix{{ numeric($characterLength) }}$suffix")
     }
 
@@ -248,7 +269,12 @@ abstract class SyntheticTestBuilder(
      * @param prefix String to be appended before the pattern
      * @param suffix String to be appended after the pattern
      */
-    fun alphabeticPatternVariable(name: String, characterLength: Int, prefix: String = "", suffix: String = "") {
+    fun alphabeticPatternVariable(
+        name: String,
+        characterLength: Int,
+        prefix: String = "",
+        suffix: String = "",
+    ) {
         addLocalVariable(name, "$prefix{{ alphabetic($characterLength) }}$suffix")
     }
 
@@ -260,7 +286,12 @@ abstract class SyntheticTestBuilder(
      * @param prefix String to be appended before the pattern
      * @param suffix String to be appended after the pattern
      */
-    fun alphanumericPatternVariable(name: String, characterLength: Int, prefix: String = "", suffix: String = "") {
+    fun alphanumericPatternVariable(
+        name: String,
+        characterLength: Int,
+        prefix: String = "",
+        suffix: String = "",
+    ) {
         addLocalVariable(name, "$prefix{{ alphanumeric($characterLength) }}$suffix")
     }
 
@@ -274,10 +305,17 @@ abstract class SyntheticTestBuilder(
      * @param suffix String to be appended after the pattern
      * The accepted formats are according to https://date-fns.org/v1.29.0/docs/format
      */
-    fun datePatternVariable(name: String, duration: Duration, format: String, prefix: String = "", suffix: String = "") {
-        val (scaledValue, unit) = checkNotNull(getScaledDate(duration)) {
-            "The passed duration should be less than 10_000_000 days for the date pattern variable $name."
-        }
+    fun datePatternVariable(
+        name: String,
+        duration: Duration,
+        format: String,
+        prefix: String = "",
+        suffix: String = "",
+    ) {
+        val (scaledValue, unit) =
+            checkNotNull(getScaledDate(duration)) {
+                "The passed duration should be less than 10_000_000 days for the date pattern variable $name."
+            }
         addLocalVariable(name, "$prefix{{ date($scaledValue$unit, $format) }}$suffix")
     }
 
@@ -289,10 +327,16 @@ abstract class SyntheticTestBuilder(
      * @param prefix String to be appended before the pattern
      * @param suffix String to be appended after the pattern
      */
-    fun timestampPatternVariable(name: String, duration: Duration, prefix: String = "", suffix: String = "") {
-        val (scaledValue, unit) = checkNotNull(getScaledTimestamp(duration)) {
-            "The passed duration should be less than 1_000_000_000 seconds for the timestamp pattern variable $name."
-        }
+    fun timestampPatternVariable(
+        name: String,
+        duration: Duration,
+        prefix: String = "",
+        suffix: String = "",
+    ) {
+        val (scaledValue, unit) =
+            checkNotNull(getScaledTimestamp(duration)) {
+                "The passed duration should be less than 1_000_000_000 seconds for the timestamp pattern variable $name."
+            }
         addLocalVariable(name, "$prefix{{ timestamp($scaledValue, $unit) }}$suffix")
     }
 
@@ -331,16 +375,19 @@ abstract class SyntheticTestBuilder(
     private fun getScaledDate(value: Duration): Pair<Long, String>? =
         value.getScaledValue(
             sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS, DurationUnit.MINUTES, DurationUnit.HOURS, DurationUnit.DAYS),
-            10_000_000
+            10_000_000,
         )
 
     private fun getScaledTimestamp(value: Duration): Pair<Long, String>? =
         value.getScaledValue(
             sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS),
-            1_000_000_000
+            1_000_000_000,
         )
 
-    private fun Duration.getScaledValue(sequence: Sequence<DurationUnit>, limit: Long): Pair<Long, String>? =
+    private fun Duration.getScaledValue(
+        sequence: Sequence<DurationUnit>,
+        limit: Long,
+    ): Pair<Long, String>? =
         sequence
             .map { unit -> this.toLong(unit) to unit.toDatadogDurationUnit() }
             .firstOrNull { (scaled, _) -> scaled.absoluteValue < limit }
@@ -364,7 +411,10 @@ abstract class SyntheticTestBuilder(
             .find { it.name.equals(variableName) }
             ?.id
 
-    protected abstract fun addLocalVariable(name: String, pattern: String)
+    protected abstract fun addLocalVariable(
+        name: String,
+        pattern: String,
+    )
 
     abstract fun useGlobalVariable(name: String)
 }

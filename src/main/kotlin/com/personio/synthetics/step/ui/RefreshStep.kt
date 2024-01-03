@@ -11,9 +11,11 @@ import com.personio.synthetics.step.addStep
  * @param stepName Name of the step
  * @return Synthetic step object with refreshStep added
  */
-fun BrowserTest.refreshStep(stepName: String, f: (SyntheticsStep.() -> Unit)? = null) =
-    addStep(stepName) {
-        type = SyntheticsStepType.REFRESH
-        params = Params()
-        if (f != null) f()
-    }
+fun BrowserTest.refreshStep(
+    stepName: String,
+    f: (SyntheticsStep.() -> Unit)? = null,
+) = addStep(stepName) {
+    type = SyntheticsStepType.REFRESH
+    params = Params()
+    if (f != null) f()
+}

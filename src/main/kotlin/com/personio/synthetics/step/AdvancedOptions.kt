@@ -10,12 +10,13 @@ import kotlin.time.Duration.Companion.seconds
  * If not set, the step is declared as failed after 60 seconds
  * @return SyntheticsStep object with timeout set
  */
-fun SyntheticsStep.waitBeforeDeclaringStepAsFailed(waitTime: Duration) = apply {
-    require(waitTime in 0.seconds..300.seconds) {
-        "Waiting time must not exceed 300 seconds."
+fun SyntheticsStep.waitBeforeDeclaringStepAsFailed(waitTime: Duration) =
+    apply {
+        require(waitTime in 0.seconds..300.seconds) {
+            "Waiting time must not exceed 300 seconds."
+        }
+        timeout = waitTime.inWholeSeconds
     }
-    timeout = waitTime.inWholeSeconds
-}
 
 /**
  * Allows the test to continue if the step fails
@@ -24,7 +25,8 @@ fun SyntheticsStep.waitBeforeDeclaringStepAsFailed(waitTime: Duration) = apply {
  * @return SyntheticsStep object with allowFailure and isCritical options set
  */
 
-fun SyntheticsStep.continueWithTestIfStepFails(markTestAsFailed: Boolean = false) = apply {
-    allowFailure = true
-    isCritical = markTestAsFailed
-}
+fun SyntheticsStep.continueWithTestIfStepFails(markTestAsFailed: Boolean = false) =
+    apply {
+        allowFailure = true
+        isCritical = markTestAsFailed
+    }

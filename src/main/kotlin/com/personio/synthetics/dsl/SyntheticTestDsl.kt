@@ -17,20 +17,24 @@ private fun getSyntheticsApiClientAndDefaults(): Pair<SyntheticsApiClient, Defau
 
     return SyntheticsApiClient(
         credentialsProvider = getCredentialsProvider(configuration.credentials),
-        apiHost = configuration.datadogApiHost
+        apiHost = configuration.datadogApiHost,
     ) to configuration.defaults
 }
 
-fun syntheticMultiStepApiTest(name: String, init: SyntheticMultiStepApiTestBuilder.() -> Unit): SyntheticsAPITest {
+fun syntheticMultiStepApiTest(
+    name: String,
+    init: SyntheticMultiStepApiTestBuilder.() -> Unit,
+): SyntheticsAPITest {
     check(name.isNotBlank()) {
         "The test's name must not be empty."
     }
 
     val (client, defaults) = getSyntheticsApiClientAndDefaults()
 
-    val test = SyntheticMultiStepApiTestBuilder(name, defaults, client)
-        .apply(init)
-        .build()
+    val test =
+        SyntheticMultiStepApiTestBuilder(name, defaults, client)
+            .apply(init)
+            .build()
 
     val testId = getTestId(client, name)
 
@@ -41,16 +45,20 @@ fun syntheticMultiStepApiTest(name: String, init: SyntheticMultiStepApiTestBuild
     }
 }
 
-fun syntheticBrowserTest(name: String, init: SyntheticBrowserTestBuilder.() -> Unit): SyntheticsBrowserTest {
+fun syntheticBrowserTest(
+    name: String,
+    init: SyntheticBrowserTestBuilder.() -> Unit,
+): SyntheticsBrowserTest {
     check(name.isNotBlank()) {
         "The test's name must not be empty."
     }
 
     val (client, defaults) = getSyntheticsApiClientAndDefaults()
 
-    val test = SyntheticBrowserTestBuilder(name, defaults, client)
-        .apply(init)
-        .build()
+    val test =
+        SyntheticBrowserTestBuilder(name, defaults, client)
+            .apply(init)
+            .build()
 
     val testId = getTestId(client, name)
 
@@ -61,20 +69,24 @@ fun syntheticBrowserTest(name: String, init: SyntheticBrowserTestBuilder.() -> U
     }
 }
 
-private fun getTestId(syntheticsApiClient: SyntheticsApiClient, name: String) =
-    syntheticsApiClient.listTests()
-        .tests
-        .orEmpty()
-        .filterNotNull()
-        .find { it.name.equals(name) }
-        ?.publicId
+private fun getTestId(
+    syntheticsApiClient: SyntheticsApiClient,
+    name: String,
+) = syntheticsApiClient.listTests()
+    .tests
+    .orEmpty()
+    .filterNotNull()
+    .find { it.name.equals(name) }
+    ?.publicId
 
 private fun getCredentialsProvider(credentials: Credentials): CredentialsProvider {
     return credentials.let {
         when {
             !it.datadogCredentialsAwsArn.isNullOrEmpty() -> AwsSecretsManagerCredentialsProvider(it)
             !it.ddApiKey.isNullOrEmpty() && !it.ddAppKey.isNullOrEmpty() -> ConfigCredentialsProvider(it)
-            else -> throw IllegalStateException("Please set the required config values for credentials in the \"configuration.yaml\" under resources.")
+            else -> throw IllegalStateException(
+                "Please set the required config values for credentials in the \"configuration.yaml\" under resources.",
+            )
         }
     }
 }

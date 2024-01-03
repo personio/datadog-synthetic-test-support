@@ -31,11 +31,12 @@ class SyntheticMultiStepApiTestBuilderTest {
     @BeforeEach
     fun prepareSut() {
         val apiClientMock = Mockito.mock(SyntheticsApiClient::class.java)
-        testBuilder = SyntheticMultiStepApiTestBuilder(
-            "any_name",
-            getConfigFromFile("config-unit-test.yaml").defaults,
-            apiClientMock
-        )
+        testBuilder =
+            SyntheticMultiStepApiTestBuilder(
+                "any_name",
+                getConfigFromFile("config-unit-test.yaml").defaults,
+                apiClientMock,
+            )
     }
 
     @Test
@@ -45,7 +46,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             "any_name",
-            result.options.monitorName
+            result.options.monitorName,
         )
     }
 
@@ -56,7 +57,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             "any_alert_medium {{#is_alert}} any_failure_message {{/is_alert}} ",
-            result.message
+            result.message,
         )
     }
 
@@ -67,7 +68,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             " {{#is_recovery}} any_recovery_message {{/is_recovery}} ",
-            result.message
+            result.message,
         )
     }
 
@@ -78,7 +79,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             listOf("any_tag1", "any_tag2"),
-            result.tags
+            result.tags,
         )
     }
 
@@ -89,7 +90,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             listOf("any_tag1", "any_tag2"),
-            result.tags
+            result.tags,
         )
     }
 
@@ -100,7 +101,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             listOf(Location.FRANKFURT_AWS.value, Location.LONDON_AWS.value),
-            result.locations
+            result.locations,
         )
     }
 
@@ -111,7 +112,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             5.minutes.inWholeSeconds,
-            result.options.tickEvery
+            result.options.tickEvery,
         )
     }
 
@@ -136,9 +137,9 @@ class SyntheticMultiStepApiTestBuilderTest {
                 from = LocalTime.of(0, 1),
                 to = LocalTime.of(23, 59),
                 DayOfWeek.MONDAY,
-                DayOfWeek.SUNDAY
+                DayOfWeek.SUNDAY,
             ),
-            timezone = ZoneId.of("Europe/Dublin")
+            timezone = ZoneId.of("Europe/Dublin"),
         )
         val result = testBuilder.build()
 
@@ -157,8 +158,8 @@ class SyntheticMultiStepApiTestBuilderTest {
             Timeframe(
                 from = LocalTime.of(0, 1),
                 to = LocalTime.of(23, 59),
-                DayOfWeek.MONDAY
-            )
+                DayOfWeek.MONDAY,
+            ),
         )
         val result = testBuilder.build()
 
@@ -177,8 +178,8 @@ class SyntheticMultiStepApiTestBuilderTest {
                     .name("ANY_NAME")
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example("")
-                    .pattern("{{ uuid }}")
-            )
+                    .pattern("{{ uuid }}"),
+            ),
         )
     }
 
@@ -193,8 +194,8 @@ class SyntheticMultiStepApiTestBuilderTest {
                     .name("ANY_NAME")
                     .pattern("prefix-{{ timestamp(300000, ms) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
-                    .example("")
-            )
+                    .example(""),
+            ),
         )
     }
 
@@ -209,8 +210,8 @@ class SyntheticMultiStepApiTestBuilderTest {
                     .name("ANY_NAME")
                     .pattern("prefix-{{ date(432000s, YYYY-MM-DD) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
-                    .example("")
-            )
+                    .example(""),
+            ),
         )
     }
 
@@ -225,8 +226,8 @@ class SyntheticMultiStepApiTestBuilderTest {
                     .name("ANY_NAME")
                     .pattern("prefix-{{ alphanumeric(10) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
-                    .example("")
-            )
+                    .example(""),
+            ),
         )
     }
 
@@ -241,8 +242,8 @@ class SyntheticMultiStepApiTestBuilderTest {
                     .name("ANY_NAME")
                     .pattern("prefix-{{ alphabetic(10) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
-                    .example("")
-            )
+                    .example(""),
+            ),
         )
     }
 
@@ -257,8 +258,8 @@ class SyntheticMultiStepApiTestBuilderTest {
                     .name("ANY_NAME")
                     .pattern("prefix-{{ numeric(10) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
-                    .example("")
-            )
+                    .example(""),
+            ),
         )
     }
 
@@ -267,14 +268,14 @@ class SyntheticMultiStepApiTestBuilderTest {
         testBuilder.steps(
             listOf(
                 SyntheticsAPIStep(),
-                SyntheticsAPIStep()
-            )
+                SyntheticsAPIStep(),
+            ),
         )
         val result = testBuilder.build()
 
         assertEquals(
             2,
-            result.config.steps.count()
+            result.config.steps.count(),
         )
     }
 
@@ -288,7 +289,7 @@ class SyntheticMultiStepApiTestBuilderTest {
 
         assertEquals(
             2,
-            result.config.steps.count()
+            result.config.steps.count(),
         )
     }
 

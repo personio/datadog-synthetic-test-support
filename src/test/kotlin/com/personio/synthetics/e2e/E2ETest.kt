@@ -86,9 +86,9 @@ class E2ETest {
                     to = LocalTime.of(23, 59),
                     DayOfWeek.MONDAY,
                     DayOfWeek.TUESDAY,
-                    DayOfWeek.FRIDAY
+                    DayOfWeek.FRIDAY,
                 ),
-                timezone = ZoneId.of("Europe/Dublin")
+                timezone = ZoneId.of("Europe/Dublin"),
             )
             retry(2, 600.milliseconds)
             minFailureDuration(120.minutes)
@@ -101,88 +101,88 @@ class E2ETest {
             numericPatternVariable(
                 name = "NUMERIC_PATTERN",
                 characterLength = 4,
-                prefix = "test"
+                prefix = "test",
             )
             alphabeticPatternVariable("ALPHABETIC_PATTERN", 5)
             alphanumericPatternVariable("ALPHANUMERIC_PATTERN", 6)
             datePatternVariable(
                 name = "DATE_PATTERN",
                 duration = (-1).days,
-                format = "MM-DD-YYYY"
+                format = "MM-DD-YYYY",
             )
             timestampPatternVariable(
                 name = "TIMESTAMP_PATTERN",
-                duration = 10.seconds
+                duration = 10.seconds,
             )
             inputTextStep(
                 stepName = "Enter username",
                 targetElement = TargetElement("[name='email']"),
-                text = "test@personio.de"
+                text = "test@personio.de",
             )
             inputTextStep(
                 stepName = "Enter password",
                 targetElement = TargetElement("[name='password']"),
-                text = "{{ TEST_PASSWORD }}"
+                text = "{{ TEST_PASSWORD }}",
             )
             clickStep(
                 stepName = "Click login button",
-                targetElement = TargetElement("[name='login']")
+                targetElement = TargetElement("[name='login']"),
             ) {
                 waitBeforeDeclaringStepAsFailed(75.seconds)
             }
             currentUrlAssertion(
                 stepName = "Check current URL",
                 expectedContent = "https://synthetic-test.personio.de",
-                check = SyntheticsCheckType.CONTAINS
+                check = SyntheticsCheckType.CONTAINS,
             )
             pageContainsTextAssertion(
                 stepName = "Check text is present on the page",
-                expectedText = "string that should be present"
+                expectedText = "string that should be present",
             ) {
                 waitBeforeDeclaringStepAsFailed(30.seconds)
                 continueWithTestIfStepFails(true)
             }
             pageNotContainsTextAssertion(
                 stepName = "Check text is not present on the page",
-                text = "string that should not be present"
+                text = "string that should not be present",
             )
             clickStep(
                 stepName = "Navigate to test page",
-                targetElement = TargetElement("[name='test-page']")
+                targetElement = TargetElement("[name='test-page']"),
             )
             elementPresentAssertion(
                 stepName = "Check if test link is present",
-                targetElement = TargetElement("[name='link-name']")
+                targetElement = TargetElement("[name='link-name']"),
             )
             elementContentAssertion(
                 stepName = "Check text of the test link",
                 targetElement = TargetElement("[value='link-text']"),
                 check = SyntheticsCheckType.EQUALS,
-                expectedContent = "Test"
+                expectedContent = "Test",
             )
             elementAttributeAssertion(
                 stepName = "Check that href of the test link is not empty",
                 targetElement = TargetElement("[href='link-href']"),
                 attribute = "href",
-                check = SyntheticsCheckType.NOT_IS_EMPTY
+                check = SyntheticsCheckType.NOT_IS_EMPTY,
             )
             extractTextFromElementStep(
                 stepName = "Extract text from element",
                 variableName = "EXTRACT_TEXT",
-                targetElement = TargetElement("[value='test-extract']")
+                targetElement = TargetElement("[value='test-extract']"),
             )
             navigateStep(
                 stepName = "Navigate to test page by URL",
-                url = "https://synthetic-test.personio.de/test"
+                url = "https://synthetic-test.personio.de/test",
             )
             customJavascriptAssertion(
                 stepName = "Check custom JS",
-                code = "return true;"
+                code = "return true;",
             )
             uploadFileStep(
                 stepName = "Upload file",
                 element = TargetElement("[name='upload-file']"),
-                uploadFile = File.createTempFile("upload", ".pdf").apply { writeText("Test") }
+                uploadFile = File.createTempFile("upload", ".pdf").apply { writeText("Test") },
             )
             downloadedFileAssertion("Check downloaded file assertion step") {
                 nameCheck(FileNameCheckType.NOT_IS_EMPTY)
@@ -192,7 +192,7 @@ class E2ETest {
             refreshStep("Refresh test page")
             waitStep(
                 stepName = "Wait for a few seconds on the page",
-                waitingTime = 10.seconds
+                waitingTime = 10.seconds,
             )
             scrollStep("Scroll to test element") {
                 targetElement(locator = "[name='test-element']")
@@ -203,16 +203,16 @@ class E2ETest {
             }
             hoverStep(
                 stepName = "Hover over test element",
-                targetElement = TargetElement("[name='test-element']")
+                targetElement = TargetElement("[name='test-element']"),
             )
             pressKeyStep(
                 stepName = "Press Ctrl+Shift+Backspace keys",
-                key = Key.BACKSPACE
+                key = Key.BACKSPACE,
             ) { modifiers(Modifier.CONTROL, Modifier.SHIFT) }
             extractFromJavascriptStep(
                 stepName = "Extract from js",
                 code = "return 'abc'",
-                variableName = "JS_STEP_VAR"
+                variableName = "JS_STEP_VAR",
             )
             apiStep("API Step", "POST") {
                 requestBody("{\"userName\": \"test\"}")
@@ -231,7 +231,7 @@ class E2ETest {
                 }
                 extractHeaderValue(
                     name = "SESSION",
-                    field = "set-cookie"
+                    field = "set-cookie",
                 )
                 waitBeforeDeclaringStepAsFailed(90.seconds)
                 continueWithTestIfStepFails()

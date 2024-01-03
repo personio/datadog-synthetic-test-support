@@ -4,23 +4,23 @@ import com.datadog.api.client.v1.model.SyntheticsCheckType
 import com.personio.synthetics.model.Params
 
 internal data class DownloadedFileAssertionParams(
-    val file: File
+    val file: File,
 ) : Params()
 
 internal data class File(
     val nameCheck: NameCheck? = null,
     val sizeCheck: SizeCheck? = null,
-    val md5: String? = null
+    val md5: String? = null,
 ) : Params()
 
 internal data class NameCheck(
     val type: String,
-    val value: String?
+    val value: String?,
 ) : Params()
 
 internal data class SizeCheck(
     val type: String,
-    val value: Int
+    val value: Int,
 ) : Params()
 
 enum class FileNameCheckType(val value: SyntheticsCheckType) {
@@ -32,7 +32,7 @@ enum class FileNameCheckType(val value: SyntheticsCheckType) {
     CONTAINS(SyntheticsCheckType.CONTAINS),
     MATCH_REGEX(SyntheticsCheckType.MATCH_REGEX),
     EQUALS(SyntheticsCheckType.EQUALS),
-    NOT_STARTS_WITH(SyntheticsCheckType.NOT_STARTS_WITH)
+    NOT_STARTS_WITH(SyntheticsCheckType.NOT_STARTS_WITH),
 }
 
 enum class FileSizeCheckType(val value: SyntheticsCheckType) {
@@ -40,5 +40,5 @@ enum class FileSizeCheckType(val value: SyntheticsCheckType) {
     GREATER(SyntheticsCheckType.GREATER),
     NOT_EQUALS(SyntheticsCheckType.NOT_EQUALS),
     GREATER_EQUALS(SyntheticsCheckType.GREATER_EQUALS),
-    LOWER_EQUALS(SyntheticsCheckType.LOWER_EQUALS)
+    LOWER_EQUALS(SyntheticsCheckType.LOWER_EQUALS),
 }

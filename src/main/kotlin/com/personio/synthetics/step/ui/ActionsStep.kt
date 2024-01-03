@@ -23,14 +23,15 @@ fun BrowserTest.inputTextStep(
     stepName: String,
     targetElement: TargetElement,
     text: String,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.TYPE_TEXT
-    params = ActionsParams(
-        element = targetElement.getElementObject(),
-        value = text,
-        delay = DEFAULT_TEXT_DELAY
-    )
+    params =
+        ActionsParams(
+            element = targetElement.getElementObject(),
+            value = text,
+            delay = DEFAULT_TEXT_DELAY,
+        )
     if (f != null) f()
 }
 
@@ -44,12 +45,13 @@ fun BrowserTest.inputTextStep(
 fun BrowserTest.clickStep(
     stepName: String,
     targetElement: TargetElement,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.CLICK
-    params = ActionsParams(
-        element = targetElement.getElementObject()
-    )
+    params =
+        ActionsParams(
+            element = targetElement.getElementObject(),
+        )
     if (f != null) f()
 }
 
@@ -67,15 +69,18 @@ fun BrowserTest.clickStep(
 fun BrowserTest.navigateStep(
     stepName: String,
     url: String,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.GO_TO_URL
-    val target = if (url.isDatadogVariable()) { url } else {
-        runCatching { URL(url) }
-            .recover { URL(config.request.url + url) }
-            .getOrThrow()
-            .toString()
-    }
+    val target =
+        if (url.isDatadogVariable()) {
+            url
+        } else {
+            runCatching { URL(url) }
+                .recover { URL(config.request.url + url) }
+                .getOrThrow()
+                .toString()
+        }
     params = ActionsParams(value = target)
     if (f != null) f()
 }

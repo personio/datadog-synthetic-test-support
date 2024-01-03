@@ -23,7 +23,7 @@ internal class SpecialActionsStepTest {
     fun `waitStep adds the new step item to the browser test object`() {
         browserTest.waitStep(
             stepName = "Step",
-            waitingTime = 1.seconds
+            waitingTime = 1.seconds,
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -33,7 +33,7 @@ internal class SpecialActionsStepTest {
     fun `waitStep adds step with type wait and params of type WaitParams`() {
         browserTest.waitStep(
             stepName = "Step",
-            waitingTime = 1.seconds
+            waitingTime = 1.seconds,
         )
         val step = browserTest.steps?.get(0)
 
@@ -45,7 +45,7 @@ internal class SpecialActionsStepTest {
     fun `waitSteps adds passed waiting time to the params object`() {
         browserTest.waitStep(
             stepName = "Step",
-            waitingTime = 1.seconds
+            waitingTime = 1.seconds,
         )
 
         assertEquals(1, (browserTest.steps?.get(0)?.params as WaitParams).value)
@@ -56,7 +56,7 @@ internal class SpecialActionsStepTest {
         assertThrows<IllegalArgumentException> {
             browserTest.waitStep(
                 stepName = "Step",
-                waitingTime = 0.seconds
+                waitingTime = 0.seconds,
             )
         }
     }
@@ -66,7 +66,7 @@ internal class SpecialActionsStepTest {
         assertThrows<IllegalArgumentException> {
             browserTest.waitStep(
                 stepName = "Step",
-                waitingTime = 301.seconds
+                waitingTime = 301.seconds,
             )
         }
     }
@@ -197,7 +197,7 @@ internal class SpecialActionsStepTest {
     fun `hoverStep adds step with type hover and params of type SpecialActionsParams`() {
         browserTest.hoverStep(
             stepName = "Step",
-            targetElement = TargetElement("#locatorId")
+            targetElement = TargetElement("#locatorId"),
         )
         val step = browserTest.steps?.get(0)
 
@@ -210,7 +210,7 @@ internal class SpecialActionsStepTest {
         val locator = "#locatorId"
         browserTest.hoverStep(
             stepName = "Step",
-            targetElement = TargetElement(locator)
+            targetElement = TargetElement(locator),
         )
 
         val params = browserTest.steps?.get(0)?.params as SpecialActionsParams
@@ -222,7 +222,7 @@ internal class SpecialActionsStepTest {
     fun `hoverStep accepts additional configuration changes to the test step`() {
         browserTest.hoverStep(
             stepName = "Step",
-            targetElement = TargetElement("#locatorId")
+            targetElement = TargetElement("#locatorId"),
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -233,7 +233,7 @@ internal class SpecialActionsStepTest {
         browserTest
             .pressKeyStep(
                 stepName = "Step",
-                key = Key.ENTER
+                key = Key.ENTER,
             )
         val step = browserTest.steps?.get(0)
 
@@ -247,7 +247,7 @@ internal class SpecialActionsStepTest {
         browserTest
             .pressKeyStep(
                 stepName = "Step",
-                key = key
+                key = key,
             )
         val params = browserTest.steps?.get(0)?.params as PressKeyParams
 
@@ -259,7 +259,7 @@ internal class SpecialActionsStepTest {
         browserTest
             .pressKeyStep(
                 stepName = "Step",
-                key = Key.ENTER
+                key = Key.ENTER,
             ) { modifiers(Modifier.OPT) }
         val params = browserTest.steps?.get(0)?.params as PressKeyParams
 
@@ -271,7 +271,7 @@ internal class SpecialActionsStepTest {
         browserTest
             .pressKeyStep(
                 stepName = "Step",
-                key = Key.ENTER
+                key = Key.ENTER,
             ) { modifiers(Modifier.OPT, Modifier.SHIFT) }
 
         val params = browserTest.steps?.get(0)?.params as PressKeyParams
@@ -284,7 +284,7 @@ internal class SpecialActionsStepTest {
         browserTest
             .pressKeyStep(
                 stepName = "Step",
-                key = Key.ENTER
+                key = Key.ENTER,
             ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

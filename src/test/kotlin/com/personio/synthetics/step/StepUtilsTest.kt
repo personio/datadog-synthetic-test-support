@@ -21,9 +21,10 @@ internal class StepUtilsTest {
     @Test
     fun `withParamType returns the object which is an instance of the type at the caller`() {
         val step = browserTest.clickStep("click", TargetElement("#locator"))
-        val params = step.withParamType<ActionsParams> {
-            copy(element = TargetElement("#newLocator").getElementObject())
-        }
+        val params =
+            step.withParamType<ActionsParams> {
+                copy(element = TargetElement("#newLocator").getElementObject())
+            }
 
         assertInstanceOf(ActionsParams::class.java, params)
     }

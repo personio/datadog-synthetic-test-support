@@ -20,16 +20,19 @@ fun BrowserTest.currentUrlAssertion(
     stepName: String,
     check: SyntheticsCheckType,
     expectedContent: String = "",
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     if (check !in listOf(SyntheticsCheckType.IS_EMPTY, SyntheticsCheckType.NOT_IS_EMPTY)) {
-        check(!expectedContent.isNullOrEmpty()) { "Expected content is a required parameter for the passed check type $check in the step: $stepName." }
+        check(!expectedContent.isNullOrEmpty()) {
+            "Expected content is a required parameter for the passed check type $check in the step: $stepName."
+        }
     }
     type = SyntheticsStepType.ASSERT_CURRENT_URL
-    params = AssertionParams(
-        check = check,
-        value = expectedContent
-    )
+    params =
+        AssertionParams(
+            check = check,
+            value = expectedContent,
+        )
     if (f != null) f()
 }
 
@@ -45,12 +48,13 @@ fun BrowserTest.currentUrlAssertion(
 fun BrowserTest.pageContainsTextAssertion(
     stepName: String,
     expectedText: String,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.ASSERT_PAGE_CONTAINS
-    params = AssertionParams(
-        value = expectedText
-    )
+    params =
+        AssertionParams(
+            value = expectedText,
+        )
     if (f != null) f()
 }
 
@@ -65,11 +69,12 @@ fun BrowserTest.pageContainsTextAssertion(
 fun BrowserTest.pageNotContainsTextAssertion(
     stepName: String,
     text: String,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.ASSERT_PAGE_LACKS
-    params = AssertionParams(
-        value = text
-    )
+    params =
+        AssertionParams(
+            value = text,
+        )
     if (f != null) f()
 }

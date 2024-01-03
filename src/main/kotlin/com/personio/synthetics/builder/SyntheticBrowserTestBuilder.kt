@@ -22,7 +22,7 @@ import kotlin.time.Duration.Companion.minutes
 class SyntheticBrowserTestBuilder(
     override val name: String,
     defaults: Defaults,
-    apiClient: SyntheticsApiClient
+    apiClient: SyntheticsApiClient,
 ) : SyntheticTestBuilder(name, defaults, apiClient) {
     private val config = SyntheticsBrowserTestConfig()
 
@@ -31,15 +31,16 @@ class SyntheticBrowserTestBuilder(
      * @return SyntheticsBrowserTest object that contains a browser test
      */
     fun build(): SyntheticsBrowserTest {
-        val test = SyntheticsBrowserTest(
-            config,
-            parameters.locations,
-            parameters.message,
-            name,
-            options,
-            SyntheticsBrowserTestType.BROWSER
-        )
-            .tags(parameters.tags)
+        val test =
+            SyntheticsBrowserTest(
+                config,
+                parameters.locations,
+                parameters.message,
+                name,
+                options,
+                SyntheticsBrowserTestType.BROWSER,
+            )
+                .tags(parameters.tags)
 
         status?.let {
             test.status(it)
@@ -56,7 +57,7 @@ class SyntheticBrowserTestBuilder(
         config.request(
             SyntheticsTestRequest()
                 .method("GET")
-                .url(url.toString())
+                .url(url.toString()),
         )
     }
 
@@ -86,19 +87,22 @@ class SyntheticBrowserTestBuilder(
      */
     @Deprecated(
         message = "The function is deprecated. Please use `browsersAndDevices` instead.",
-        replaceWith = ReplaceWith("browsersAndDevices(*deviceIds)")
+        replaceWith = ReplaceWith("browsersAndDevices(*deviceIds)"),
     )
     fun browserAndDevice(vararg deviceIds: SyntheticsDeviceID) {
         options.deviceIds = deviceIds.map { it }
     }
 
-    override fun addLocalVariable(name: String, pattern: String) {
+    override fun addLocalVariable(
+        name: String,
+        pattern: String,
+    ) {
         config.addVariablesItem(
             SyntheticsBrowserVariable()
                 .name(name.uppercase())
                 .type(SyntheticsBrowserVariableType.TEXT)
                 .pattern(pattern)
-                .example("")
+                .example(""),
         )
     }
 
@@ -110,7 +114,7 @@ class SyntheticBrowserTestBuilder(
             SyntheticsBrowserVariable()
                 .name(variableName)
                 .id(variableId)
-                .type(SyntheticsBrowserVariableType.GLOBAL)
+                .type(SyntheticsBrowserVariableType.GLOBAL),
         )
     }
 }

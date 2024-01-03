@@ -23,7 +23,7 @@ class AssertionsBuilder {
         target(
             SyntheticsAssertionType.STATUS_CODE,
             SyntheticsAssertionOperator.IS,
-            code
+            code,
         )
     }
 
@@ -32,15 +32,18 @@ class AssertionsBuilder {
      * @param name Header name
      * @param value Value to look for
      */
-    fun headerContains(name: String, value: String) {
+    fun headerContains(
+        name: String,
+        value: String,
+    ) {
         assertions.add(
             SyntheticsAssertion(
                 SyntheticsAssertionTarget()
                     .property(name)
                     .operator(SyntheticsAssertionOperator.CONTAINS)
                     .type(SyntheticsAssertionType.HEADER)
-                    .target(value)
-            )
+                    .target(value),
+            ),
         )
     }
 
@@ -49,7 +52,10 @@ class AssertionsBuilder {
      * @param jsonPath JSON path
      * @param targetValue Value to look for
      */
-    fun bodyContainsJsonPath(jsonPath: String, targetValue: Any) {
+    fun bodyContainsJsonPath(
+        jsonPath: String,
+        targetValue: Any,
+    ) {
         assertions.add(
             SyntheticsAssertion(
                 SyntheticsAssertionJSONPathTarget()
@@ -59,9 +65,9 @@ class AssertionsBuilder {
                         SyntheticsAssertionJSONPathTargetTarget()
                             .jsonPath(jsonPath)
                             .operator("contains")
-                            .targetValue(targetValue)
-                    )
-            )
+                            .targetValue(targetValue),
+                    ),
+            ),
         )
     }
 
@@ -73,7 +79,7 @@ class AssertionsBuilder {
         target(
             SyntheticsAssertionType.BODY,
             SyntheticsAssertionOperator.CONTAINS,
-            value
+            value,
         )
     }
 
@@ -85,7 +91,7 @@ class AssertionsBuilder {
         target(
             SyntheticsAssertionType.BODY,
             SyntheticsAssertionOperator.DOES_NOT_CONTAIN,
-            value
+            value,
         )
     }
 
@@ -95,15 +101,19 @@ class AssertionsBuilder {
      * @param operator Assertion operator
      * @param target Target
      */
-    private fun target(type: SyntheticsAssertionType, operator: SyntheticsAssertionOperator, target: Any) {
+    private fun target(
+        type: SyntheticsAssertionType,
+        operator: SyntheticsAssertionOperator,
+        target: Any,
+    ) {
         assertions.add(
             SyntheticsAssertion(
                 SyntheticsAssertionTarget(
                     operator,
                     target,
-                    type
-                )
-            )
+                    type,
+                ),
+            ),
         )
     }
 }

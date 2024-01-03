@@ -22,7 +22,7 @@ internal class ActionsStepTest {
         browserTest.inputTextStep(
             stepName = "Step",
             targetElement = TargetElement("#locator"),
-            text = "text"
+            text = "text",
         )
         val step = browserTest.steps?.get(0)
 
@@ -36,7 +36,7 @@ internal class ActionsStepTest {
         browserTest.inputTextStep(
             stepName = "Step",
             targetElement = TargetElement("#locator"),
-            text = text
+            text = text,
         )
         assertEquals(text, (browserTest.steps?.get(0)?.params as ActionsParams).value)
     }
@@ -47,7 +47,7 @@ internal class ActionsStepTest {
         browserTest.inputTextStep(
             stepName = "Step",
             targetElement = targetElement,
-            text = "text"
+            text = "text",
         )
 
         assertEquals(targetElement.getElementObject(), (browserTest.steps?.get(0)?.params as ActionsParams).element)
@@ -59,7 +59,7 @@ internal class ActionsStepTest {
         browserTest.inputTextStep(
             stepName = "Step",
             targetElement = TargetElement("#locator"),
-            text = fromVariable(variableName)
+            text = fromVariable(variableName),
         )
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
@@ -71,7 +71,7 @@ internal class ActionsStepTest {
         browserTest.inputTextStep(
             stepName = "Step",
             targetElement = TargetElement("#locator"),
-            text = "text"
+            text = "text",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -81,7 +81,7 @@ internal class ActionsStepTest {
     fun `clickStep adds step with type click and params of type ActionsParams`() {
         browserTest.clickStep(
             stepName = "Step",
-            targetElement = TargetElement("#locatorId")
+            targetElement = TargetElement("#locatorId"),
         )
         val step = browserTest.steps?.get(0)
 
@@ -94,7 +94,7 @@ internal class ActionsStepTest {
         val locator = "#locator"
         browserTest.clickStep(
             stepName = "Step",
-            targetElement = TargetElement(locator)
+            targetElement = TargetElement(locator),
         )
         val params = browserTest.steps?.get(0)?.params as ActionsParams
 
@@ -105,7 +105,7 @@ internal class ActionsStepTest {
     fun `clickStep accepts additional configuration changes to the test step`() {
         browserTest.clickStep(
             stepName = "Step",
-            targetElement = TargetElement("#locator")
+            targetElement = TargetElement("#locator"),
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -116,7 +116,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = "https://synthetic-test.personio.de"
+                url = "https://synthetic-test.personio.de",
             )
         val step = browserTest.steps?.get(0)
 
@@ -130,7 +130,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = url
+                url = url,
             )
 
         assertEquals(url, (browserTest.steps?.get(0)?.params as ActionsParams).value)
@@ -146,7 +146,7 @@ internal class ActionsStepTest {
             .baseUrl(URL(baseUrl))
             .navigateStep(
                 stepName = "Step",
-                url = url
+                url = url,
             )
 
         assertEquals(expectedUrl, (browserTest.steps?.get(0)?.params as ActionsParams).value)
@@ -158,7 +158,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = fromVariable(variable)
+                url = fromVariable(variable),
             )
 
         assertEquals("{{ $variable }}", (browserTest.steps?.get(0)?.params as ActionsParams).value)
@@ -171,7 +171,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = "$baseUrl/${fromVariable(locationVariable)}"
+                url = "$baseUrl/${fromVariable(locationVariable)}",
             )
 
         assertEquals("$baseUrl/{{ $locationVariable }}", (browserTest.steps?.get(0)?.params as ActionsParams).value)
@@ -182,7 +182,7 @@ internal class ActionsStepTest {
         browserTest
             .navigateStep(
                 stepName = "Step",
-                url = "https://synthetic-test.personio.de"
+                url = "https://synthetic-test.personio.de",
             ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

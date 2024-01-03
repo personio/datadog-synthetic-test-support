@@ -8,5 +8,5 @@ enum class Key(val value: String) {
     ARROW_LEFT("left"),
     TAB("Tab"),
     ESCAPE("Escape"),
-    BACKSPACE("Backspace")
+    BACKSPACE("Backspace"),
 }

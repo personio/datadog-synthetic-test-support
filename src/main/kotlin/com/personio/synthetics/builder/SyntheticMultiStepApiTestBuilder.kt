@@ -17,7 +17,7 @@ import com.personio.synthetics.config.Defaults
 class SyntheticMultiStepApiTestBuilder(
     override val name: String,
     defaults: Defaults,
-    apiClient: SyntheticsApiClient
+    apiClient: SyntheticsApiClient,
 ) : SyntheticTestBuilder(name, defaults, apiClient) {
     private val config = SyntheticsAPITestConfig()
 
@@ -26,16 +26,17 @@ class SyntheticMultiStepApiTestBuilder(
      * @return SyntheticsAPITest object that contains an API test
      */
     fun build(): SyntheticsAPITest {
-        val test = SyntheticsAPITest(
-            config,
-            parameters.locations,
-            parameters.message,
-            name,
-            options,
-            SyntheticsAPITestType.API
-        )
-            .tags(parameters.tags)
-            .subtype(SyntheticsTestDetailsSubType.MULTI)
+        val test =
+            SyntheticsAPITest(
+                config,
+                parameters.locations,
+                parameters.message,
+                name,
+                options,
+                SyntheticsAPITestType.API,
+            )
+                .tags(parameters.tags)
+                .subtype(SyntheticsTestDetailsSubType.MULTI)
 
         status?.let {
             test.status(it)
@@ -49,7 +50,10 @@ class SyntheticMultiStepApiTestBuilder(
      * @param stepsBuilder A builder to use for building synthetic API steps
      * @param init A function to apply to the specified builder instance
      */
-    fun steps(stepsBuilder: StepsBuilder = StepsBuilder(), init: StepsBuilder.() -> Unit) {
+    fun steps(
+        stepsBuilder: StepsBuilder = StepsBuilder(),
+        init: StepsBuilder.() -> Unit,
+    ) {
         config.steps(stepsBuilder.apply(init).build())
     }
 
@@ -61,13 +65,16 @@ class SyntheticMultiStepApiTestBuilder(
         config.steps(steps)
     }
 
-    override fun addLocalVariable(name: String, pattern: String) {
+    override fun addLocalVariable(
+        name: String,
+        pattern: String,
+    ) {
         config.addConfigVariablesItem(
             SyntheticsConfigVariable()
                 .name(name.uppercase())
                 .type(SyntheticsConfigVariableType.TEXT)
                 .pattern(pattern)
-                .example("")
+                .example(""),
         )
     }
 
@@ -79,7 +86,7 @@ class SyntheticMultiStepApiTestBuilder(
             SyntheticsConfigVariable()
                 .name(variableName)
                 .id(variableId)
-                .type(SyntheticsConfigVariableType.GLOBAL)
+                .type(SyntheticsConfigVariableType.GLOBAL),
         )
     }
 }

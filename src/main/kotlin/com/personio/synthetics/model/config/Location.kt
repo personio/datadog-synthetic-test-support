@@ -21,5 +21,5 @@ enum class Location(val value: String) {
     IRELAND_AWS("aws:eu-west-1"),
     LONDON_AWS("aws:eu-west-2"),
     PARIS_AWS("aws:eu-west-3"),
-    STOCKHOLM_AWS("aws:eu-north-1")
+    STOCKHOLM_AWS("aws:eu-north-1"),
 }

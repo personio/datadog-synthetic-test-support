@@ -23,14 +23,15 @@ import org.mockito.kotlin.whenever
 class StepBuilderTest {
     @Test
     fun `extract sets the extracted values properly`() {
-        val stepBuilder = StepBuilder(
-            "any_name",
-            makeRequestBuilderHappyPathMock(),
-            makeAssertionBuilderMock(),
-            makeParsingOptionsBuilderMock(
-                SyntheticsParsingOptions()
+        val stepBuilder =
+            StepBuilder(
+                "any_name",
+                makeRequestBuilderHappyPathMock(),
+                makeAssertionBuilderMock(),
+                makeParsingOptionsBuilderMock(
+                    SyntheticsParsingOptions(),
+                ),
             )
-        )
         stepBuilder.request { }
         stepBuilder.extract("any_variable_name") {}
         val result = stepBuilder.build()
@@ -40,12 +41,13 @@ class StepBuilderTest {
 
     @Test
     fun `extract sets the extracted values to null when no parsing options provided`() {
-        val stepBuilder = StepBuilder(
-            "any_name",
-            makeRequestBuilderHappyPathMock(),
-            makeAssertionBuilderMock(),
-            makeParsingOptionsBuilderMock()
-        )
+        val stepBuilder =
+            StepBuilder(
+                "any_name",
+                makeRequestBuilderHappyPathMock(),
+                makeAssertionBuilderMock(),
+                makeParsingOptionsBuilderMock(),
+            )
         stepBuilder.request { }
         stepBuilder.extract("any_variable_name") {}
         val result = stepBuilder.build()
@@ -66,9 +68,10 @@ class StepBuilderTest {
 
     @Test
     fun `assertions sets assertions properly`() {
-        val assertionsMock = makeAssertionBuilderMock(
-            listOf(SyntheticsAssertion(), SyntheticsAssertion())
-        )
+        val assertionsMock =
+            makeAssertionBuilderMock(
+                listOf(SyntheticsAssertion(), SyntheticsAssertion()),
+            )
         val stepBuilder = StepBuilder("any_name", RequestBuilder(), assertionsMock)
         stepBuilder.assertions { }
         stepBuilder.request { }

@@ -23,9 +23,9 @@ class AssertionsBuilderTest {
                 SyntheticsAssertionTarget()
                     .operator(SyntheticsAssertionOperator.IS)
                     .target(200)
-                    .type(SyntheticsAssertionType.STATUS_CODE)
+                    .type(SyntheticsAssertionType.STATUS_CODE),
             ),
-            result.first()
+            result.first(),
         )
     }
 
@@ -40,9 +40,9 @@ class AssertionsBuilderTest {
                     .property("any_header")
                     .operator(SyntheticsAssertionOperator.CONTAINS)
                     .target("any_value")
-                    .type(SyntheticsAssertionType.HEADER)
+                    .type(SyntheticsAssertionType.HEADER),
             ),
-            result.first()
+            result.first(),
         )
     }
 
@@ -60,11 +60,10 @@ class AssertionsBuilderTest {
                         SyntheticsAssertionJSONPathTargetTarget()
                             .jsonPath("any_json_path")
                             .operator("contains")
-                            .targetValue("any_value")
-
-                    )
+                            .targetValue("any_value"),
+                    ),
             ),
-            result.first()
+            result.first(),
         )
     }
 
@@ -78,9 +77,9 @@ class AssertionsBuilderTest {
                 SyntheticsAssertionTarget()
                     .operator(SyntheticsAssertionOperator.CONTAINS)
                     .target("any_value")
-                    .type(SyntheticsAssertionType.BODY)
+                    .type(SyntheticsAssertionType.BODY),
             ),
-            result.first()
+            result.first(),
         )
     }
 
@@ -94,9 +93,9 @@ class AssertionsBuilderTest {
                 SyntheticsAssertionTarget()
                     .operator(SyntheticsAssertionOperator.DOES_NOT_CONTAIN)
                     .target("any_value")
-                    .type(SyntheticsAssertionType.BODY)
+                    .type(SyntheticsAssertionType.BODY),
             ),
-            result.first()
+            result.first(),
         )
     }
 

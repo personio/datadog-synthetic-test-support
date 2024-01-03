@@ -19,11 +19,11 @@ fun getConfigFromFile(path: String): Configuration {
             stringSubstitutor.replace(
                 String(
                     Files.readAllBytes(
-                        File(this::class.java.classLoader.getResource(path)!!.file).toPath()
-                    )
-                )
+                        File(this::class.java.classLoader.getResource(path)!!.file).toPath(),
+                    ),
+                ),
             ),
-            Configuration::class.java
+            Configuration::class.java,
         )
     }
 }

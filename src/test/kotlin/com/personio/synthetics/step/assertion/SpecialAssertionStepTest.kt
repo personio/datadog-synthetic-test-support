@@ -22,7 +22,7 @@ internal class SpecialAssertionStepTest {
     fun `customJavascriptAssertion adds the new step item to the browser test object`() {
         browserTest.customJavascriptAssertion(
             stepName = "Step",
-            code = "return true;"
+            code = "return true;",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -32,7 +32,7 @@ internal class SpecialAssertionStepTest {
     fun `customJavascriptAssertion adds the step item of type Test custom JavaScript assertion`() {
         browserTest.customJavascriptAssertion(
             stepName = "Step",
-            code = "return true;"
+            code = "return true;",
         )
 
         assertEquals(SyntheticsStepType.ASSERT_FROM_JAVASCRIPT, browserTest.steps!![0].type)
@@ -42,7 +42,7 @@ internal class SpecialAssertionStepTest {
     fun `customJavascriptAssertion adds AssertionParams to the browser test object`() {
         browserTest.customJavascriptAssertion(
             stepName = "Step",
-            code = "return true;"
+            code = "return true;",
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -53,7 +53,7 @@ internal class SpecialAssertionStepTest {
         val code = "return true;"
         browserTest.customJavascriptAssertion(
             stepName = "Step",
-            code = code
+            code = code,
         )
 
         assertEquals(code, (browserTest.steps?.get(0)?.params as AssertionParams).code)
@@ -63,7 +63,7 @@ internal class SpecialAssertionStepTest {
     fun `customJavascriptAssertion accepts additional configuration changes to the test step`() {
         browserTest.customJavascriptAssertion(
             stepName = "Step",
-            code = "return true;"
+            code = "return true;",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

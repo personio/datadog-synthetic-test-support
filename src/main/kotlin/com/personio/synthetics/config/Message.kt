@@ -11,7 +11,10 @@ import com.personio.synthetics.client.BrowserTest
  * Example: Slack channel -> @slack-test_slack_channel
  * Email -> @firstName.lastName@domain.com
  */
-fun BrowserTest.alertMessage(failureMessage: String, vararg alertMedium: String) {
+fun BrowserTest.alertMessage(
+    failureMessage: String,
+    vararg alertMedium: String,
+) {
     message += "${alertMedium.joinToString(" ")} {{#is_alert}} $failureMessage {{/is_alert}} "
 }
 

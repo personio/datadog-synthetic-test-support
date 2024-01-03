@@ -23,7 +23,7 @@ import kotlin.time.Duration
  */
 fun BrowserTest.waitStep(
     stepName: String,
-    waitingTime: Duration
+    waitingTime: Duration,
 ) = addStep(stepName) {
     type = SyntheticsStepType.WAIT
     params = WaitParams(value = waitingTime.inWholeSeconds.toInt())
@@ -37,14 +37,17 @@ fun BrowserTest.waitStep(
  * - vertical and horizontal scroll -> Supply the pixels for performing the scroll
  * @return SpecialActionsStep object with scrollStep added
  */
-fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): SpecialActionsStep =
+fun BrowserTest.scrollStep(
+    stepName: String,
+    f: SpecialActionsStep.() -> Unit,
+): SpecialActionsStep =
     addStep(stepName, SpecialActionsStep()) {
         type = SyntheticsStepType.SCROLL
         params = SpecialActionsParams()
         f()
         with(params as SpecialActionsParams) {
             check(
-                (x in -9999..9999 && y in -9999..9999) || (element != null)
+                (x in -9999..9999 && y in -9999..9999) || (element != null),
             ) { "Either set x,y coordinates within(-9999,9999) pixels or target element for step:'$stepName'." }
         }
     }
@@ -59,7 +62,7 @@ fun BrowserTest.scrollStep(stepName: String, f: SpecialActionsStep.() -> Unit): 
 fun BrowserTest.hoverStep(
     stepName: String,
     targetElement: TargetElement,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.HOVER
     params = SpecialActionsParams(element = targetElement.getSpecialActionsElementObject())
@@ -76,7 +79,7 @@ fun BrowserTest.hoverStep(
 fun BrowserTest.pressKeyStep(
     stepName: String,
     key: Key,
-    f: (SpecialActionsStep.() -> Unit)? = null
+    f: (SpecialActionsStep.() -> Unit)? = null,
 ): SpecialActionsStep =
     addStep(stepName, SpecialActionsStep()) {
         type = SyntheticsStepType.PRESS_KEY
@@ -93,34 +96,40 @@ class SpecialActionsStep : SyntheticsStep() {
      * @param x The number of pixels to scroll horizontally
      * @return SpecialActionsStep object with horizontal scroll value set
      */
-    fun horizontalScroll(x: Int) = apply {
-        params = withParamType<SpecialActionsParams> {
-            copy(x = x)
+    fun horizontalScroll(x: Int) =
+        apply {
+            params =
+                withParamType<SpecialActionsParams> {
+                    copy(x = x)
+                }
         }
-    }
 
     /**
      * Sets the vertical scroll value to be sent for the scroll step
      * @param y The number of pixels to scroll vertically
      * @return SpecialActionsStep object with vertical scroll value set
      */
-    fun verticalScroll(y: Int) = apply {
-        params = withParamType<SpecialActionsParams> {
-            copy(y = y)
+    fun verticalScroll(y: Int) =
+        apply {
+            params =
+                withParamType<SpecialActionsParams> {
+                    copy(y = y)
+                }
         }
-    }
 
     /**
      * Sets the modifier to be sent for the press key step
      * @param modifiers Pass comma separated modifiers to be sent for the press key step
      * @return SpecialActionsStep object with press key value set
      */
-    fun modifiers(vararg modifiers: Modifier) = apply {
-        params = withParamType<PressKeyParams> {
-            val modifierValues = modifiers.map { it.value }.toList()
-            copy(modifiers = modifierValues)
+    fun modifiers(vararg modifiers: Modifier) =
+        apply {
+            params =
+                withParamType<PressKeyParams> {
+                    val modifierValues = modifiers.map { it.value }.toList()
+                    copy(modifiers = modifierValues)
+                }
         }
-    }
 
     /**
      * Sets the target element for the scroll step
@@ -128,9 +137,13 @@ class SpecialActionsStep : SyntheticsStep() {
      * @param locatorType The locator type for identifying the element
      * By default the locator type is set as CSS
      */
-    fun targetElement(locator: String, locatorType: LocatorType = LocatorType.CSS) {
-        params = withParamType<SpecialActionsParams> {
-            copy(element = TargetElement(locator, locatorType).getSpecialActionsElementObject())
-        }
+    fun targetElement(
+        locator: String,
+        locatorType: LocatorType = LocatorType.CSS,
+    ) {
+        params =
+            withParamType<SpecialActionsParams> {
+                copy(element = TargetElement(locator, locatorType).getSpecialActionsElementObject())
+            }
     }
 }

@@ -24,12 +24,13 @@ import org.intellij.lang.annotations.Language
 fun BrowserTest.customJavascriptAssertion(
     stepName: String,
     @Language("JS") code: String,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.ASSERT_FROM_JAVASCRIPT
-    params = AssertionParams(
-        code = code
-    )
+    params =
+        AssertionParams(
+            code = code,
+        )
     if (f != null) f()
 }
 
@@ -39,7 +40,10 @@ fun BrowserTest.customJavascriptAssertion(
  * @param f Add all the parameters required for this test step
  * @return SyntheticsCommonAssertionSteps object with downloadedFileAssertion added
  */
-fun BrowserTest.downloadedFileAssertion(stepName: String, f: DownloadedFileAssertionStep.() -> Unit): DownloadedFileAssertionStep =
+fun BrowserTest.downloadedFileAssertion(
+    stepName: String,
+    f: DownloadedFileAssertionStep.() -> Unit,
+): DownloadedFileAssertionStep =
     addStep(stepName, DownloadedFileAssertionStep()) {
         type = SyntheticsStepType.ASSERT_FILE_DOWNLOAD
         params = DownloadedFileAssertionParams(File())
@@ -56,13 +60,22 @@ class DownloadedFileAssertionStep : SyntheticsStep() {
      * @param value Expected name for the downloaded file
      * @return DownloadedFileAssertionStep object with file.nameCheck param set
      */
-    fun nameCheck(checkType: FileNameCheckType, value: String = "") = apply {
+    fun nameCheck(
+        checkType: FileNameCheckType,
+        value: String = "",
+    ) = apply {
         if (checkType !in listOf(FileNameCheckType.IS_EMPTY, FileNameCheckType.NOT_IS_EMPTY)) {
-            check(!value.isEmpty()) { "Expected value is a required parameter for the file name check in the step '${this.name}' when the passed check type is $checkType." }
+            check(
+                !value.isEmpty(),
+            ) {
+                "Expected value is a required parameter for the file name check in the step '${this.name}' when " +
+                    "the passed check type is $checkType."
+            }
         }
-        params = withParamType<DownloadedFileAssertionParams> {
-            copy(file = file.copy(nameCheck = NameCheck(checkType.value.toString(), value)))
-        }
+        params =
+            withParamType<DownloadedFileAssertionParams> {
+                copy(file = file.copy(nameCheck = NameCheck(checkType.value.toString(), value)))
+            }
     }
 
     /**
@@ -71,10 +84,14 @@ class DownloadedFileAssertionStep : SyntheticsStep() {
      * @param value Expected file size in KB for the downloaded file assertion step
      * @return DownloadedFileAssertionStep object with file.sizeCheck param set
      */
-    fun sizeCheck(checkType: FileSizeCheckType, value: Int) = apply {
-        params = withParamType<DownloadedFileAssertionParams> {
-            copy(file = file.copy(sizeCheck = SizeCheck(checkType.value.toString(), value)))
-        }
+    fun sizeCheck(
+        checkType: FileSizeCheckType,
+        value: Int,
+    ) = apply {
+        params =
+            withParamType<DownloadedFileAssertionParams> {
+                copy(file = file.copy(sizeCheck = SizeCheck(checkType.value.toString(), value)))
+            }
     }
 
     /**
@@ -82,9 +99,11 @@ class DownloadedFileAssertionStep : SyntheticsStep() {
      * @param value Expected MD5 value for the downloaded file assertion step
      * @return DownloadedFileAssertionStep object with file.md5 param set
      */
-    fun expectedMd5(value: String) = apply {
-        params = withParamType<DownloadedFileAssertionParams> {
-            copy(file = file.copy(md5 = value))
+    fun expectedMd5(value: String) =
+        apply {
+            params =
+                withParamType<DownloadedFileAssertionParams> {
+                    copy(file = file.copy(md5 = value))
+                }
         }
-    }
 }

@@ -21,13 +21,14 @@ fun BrowserTest.extractFromJavascriptStep(
     stepName: String,
     variableName: String,
     @Language("JS") code: String,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.EXTRACT_FROM_JAVASCRIPT
-    params = ExtractParams(
-        code = code,
-        variable = Variable(name = variableName)
-    )
+    params =
+        ExtractParams(
+            code = code,
+            variable = Variable(name = variableName),
+        )
     if (f != null) f()
 }
 
@@ -43,12 +44,13 @@ fun BrowserTest.extractTextFromElementStep(
     stepName: String,
     variableName: String,
     targetElement: TargetElement,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.EXTRACT_VARIABLE
-    params = ExtractParams(
-        variable = Variable(name = variableName),
-        element = targetElement.getElementObject()
-    )
+    params =
+        ExtractParams(
+            variable = Variable(name = variableName),
+            element = targetElement.getElementObject(),
+        )
     if (f != null) f()
 }

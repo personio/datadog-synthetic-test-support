@@ -19,7 +19,7 @@ internal class ExtractStepTest {
         browserTest.extractFromJavascriptStep(
             stepName = "Step",
             code = "return 'true'",
-            variableName = "EXTRACT_JS_STEP_VAR"
+            variableName = "EXTRACT_JS_STEP_VAR",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -30,7 +30,7 @@ internal class ExtractStepTest {
         browserTest.extractFromJavascriptStep(
             stepName = "Step",
             code = "return 'true'",
-            variableName = "EXTRACT_JS_STEP_VAR"
+            variableName = "EXTRACT_JS_STEP_VAR",
         )
         val step = browserTest.steps?.get(0)
 
@@ -44,7 +44,7 @@ internal class ExtractStepTest {
         browserTest.extractFromJavascriptStep(
             stepName = "Step",
             code = jsCode,
-            variableName = "EXTRACT_JS_STEP_VAR"
+            variableName = "EXTRACT_JS_STEP_VAR",
         )
 
         assertEquals(jsCode, (browserTest.steps?.get(0)?.params as ExtractParams).code)
@@ -56,7 +56,7 @@ internal class ExtractStepTest {
         browserTest.extractFromJavascriptStep(
             stepName = "Step",
             code = "return 'true'",
-            variableName = variableName
+            variableName = variableName,
         )
 
         assertEquals(variableName, (browserTest.steps?.get(0)?.params as ExtractParams).variable?.name)
@@ -67,7 +67,7 @@ internal class ExtractStepTest {
         browserTest.extractFromJavascriptStep(
             stepName = "Step",
             code = "return 'true'",
-            variableName = "EXTRACT_JS_STEP_VAR"
+            variableName = "EXTRACT_JS_STEP_VAR",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -78,7 +78,7 @@ internal class ExtractStepTest {
         browserTest.extractTextFromElementStep(
             stepName = "Step",
             targetElement = TargetElement("#locatorId"),
-            variableName = "EXTRACT_TEXT_VAR"
+            variableName = "EXTRACT_TEXT_VAR",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -89,7 +89,7 @@ internal class ExtractStepTest {
         browserTest.extractTextFromElementStep(
             stepName = "Step",
             targetElement = TargetElement("#locatorId"),
-            variableName = "EXTRACT_TEXT_VAR"
+            variableName = "EXTRACT_TEXT_VAR",
         )
         val step = browserTest.steps?.get(0)
 
@@ -103,7 +103,7 @@ internal class ExtractStepTest {
         browserTest.extractTextFromElementStep(
             stepName = "Step",
             targetElement = TargetElement("#locatorId"),
-            variableName = variableName
+            variableName = variableName,
         )
 
         assertEquals(variableName, (browserTest.steps?.get(0)?.params as ExtractParams).variable?.name)
@@ -115,7 +115,7 @@ internal class ExtractStepTest {
         browserTest.extractTextFromElementStep(
             stepName = "Step",
             targetElement = targetElement,
-            variableName = "EXTRACT_TEXT_VAR"
+            variableName = "EXTRACT_TEXT_VAR",
         )
 
         assertEquals(targetElement.getElementObject(), (browserTest.steps?.get(0)?.params as ExtractParams).element)
@@ -126,7 +126,7 @@ internal class ExtractStepTest {
         browserTest.extractTextFromElementStep(
             stepName = "Step",
             targetElement = TargetElement("#locatorId"),
-            variableName = "EXTRACT_TEXT_VAR"
+            variableName = "EXTRACT_TEXT_VAR",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

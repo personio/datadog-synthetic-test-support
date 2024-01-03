@@ -58,9 +58,9 @@ internal class BrowserTestConfigTest {
                 from = LocalTime.of(0, 1),
                 to = LocalTime.of(23, 59),
                 DayOfWeek.MONDAY,
-                DayOfWeek.SUNDAY
+                DayOfWeek.SUNDAY,
             ),
-            timezone = ZoneId.of("Europe/Dublin")
+            timezone = ZoneId.of("Europe/Dublin"),
         )
 
         assertEquals(1, browserTest.options.scheduling.timeframes[0].day)
@@ -78,8 +78,8 @@ internal class BrowserTestConfigTest {
             Timeframe(
                 from = LocalTime.of(0, 1),
                 to = LocalTime.of(23, 59),
-                DayOfWeek.MONDAY
-            )
+                DayOfWeek.MONDAY,
+            ),
         )
 
         assertNotNull(browserTest.options.scheduling.timezone)

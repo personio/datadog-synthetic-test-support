@@ -21,7 +21,7 @@ internal class PageAssertionStepTest {
         browserTest.currentUrlAssertion(
             stepName = "Step",
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -32,7 +32,7 @@ internal class PageAssertionStepTest {
         browserTest.currentUrlAssertion(
             stepName = "Step",
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(SyntheticsStepType.ASSERT_CURRENT_URL, browserTest.steps!![0].type)
@@ -43,7 +43,7 @@ internal class PageAssertionStepTest {
         browserTest.currentUrlAssertion(
             stepName = "Step",
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -55,7 +55,7 @@ internal class PageAssertionStepTest {
         browserTest.currentUrlAssertion(
             stepName = "Step",
             check = checkType,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(checkType, (browserTest.steps!![0].params as AssertionParams).check)
@@ -67,7 +67,7 @@ internal class PageAssertionStepTest {
         browserTest.currentUrlAssertion(
             stepName = "Step",
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = expectedContent
+            expectedContent = expectedContent,
         )
 
         assertEquals(expectedContent, (browserTest.steps!![0].params as AssertionParams).value)
@@ -78,7 +78,7 @@ internal class PageAssertionStepTest {
         assertDoesNotThrow {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
-                check = SyntheticsCheckType.IS_EMPTY
+                check = SyntheticsCheckType.IS_EMPTY,
             )
         }
     }
@@ -88,7 +88,7 @@ internal class PageAssertionStepTest {
         assertDoesNotThrow {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
-                check = SyntheticsCheckType.NOT_IS_EMPTY
+                check = SyntheticsCheckType.NOT_IS_EMPTY,
             )
         }
     }
@@ -98,7 +98,7 @@ internal class PageAssertionStepTest {
         assertThrows<IllegalStateException> {
             browserTest.currentUrlAssertion(
                 stepName = "Step",
-                check = SyntheticsCheckType.EQUALS
+                check = SyntheticsCheckType.EQUALS,
             )
         }
     }
@@ -108,7 +108,7 @@ internal class PageAssertionStepTest {
         browserTest.currentUrlAssertion(
             stepName = "Step",
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -118,7 +118,7 @@ internal class PageAssertionStepTest {
     fun `pageContainsTextAssertion adds the new step item to the browser test object`() {
         browserTest.pageContainsTextAssertion(
             stepName = "Step",
-            expectedText = "expectedText"
+            expectedText = "expectedText",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -128,7 +128,7 @@ internal class PageAssertionStepTest {
     fun `pageContainsTextAssertion adds the step item of type Test that some text is present on the active page`() {
         browserTest.pageContainsTextAssertion(
             stepName = "Step",
-            expectedText = "expectedText"
+            expectedText = "expectedText",
         )
 
         assertEquals(SyntheticsStepType.ASSERT_PAGE_CONTAINS, browserTest.steps!![0].type)
@@ -138,7 +138,7 @@ internal class PageAssertionStepTest {
     fun `pageContainsTextAssertion adds AssertionParams to the browser test object`() {
         browserTest.pageContainsTextAssertion(
             stepName = "Step",
-            expectedText = "expectedText"
+            expectedText = "expectedText",
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -149,7 +149,7 @@ internal class PageAssertionStepTest {
         val expectedText = "expectedText"
         browserTest.pageContainsTextAssertion(
             stepName = "Step",
-            expectedText = expectedText
+            expectedText = expectedText,
         )
 
         assertEquals(expectedText, (browserTest.steps!![0].params as AssertionParams).value)
@@ -159,7 +159,7 @@ internal class PageAssertionStepTest {
     fun `pageContainsTextAssertion accepts additional configuration changes to the test step`() {
         browserTest.pageContainsTextAssertion(
             stepName = "Step",
-            expectedText = "expectedText"
+            expectedText = "expectedText",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -169,7 +169,7 @@ internal class PageAssertionStepTest {
     fun `pageNotContainsTextAssertion adds the new step item to the browser test object`() {
         browserTest.pageNotContainsTextAssertion(
             stepName = "Step",
-            text = "text"
+            text = "text",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -179,7 +179,7 @@ internal class PageAssertionStepTest {
     fun `pageNotContainsTextAssertion adds the step item of type Test that some text is not present on the active page`() {
         browserTest.pageNotContainsTextAssertion(
             stepName = "Step",
-            text = "text"
+            text = "text",
         )
 
         assertEquals(SyntheticsStepType.ASSERT_PAGE_LACKS, browserTest.steps!![0].type)
@@ -189,7 +189,7 @@ internal class PageAssertionStepTest {
     fun `pageNotContainsTextAssertion adds AssertionParams to the browser test object`() {
         browserTest.pageNotContainsTextAssertion(
             stepName = "Step",
-            text = "text"
+            text = "text",
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -200,7 +200,7 @@ internal class PageAssertionStepTest {
         val text = "text"
         browserTest.pageNotContainsTextAssertion(
             stepName = "Step",
-            text = text
+            text = text,
         )
 
         assertEquals(text, (browserTest.steps!![0].params as AssertionParams).value)
@@ -210,7 +210,7 @@ internal class PageAssertionStepTest {
     fun `pageNotContainsTextAssertion accepts additional configuration changes to the test step`() {
         browserTest.pageNotContainsTextAssertion(
             stepName = "Step",
-            text = "text"
+            text = "text",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

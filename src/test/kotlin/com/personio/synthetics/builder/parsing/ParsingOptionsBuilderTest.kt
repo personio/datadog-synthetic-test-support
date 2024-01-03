@@ -50,11 +50,11 @@ class ParsingOptionsBuilderTest {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.JSON_PATH)
-                        .value("any_json_path")
+                        .value("any_json_path"),
                 )
                 .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
                 .secure(secure),
-            parsingOptionsBuilder.build()
+            parsingOptionsBuilder.build(),
         )
     }
 
@@ -70,11 +70,11 @@ class ParsingOptionsBuilderTest {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
-                        .value("any_regex")
+                        .value("any_regex"),
                 )
                 .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
                 .secure(secure),
-            parsingOptionsBuilder.build()
+            parsingOptionsBuilder.build(),
         )
     }
 
@@ -90,11 +90,11 @@ class ParsingOptionsBuilderTest {
                 .field("any_header_name")
                 .parser(
                     SyntheticsVariableParser()
-                        .type(SyntheticsGlobalVariableParserType.RAW)
+                        .type(SyntheticsGlobalVariableParserType.RAW),
                 )
                 .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
                 .secure(secure),
-            parsingOptionsBuilder.build()
+            parsingOptionsBuilder.build(),
         )
     }
 
@@ -111,11 +111,11 @@ class ParsingOptionsBuilderTest {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
-                        .value("any_regex")
+                        .value("any_regex"),
                 )
                 .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
                 .secure(secure),
-            parsingOptionsBuilder.build()
+            parsingOptionsBuilder.build(),
         )
     }
 }

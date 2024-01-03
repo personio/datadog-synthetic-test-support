@@ -6,5 +6,5 @@ import com.personio.synthetics.model.element.Element
 internal data class FileParams(
     val element: Element? = null,
     val files: List<UploadFile> = emptyList(),
-    val withClick: Boolean = false
+    val withClick: Boolean = false,
 ) : Params()
