@@ -21,7 +21,7 @@ internal class ElementAssertionStepTest {
     fun `elementPresentAssertion adds the new step item to the browser test object`() {
         browserTest.elementPresentAssertion(
             stepName = "Step",
-            targetElement = TargetElement("#locator")
+            targetElement = TargetElement("#locator"),
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -31,7 +31,7 @@ internal class ElementAssertionStepTest {
     fun `elementPresentAssertion adds the step item of type Test that an element is present`() {
         browserTest.elementPresentAssertion(
             stepName = "Step",
-            targetElement = TargetElement("#locator")
+            targetElement = TargetElement("#locator"),
         )
 
         assertEquals(SyntheticsStepType.ASSERT_ELEMENT_PRESENT, browserTest.steps!![0].type)
@@ -41,7 +41,7 @@ internal class ElementAssertionStepTest {
     fun `elementPresentAssertion adds AssertionParams to the browser test object`() {
         browserTest.elementPresentAssertion(
             stepName = "Step",
-            targetElement = TargetElement("#locator")
+            targetElement = TargetElement("#locator"),
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -52,7 +52,7 @@ internal class ElementAssertionStepTest {
         val targetElement = TargetElement("#locator")
         browserTest.elementPresentAssertion(
             stepName = "Step",
-            targetElement = targetElement
+            targetElement = targetElement,
         )
 
         assertEquals(targetElement.getElementObject(), (browserTest.steps!![0].params as AssertionParams).element)
@@ -62,7 +62,7 @@ internal class ElementAssertionStepTest {
     fun `elementPresentAssertion accepts additional configuration changes to the test step`() {
         browserTest.elementPresentAssertion(
             stepName = "Step",
-            targetElement = TargetElement("#locator")
+            targetElement = TargetElement("#locator"),
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -74,7 +74,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -86,7 +86,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(SyntheticsStepType.ASSERT_ELEMENT_CONTENT, browserTest.steps!![0].type)
@@ -98,7 +98,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -111,7 +111,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = targetElement,
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(targetElement.getElementObject(), (browserTest.steps!![0].params as AssertionParams).element)
@@ -124,7 +124,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             check = checkType,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         )
 
         assertEquals(checkType, (browserTest.steps!![0].params as AssertionParams).check)
@@ -137,7 +137,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = expectedContent
+            expectedContent = expectedContent,
         )
 
         assertEquals(expectedContent, (browserTest.steps!![0].params as AssertionParams).value)
@@ -149,7 +149,7 @@ internal class ElementAssertionStepTest {
             browserTest.elementContentAssertion(
                 stepName = "Step",
                 targetElement = TargetElement("#locator"),
-                check = SyntheticsCheckType.IS_EMPTY
+                check = SyntheticsCheckType.IS_EMPTY,
             )
         }
     }
@@ -160,7 +160,7 @@ internal class ElementAssertionStepTest {
             browserTest.elementContentAssertion(
                 stepName = "Step",
                 targetElement = TargetElement("#locator"),
-                check = SyntheticsCheckType.NOT_IS_EMPTY
+                check = SyntheticsCheckType.NOT_IS_EMPTY,
             )
         }
     }
@@ -171,7 +171,7 @@ internal class ElementAssertionStepTest {
             browserTest.elementContentAssertion(
                 stepName = "Step",
                 targetElement = TargetElement("#locator"),
-                check = SyntheticsCheckType.EQUALS
+                check = SyntheticsCheckType.EQUALS,
             )
         }
     }
@@ -182,7 +182,7 @@ internal class ElementAssertionStepTest {
             stepName = "Step",
             targetElement = TargetElement("#locator"),
             check = SyntheticsCheckType.EQUALS,
-            expectedContent = "expectedContent"
+            expectedContent = "expectedContent",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
@@ -195,7 +195,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -208,7 +208,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         )
 
         assertEquals(SyntheticsStepType.ASSERT_ELEMENT_ATTRIBUTE, browserTest.steps!![0].type)
@@ -221,7 +221,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         )
 
         assertInstanceOf(AssertionParams::class.java, browserTest.steps!![0].params)
@@ -235,7 +235,7 @@ internal class ElementAssertionStepTest {
             targetElement = targetElement,
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         )
 
         assertEquals(targetElement.getElementObject(), (browserTest.steps!![0].params as AssertionParams).element)
@@ -249,7 +249,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = attribute,
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         )
 
         assertEquals(attribute, (browserTest.steps!![0].params as AssertionParams).attribute)
@@ -263,7 +263,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = "attribute",
             check = checkType,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         )
 
         assertEquals(checkType, (browserTest.steps!![0].params as AssertionParams).check)
@@ -277,7 +277,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = expectedValue
+            expectedValue = expectedValue,
         )
 
         assertEquals(expectedValue, (browserTest.steps!![0].params as AssertionParams).value)
@@ -290,7 +290,7 @@ internal class ElementAssertionStepTest {
                 stepName = "Step",
                 targetElement = TargetElement("#locator"),
                 attribute = "attribute",
-                check = SyntheticsCheckType.IS_EMPTY
+                check = SyntheticsCheckType.IS_EMPTY,
             )
         }
     }
@@ -302,7 +302,7 @@ internal class ElementAssertionStepTest {
                 stepName = "Step",
                 targetElement = TargetElement("#locator"),
                 attribute = "attribute",
-                check = SyntheticsCheckType.NOT_IS_EMPTY
+                check = SyntheticsCheckType.NOT_IS_EMPTY,
             )
         }
     }
@@ -314,7 +314,7 @@ internal class ElementAssertionStepTest {
                 stepName = "Step",
                 targetElement = TargetElement("#locator"),
                 attribute = "attribute",
-                check = SyntheticsCheckType.EQUALS
+                check = SyntheticsCheckType.EQUALS,
             )
         }
     }
@@ -326,7 +326,7 @@ internal class ElementAssertionStepTest {
             targetElement = TargetElement("#locator"),
             attribute = "attribute",
             check = SyntheticsCheckType.EQUALS,
-            expectedValue = "expectedValue"
+            expectedValue = "expectedValue",
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)

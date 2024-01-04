@@ -53,9 +53,7 @@ internal class MessageTest {
         assertEquals(expectedMessage, browserTest.message)
     }
 
-    private fun getFormattedAlertMessage(message: String): String =
-        " {{#is_alert}} $message {{/is_alert}} "
+    private fun getFormattedAlertMessage(message: String): String = " {{#is_alert}} $message {{/is_alert}} "
 
-    private fun getFormattedRecoveryMessage(message: String): String =
-        " {{#is_recovery}} $message {{/is_recovery}} "
+    private fun getFormattedRecoveryMessage(message: String): String = " {{#is_recovery}} $message {{/is_recovery}} "
 }

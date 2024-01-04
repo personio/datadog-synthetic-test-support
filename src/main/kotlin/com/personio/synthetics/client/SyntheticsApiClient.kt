@@ -10,9 +10,10 @@ import com.personio.synthetics.config.Config
 class SyntheticsApiClient(credentialsProvider: CredentialsProvider, apiHost: String = Config.testConfig.datadogApiHost) : SyntheticsApi() {
     init {
         val credentials = credentialsProvider.getCredentials()
-        apiClient = ApiClient.getDefaultApiClient().apply {
-            serverVariables = mapOf("site" to apiHost)
-            configureApiKeys(mapOf("apiKeyAuth" to credentials.apiKey, "appKeyAuth" to credentials.appKey))
-        }
+        apiClient =
+            ApiClient.getDefaultApiClient().apply {
+                serverVariables = mapOf("site" to apiHost)
+                configureApiKeys(mapOf("apiKeyAuth" to credentials.apiKey, "appKeyAuth" to credentials.appKey))
+            }
     }
 }

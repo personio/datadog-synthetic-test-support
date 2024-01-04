@@ -3,14 +3,14 @@ package com.personio.synthetics.config
 data class Configuration(
     val credentials: Credentials,
     val datadogApiHost: String,
-    val defaults: Defaults
+    val defaults: Defaults,
 )
 
 data class Credentials(
     val ddApiKey: String?,
     val ddAppKey: String?,
     val awsRegion: String?,
-    val datadogCredentialsAwsArn: String?
+    val datadogCredentialsAwsArn: String?,
 )
 
 data class Defaults(
@@ -19,5 +19,5 @@ data class Defaults(
     val minLocationFailed: Long,
     val retryCount: Long,
     val retryInterval: Double,
-    val runLocations: List<String>
+    val runLocations: List<String>,
 )

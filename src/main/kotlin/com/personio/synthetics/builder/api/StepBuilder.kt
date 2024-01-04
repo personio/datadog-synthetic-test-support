@@ -20,7 +20,7 @@ class StepBuilder(
     val name: String,
     private val requestBuilder: RequestBuilder = RequestBuilder(),
     private val assertionBuilder: AssertionsBuilder = AssertionsBuilder(),
-    private val parsingOptionsBuilder: ParsingOptionsBuilder = ParsingOptionsBuilder()
+    private val parsingOptionsBuilder: ParsingOptionsBuilder = ParsingOptionsBuilder(),
 ) {
     var allowFailure = false
     var isCritical = false
@@ -72,12 +72,16 @@ class StepBuilder(
      * @param variableName Name of the variable
      * @param init Configuration to be applied on the ParsingOptionsBuilder
      */
-    fun extract(variableName: String, init: ParsingOptionsBuilder.() -> Unit) {
+    fun extract(
+        variableName: String,
+        init: ParsingOptionsBuilder.() -> Unit,
+    ) {
         parsingOptionsBuilder.variable(variableName)
 
-        val options = parsingOptionsBuilder
-            .apply(init)
-            .build()
+        val options =
+            parsingOptionsBuilder
+                .apply(init)
+                .build()
 
         if (options != null) {
             parsingOptions.add(options)

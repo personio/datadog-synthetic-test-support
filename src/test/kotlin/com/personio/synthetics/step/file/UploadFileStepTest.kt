@@ -22,7 +22,7 @@ internal class UploadFileStepTest {
         browserTest.uploadFileStep(
             stepName = "Step",
             uploadFile = getFile(),
-            element = TargetElement("#locator")
+            element = TargetElement("#locator"),
         )
 
         assertEquals(1, browserTest.steps?.size)
@@ -33,7 +33,7 @@ internal class UploadFileStepTest {
         browserTest.uploadFileStep(
             stepName = "Step",
             uploadFile = getFile(),
-            element = TargetElement("#locator")
+            element = TargetElement("#locator"),
         )
         val step = browserTest.steps?.get(0)
 
@@ -45,16 +45,17 @@ internal class UploadFileStepTest {
     fun `uploadFileStep adds the passed file to the FileParams object`() {
         val uploadFileContent = "text"
         val fileToBeUploaded = getFile(uploadFileContent).apply { writeText(uploadFileContent) }
-        val expectedFile = UploadFile(
-            name = fileToBeUploaded.name,
-            size = fileToBeUploaded.length(),
-            content = Base64.getEncoder().encodeToString(uploadFileContent.toByteArray())
-        )
+        val expectedFile =
+            UploadFile(
+                name = fileToBeUploaded.name,
+                size = fileToBeUploaded.length(),
+                content = Base64.getEncoder().encodeToString(uploadFileContent.toByteArray()),
+            )
 
         browserTest.uploadFileStep(
             stepName = "Step",
             uploadFile = fileToBeUploaded,
-            element = TargetElement("#locator")
+            element = TargetElement("#locator"),
         )
         val params = browserTest.steps?.get(0)?.params as FileParams
 
@@ -67,7 +68,7 @@ internal class UploadFileStepTest {
         browserTest.uploadFileStep(
             stepName = "Step",
             uploadFile = getFile(),
-            element = element
+            element = element,
         )
         val params = browserTest.steps?.get(0)?.params as FileParams
 
@@ -79,12 +80,14 @@ internal class UploadFileStepTest {
         browserTest.uploadFileStep(
             stepName = "Step",
             uploadFile = getFile(),
-            element = TargetElement("#locator")
+            element = TargetElement("#locator"),
         ) { waitBeforeDeclaringStepAsFailed(10.seconds) }
 
         assertEquals(10, browserTest.steps?.get(0)?.timeout)
     }
 
     private fun getFile(content: String = "text"): File =
-        File.createTempFile("upload", ".pdf").apply { writeText(content) }
+        File.createTempFile("upload", ".pdf").apply {
+            writeText(content)
+        }
 }

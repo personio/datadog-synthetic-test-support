@@ -8,10 +8,9 @@ import com.personio.synthetics.model.element.Value
 
 data class TargetElement(
     val locator: String,
-    val locatorType: LocatorType = LocatorType.CSS
+    val locatorType: LocatorType = LocatorType.CSS,
 ) {
-    private fun userLocator(): UserLocator =
-        UserLocator(values = listOf(Value(locatorType.value, locator)))
+    private fun userLocator(): UserLocator = UserLocator(values = listOf(Value(locatorType.value, locator)))
 
     @PublishedApi
     internal fun getElementObject(): Element {

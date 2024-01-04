@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class ConfigurationLoaderTest {
-
     @Test
     fun `loadConfiguration loads the dd api key from the config file into the config object`() {
         loadConfiguration("config-unit-test.yaml")

@@ -33,9 +33,9 @@ class E2EMultiStepApiTest {
                     to = LocalTime.of(23, 59),
                     DayOfWeek.MONDAY,
                     DayOfWeek.TUESDAY,
-                    DayOfWeek.FRIDAY
+                    DayOfWeek.FRIDAY,
                 ),
-                timezone = ZoneId.of("Africa/Bissau")
+                timezone = ZoneId.of("Africa/Bissau"),
             )
             monitorName("Test Monitor Name")
             alphabeticPatternVariable("ALPHABETIC_PATTERN", 5)
@@ -45,16 +45,16 @@ class E2EMultiStepApiTest {
             numericPatternVariable(
                 name = "NUMERIC_PATTERN",
                 characterLength = 4,
-                prefix = "test"
+                prefix = "test",
             )
             datePatternVariable(
                 name = "DATE_PATTERN",
                 duration = (-1).days,
-                format = "MM-DD-YYYY"
+                format = "MM-DD-YYYY",
             )
             timestampPatternVariable(
                 name = "TIMESTAMP_PATTERN",
-                duration = 10.seconds
+                duration = 10.seconds,
             )
             steps {
                 step("Do http request") {
@@ -67,12 +67,12 @@ class E2EMultiStepApiTest {
                             {
                                 "key": "value",
                             }
-                            """.trimIndent()
+                            """.trimIndent(),
                         )
                         headers(
                             mapOf(
-                                "Content-Type" to "application/json"
-                            )
+                                "Content-Type" to "application/json",
+                            ),
                         )
                         ignoreServerCertificateError(true)
                         assertions {

@@ -4,5 +4,5 @@ enum class Modifier(val value: String) {
     OPT("Alt"),
     CONTROL("Control"),
     META("Meta"),
-    SHIFT("Shift")
+    SHIFT("Shift"),
 }

@@ -32,10 +32,12 @@ class VariableTest {
 
         browserTest.useGlobalVariable(variableName)
 
-        val expectedResult = SyntheticsBrowserVariable()
-            .name(variableName)
-            .type(variableType)
-            .id(variableId)
+        val expectedResult =
+            SyntheticsBrowserVariable()
+                .name(variableName)
+                .type(variableType)
+                .id(variableId)
+
         assertEquals(expectedResult, browserTest.config!!.variables!![0])
     }
 
@@ -64,10 +66,12 @@ class VariableTest {
 
         browserTest.useGlobalVariable(variableName)
 
-        val expectedResult = SyntheticsBrowserVariable()
-            .name(expectedVariableName)
-            .type(variableType)
-            .id(variableId)
+        val expectedResult =
+            SyntheticsBrowserVariable()
+                .name(expectedVariableName)
+                .type(variableType)
+                .id(variableId)
+
         assertEquals(expectedResult, browserTest.config!!.variables!![0])
     }
 
@@ -76,9 +80,10 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val value = "variableValue"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern(value)
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern(value)
 
         browserTest.textVariable(variableName, value)
 
@@ -91,9 +96,10 @@ class VariableTest {
         val characterLength = 5
 
         val expectedVariableName = variableName.uppercase()
-        val expectedResult = syntheticBrowserVariable()
-            .name(expectedVariableName)
-            .pattern("{{ numeric($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(expectedVariableName)
+                .pattern("{{ numeric($characterLength) }}")
 
         browserTest.numericPatternVariable(variableName, 5)
 
@@ -105,9 +111,10 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val characterLength = 5
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ numeric($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ numeric($characterLength) }}")
 
         browserTest.numericPatternVariable(variableName, 5)
 
@@ -120,14 +127,15 @@ class VariableTest {
         val characterLength = 5
         val prefix = "prefix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("$prefix{{ numeric($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("$prefix{{ numeric($characterLength) }}")
 
         browserTest.numericPatternVariable(
             name = variableName,
             characterLength = 5,
-            prefix = prefix
+            prefix = prefix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -139,14 +147,15 @@ class VariableTest {
         val characterLength = 5
         val suffix = "suffix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ numeric($characterLength) }}$suffix")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ numeric($characterLength) }}$suffix")
 
         browserTest.numericPatternVariable(
             name = variableName,
             characterLength = 5,
-            suffix = suffix
+            suffix = suffix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -157,9 +166,10 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val characterLength = 5
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ alphabetic($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ alphabetic($characterLength) }}")
 
         browserTest.alphabeticPatternVariable(variableName, 5)
 
@@ -172,14 +182,15 @@ class VariableTest {
         val characterLength = 5
         val prefix = "prefix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("$prefix{{ alphabetic($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("$prefix{{ alphabetic($characterLength) }}")
 
         browserTest.alphabeticPatternVariable(
             name = variableName,
             characterLength = 5,
-            prefix = prefix
+            prefix = prefix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -191,14 +202,15 @@ class VariableTest {
         val characterLength = 5
         val suffix = "suffix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ alphabetic($characterLength) }}$suffix")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ alphabetic($characterLength) }}$suffix")
 
         browserTest.alphabeticPatternVariable(
             name = variableName,
             characterLength = 5,
-            suffix = suffix
+            suffix = suffix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -209,9 +221,10 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val characterLength = 5
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ alphanumeric($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ alphanumeric($characterLength) }}")
 
         browserTest.alphanumericPatternVariable(variableName, 5)
 
@@ -224,14 +237,15 @@ class VariableTest {
         val characterLength = 5
         val prefix = "prefix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("$prefix{{ alphanumeric($characterLength) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("$prefix{{ alphanumeric($characterLength) }}")
 
         browserTest.alphanumericPatternVariable(
             name = variableName,
             characterLength = 5,
-            prefix = prefix
+            prefix = prefix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -243,14 +257,15 @@ class VariableTest {
         val characterLength = 5
         val suffix = "suffix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ alphanumeric($characterLength) }}$suffix")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ alphanumeric($characterLength) }}$suffix")
 
         browserTest.alphanumericPatternVariable(
             name = variableName,
             characterLength = 5,
-            suffix = suffix
+            suffix = suffix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -262,14 +277,15 @@ class VariableTest {
         val dateValue = 5.minutes
         val dateFormat = "YYYY-MM-DD"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
-            format = dateFormat
+            format = dateFormat,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -282,15 +298,16 @@ class VariableTest {
         val dateFormat = "YYYY-MM-DD"
         val prefix = "prefix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("$prefix{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("$prefix{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
             format = dateFormat,
-            prefix = prefix
+            prefix = prefix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -303,15 +320,16 @@ class VariableTest {
         val dateFormat = "YYYY-MM-DD"
         val suffix = "suffix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}$suffix")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}$suffix")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
             format = dateFormat,
-            suffix = suffix
+            suffix = suffix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -323,14 +341,15 @@ class VariableTest {
         val dateValue = 10_000_000.minutes
         val dateFormat = "YYYY-MM-DD"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ date(${dateValue.inWholeHours}h, $dateFormat) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeHours}h, $dateFormat) }}")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
-            format = dateFormat
+            format = dateFormat,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -342,14 +361,15 @@ class VariableTest {
         val dateValue = 9_999_999.days
         val dateFormat = "YYYY-MM-DD"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ date(${dateValue.inWholeDays}d, $dateFormat) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeDays}d, $dateFormat) }}")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
-            format = dateFormat
+            format = dateFormat,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -361,14 +381,15 @@ class VariableTest {
         val dateValue = 1_000.microseconds
         val dateFormat = "YYYY-MM-DD"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
-            format = dateFormat
+            format = dateFormat,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -380,14 +401,15 @@ class VariableTest {
         val dateValue = 1_000.nanoseconds
         val dateFormat = "YYYY-MM-DD"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeMilliseconds}ms, $dateFormat) }}")
 
         browserTest.datePatternVariable(
             name = variableName,
             duration = dateValue,
-            format = dateFormat
+            format = dateFormat,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -399,7 +421,7 @@ class VariableTest {
             browserTest.datePatternVariable(
                 name = "VARIABLE1",
                 duration = 10_000_000.days,
-                format = "YYYY-MM-DD"
+                format = "YYYY-MM-DD",
             )
         }
     }
@@ -409,13 +431,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 5.seconds
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -427,14 +450,15 @@ class VariableTest {
         val timestampValue = 5.seconds
         val prefix = "prefix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("$prefix{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("$prefix{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
             duration = timestampValue,
-            prefix = prefix
+            prefix = prefix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -446,14 +470,15 @@ class VariableTest {
         val timestampValue = 5.seconds
         val suffix = "suffix"
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}$suffix")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}$suffix")
 
         browserTest.timestampPatternVariable(
             name = variableName,
             duration = timestampValue,
-            suffix = suffix
+            suffix = suffix,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -464,13 +489,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 1_000_000_000.milliseconds
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeSeconds}, s) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeSeconds}, s) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -481,13 +507,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 999_999_999.seconds
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeSeconds}, s) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeSeconds}, s) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -498,13 +525,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 1_000.nanoseconds
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -515,13 +543,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 1_000.microseconds
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -532,13 +561,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 1.minutes
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -549,13 +579,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 1.hours
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -566,13 +597,14 @@ class VariableTest {
         val variableName = "VARIABLE1"
         val timestampValue = 1.days
 
-        val expectedResult = syntheticBrowserVariable()
-            .name(variableName)
-            .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ timestamp(${timestampValue.inWholeMilliseconds}, ms) }}")
 
         browserTest.timestampPatternVariable(
             name = variableName,
-            duration = timestampValue
+            duration = timestampValue,
         )
 
         assertEquals(expectedResult, browserTest.config?.variables?.get(0))
@@ -583,7 +615,7 @@ class VariableTest {
         assertThrows<IllegalStateException> {
             browserTest.timestampPatternVariable(
                 name = "VARIABLE1",
-                duration = 1_000_000_000.seconds
+                duration = 1_000_000_000.seconds,
             )
         }
     }

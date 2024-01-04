@@ -15,5 +15,5 @@ enum class RenotifyInterval(val valueInMinutes: Long) {
     HOURS_5(300),
     HOURS_6(360),
     HOURS_12(720),
-    HOURS_24(1440)
+    HOURS_24(1440),
 }

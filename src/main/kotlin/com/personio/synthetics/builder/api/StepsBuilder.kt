@@ -15,7 +15,11 @@ class StepsBuilder {
      * @param stepBuilder Optional step builder
      * @param init Configuration to be applied on the step builder
      */
-    fun step(name: String, stepBuilder: StepBuilder = StepBuilder(name), init: StepBuilder.() -> Unit) {
+    fun step(
+        name: String,
+        stepBuilder: StepBuilder = StepBuilder(name),
+        init: StepBuilder.() -> Unit,
+    ) {
         steps += stepBuilder.apply(init).build()
     }
 }

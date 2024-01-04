@@ -20,7 +20,10 @@ import com.personio.synthetics.config.loadConfiguration
  * @param steps Calls the added steps and configuration functions of the test
  */
 @Deprecated(message = "This function will have its package and signature changed in 3.x.x")
-inline fun syntheticBrowserTest(name: String, steps: BrowserTest.() -> Unit) {
+inline fun syntheticBrowserTest(
+    name: String,
+    steps: BrowserTest.() -> Unit,
+) {
     check(name.isNotBlank()) {
         "The test's name must not be empty."
     }
@@ -35,7 +38,9 @@ fun getCredentialsProvider(): CredentialsProvider {
         when {
             !it.datadogCredentialsAwsArn.isNullOrEmpty() -> AwsSecretsManagerCredentialsProvider(it)
             !it.ddApiKey.isNullOrEmpty() && !it.ddAppKey.isNullOrEmpty() -> ConfigCredentialsProvider(it)
-            else -> throw IllegalStateException("Please set the required config values for credentials in the \"configuration.yaml\" under resources.")
+            else -> throw IllegalStateException(
+                "Please set the required config values for credentials in the \"configuration.yaml\" under resources.",
+            )
         }
     }
 }
@@ -47,7 +52,11 @@ fun getCredentialsProvider(): CredentialsProvider {
  * SyntheticTestBuilder (or similar).
  */
 @Deprecated(message = "Planned for removal in 3.x.x")
-class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsApiClient, private val defaultSettings: Defaults = Config.testConfig.defaults) : SyntheticsBrowserTest() {
+class BrowserTest(
+    testName: String,
+    private val syntheticsApiClient: SyntheticsApiClient,
+    private val defaultSettings: Defaults = Config.testConfig.defaults,
+) : SyntheticsBrowserTest() {
     init {
         name = testName
         locations = defaultSettings.runLocations
@@ -96,6 +105,6 @@ class BrowserTest(testName: String, private val syntheticsApiClient: SyntheticsA
             .minLocationFailed(defaultSettings.minLocationFailed)
             .retry(SyntheticsTestOptionsRetry().count(defaultSettings.retryCount).interval(defaultSettings.retryInterval))
             .monitorOptions(
-                SyntheticsTestOptionsMonitorOptions()
+                SyntheticsTestOptionsMonitorOptions(),
             )
 }

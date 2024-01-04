@@ -14,7 +14,7 @@ class TimeframeTest {
                 from = LocalTime.of(19, 0),
                 to = LocalTime.of(17, 0),
                 DayOfWeek.MONDAY,
-                DayOfWeek.SUNDAY
+                DayOfWeek.SUNDAY,
             )
         }
     }
@@ -26,7 +26,7 @@ class TimeframeTest {
                 from = LocalTime.of(23, 1),
                 to = LocalTime.of(23, 1),
                 DayOfWeek.MONDAY,
-                DayOfWeek.SUNDAY
+                DayOfWeek.SUNDAY,
             )
         }
     }

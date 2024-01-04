@@ -9,5 +9,5 @@ internal data class AssertionParams(
     val value: String? = null,
     val check: SyntheticsCheckType? = null,
     val element: Element? = null,
-    val code: String? = null
+    val code: String? = null,
 ) : Params()

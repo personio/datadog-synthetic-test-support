@@ -12,13 +12,13 @@ class RequestBuilderTest {
     @Test
     fun `headers appends given headers`() {
         requestBuilder.headers(
-            mapOf("any_header" to "any_value")
+            mapOf("any_header" to "any_value"),
         )
         val result = requestBuilder.build()
 
         assertEquals(
             mapOf("any_header" to "any_value"),
-            result.headers
+            result.headers,
         )
     }
 
@@ -29,7 +29,7 @@ class RequestBuilderTest {
 
         assertEquals(
             mapOf("Cookie" to "any_cookie"),
-            result.headers
+            result.headers,
         )
     }
 
@@ -64,7 +64,7 @@ class RequestBuilderTest {
 
         assertEquals(
             SyntheticsTestRequestBodyType.APPLICATION_JSON,
-            result.bodyType
+            result.bodyType,
         )
     }
 
@@ -76,7 +76,7 @@ class RequestBuilderTest {
 
         assertEquals(
             value,
-            result.followRedirects
+            result.followRedirects,
         )
     }
 
@@ -88,7 +88,7 @@ class RequestBuilderTest {
 
         assertEquals(
             value,
-            result.allowInsecure
+            result.allowInsecure,
         )
     }
 }

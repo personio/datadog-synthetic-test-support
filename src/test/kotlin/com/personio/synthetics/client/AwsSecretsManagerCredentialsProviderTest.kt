@@ -18,9 +18,10 @@ internal class AwsSecretsManagerCredentialsProviderTest {
     fun `getCredentials returns expected API credentials given the secret has the expected structure`() {
         val secretsManagerClient: SecretsManagerClient = mock()
         val credentialsProvider = AwsSecretsManagerCredentialsProvider(credentials, secretsManagerClient)
-        val getSecretValueResponse = GetSecretValueResponse.builder()
-            .secretString("{\"apiKey\": \"apikey\",\"appKey\": \"appkey\"}")
-            .build()
+        val getSecretValueResponse =
+            GetSecretValueResponse.builder()
+                .secretString("{\"apiKey\": \"apikey\",\"appKey\": \"appkey\"}")
+                .build()
         whenever(secretsManagerClient.getSecretValue(any<GetSecretValueRequest>())).thenReturn(getSecretValueResponse)
 
         assertEquals(ApiCredentials("apikey", "appkey"), credentialsProvider.getCredentials())
@@ -30,9 +31,10 @@ internal class AwsSecretsManagerCredentialsProviderTest {
     fun `getCredentials throws exception given the secret has a wrong structure`() {
         val secretsManagerClient: SecretsManagerClient = mock()
         val credentialsProvider = AwsSecretsManagerCredentialsProvider(credentials, secretsManagerClient)
-        val getSecretValueResponse = GetSecretValueResponse.builder()
-            .secretString("{\"foo\": \"bar\"}")
-            .build()
+        val getSecretValueResponse =
+            GetSecretValueResponse.builder()
+                .secretString("{\"foo\": \"bar\"}")
+                .build()
         whenever(secretsManagerClient.getSecretValue(any<GetSecretValueRequest>())).thenReturn(getSecretValueResponse)
 
         assertThrows<Exception> { credentialsProvider.getCredentials() }

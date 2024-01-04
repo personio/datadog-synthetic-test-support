@@ -18,12 +18,13 @@ import com.personio.synthetics.step.ui.model.TargetElement
 fun BrowserTest.elementPresentAssertion(
     stepName: String,
     targetElement: TargetElement,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.ASSERT_ELEMENT_PRESENT
-    params = AssertionParams(
-        element = targetElement.getElementObject()
-    )
+    params =
+        AssertionParams(
+            element = targetElement.getElementObject(),
+        )
     if (f != null) f()
 }
 
@@ -42,17 +43,20 @@ fun BrowserTest.elementContentAssertion(
     targetElement: TargetElement,
     check: SyntheticsCheckType,
     expectedContent: String = "",
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     if (check !in listOf(SyntheticsCheckType.IS_EMPTY, SyntheticsCheckType.NOT_IS_EMPTY)) {
-        check(!expectedContent.isNullOrEmpty()) { "Expected content is a required parameter for the passed check type $check in the step: $stepName." }
+        check(
+            !expectedContent.isNullOrEmpty(),
+        ) { "Expected content is a required parameter for the passed check type $check in the step: $stepName." }
     }
     type = SyntheticsStepType.ASSERT_ELEMENT_CONTENT
-    params = AssertionParams(
-        element = targetElement.getElementObject(),
-        check = check,
-        value = expectedContent
-    )
+    params =
+        AssertionParams(
+            element = targetElement.getElementObject(),
+            check = check,
+            value = expectedContent,
+        )
     if (f != null) f()
 }
 
@@ -73,17 +77,20 @@ fun BrowserTest.elementAttributeAssertion(
     targetElement: TargetElement,
     check: SyntheticsCheckType,
     expectedValue: String = "",
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     if (check !in listOf(SyntheticsCheckType.IS_EMPTY, SyntheticsCheckType.NOT_IS_EMPTY)) {
-        check(!expectedValue.isNullOrEmpty()) { "Expected value is a required parameter for the passed check type $check in the step: $stepName." }
+        check(
+            !expectedValue.isNullOrEmpty(),
+        ) { "Expected value is a required parameter for the passed check type $check in the step: $stepName." }
     }
     type = SyntheticsStepType.ASSERT_ELEMENT_ATTRIBUTE
-    params = AssertionParams(
-        attribute = attribute,
-        check = check,
-        value = expectedValue,
-        element = targetElement.getElementObject()
-    )
+    params =
+        AssertionParams(
+            attribute = attribute,
+            check = check,
+            value = expectedValue,
+            element = targetElement.getElementObject(),
+        )
     if (f != null) f()
 }

@@ -21,11 +21,12 @@ class SyntheticBrowserTestBuilderTest {
     @BeforeEach
     fun prepareSut() {
         val apiClientMock = Mockito.mock(SyntheticsApiClient::class.java)
-        testBuilder = SyntheticBrowserTestBuilder(
-            "any_name",
-            getConfigFromFile("config-unit-test.yaml").defaults,
-            apiClientMock
-        )
+        testBuilder =
+            SyntheticBrowserTestBuilder(
+                "any_name",
+                getConfigFromFile("config-unit-test.yaml").defaults,
+                apiClientMock,
+            )
     }
 
     @Test
@@ -35,7 +36,7 @@ class SyntheticBrowserTestBuilderTest {
 
         assertEquals(
             "https://synthetic-test.personio.de",
-            result.config.request.url
+            result.config.request.url,
         )
     }
 
@@ -46,7 +47,7 @@ class SyntheticBrowserTestBuilderTest {
 
         assertEquals(
             listOf(Location.TOKYO_AWS.value, Location.LONDON_AWS.value),
-            result.locations
+            result.locations,
         )
     }
 
@@ -57,7 +58,7 @@ class SyntheticBrowserTestBuilderTest {
 
         assertEquals(
             listOf(Location.TOKYO_AWS.value, Location.LONDON_AWS.value),
-            result.locations
+            result.locations,
         )
     }
 
@@ -82,7 +83,7 @@ class SyntheticBrowserTestBuilderTest {
 
         assertEquals(
             7.days.inWholeSeconds,
-            result.options.tickEvery
+            result.options.tickEvery,
         )
     }
 
@@ -93,7 +94,7 @@ class SyntheticBrowserTestBuilderTest {
 
         assertEquals(
             listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
-            result.options.deviceIds
+            result.options.deviceIds,
         )
     }
 
@@ -104,7 +105,7 @@ class SyntheticBrowserTestBuilderTest {
 
         assertEquals(
             listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
-            result.options.deviceIds
+            result.options.deviceIds,
         )
     }
 

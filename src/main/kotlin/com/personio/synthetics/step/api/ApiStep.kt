@@ -23,13 +23,18 @@ import java.net.URL
  * @param f Add all the parameters required for this test step
  * @return ApiStep object with this step added
  */
-fun BrowserTest.apiStep(stepName: String, httpMethod: String, f: ApiStep.() -> Unit): ApiStep =
+fun BrowserTest.apiStep(
+    stepName: String,
+    httpMethod: String,
+    f: ApiStep.() -> Unit,
+): ApiStep =
     addStep(stepName, ApiStep()) {
         type = SyntheticsStepType.RUN_API_TEST
-        params = with(RequestParams()) {
-            request.config.request(SyntheticsTestRequest().url(config?.request?.url).method(httpMethod))
-            copy(request = request.copy(subtype = "http"))
-        }
+        params =
+            with(RequestParams()) {
+                request.config.request(SyntheticsTestRequest().url(config?.request?.url).method(httpMethod))
+                copy(request = request.copy(subtype = "http"))
+            }
         f()
     }
 
@@ -47,24 +52,26 @@ class ApiStep : SyntheticsStep() {
      * expected: Expected value for assertion
      * @return ApiStep object with this assertion added
      */
-    fun assertion(f: SyntheticsAssertionTarget.() -> Unit) = apply {
-        val assertionTarget = SyntheticsAssertionTarget()
-        assertionTarget.f()
-        withParamType<RequestParams> {
-            apply { request.config.assertions?.add(SyntheticsAssertion(assertionTarget)) }
+    fun assertion(f: SyntheticsAssertionTarget.() -> Unit) =
+        apply {
+            val assertionTarget = SyntheticsAssertionTarget()
+            assertionTarget.f()
+            withParamType<RequestParams> {
+                apply { request.config.assertions?.add(SyntheticsAssertion(assertionTarget)) }
+            }
         }
-    }
 
     /**
      * Sets the request body to be passed to the API request
      * @param body The body of the request
      * @return ApiStep object with the request body set
      */
-    fun requestBody(body: String) = apply {
-        withParamType<RequestParams> {
-            apply { request.config.request.body = body }
+    fun requestBody(body: String) =
+        apply {
+            withParamType<RequestParams> {
+                apply { request.config.request.body = body }
+            }
         }
-    }
 
     /**
      * Sets the request headers to be passed to the API request
@@ -72,11 +79,12 @@ class ApiStep : SyntheticsStep() {
      * eg: mapOf("content-type" to "application/json")
      * @return ApiStep object with the request headers set
      */
-    fun requestHeaders(headers: Map<String, String>) = apply {
-        withParamType<RequestParams> {
-            apply { request.config.request.headers = headers }
+    fun requestHeaders(headers: Map<String, String>) =
+        apply {
+            withParamType<RequestParams> {
+                apply { request.config.request.headers = headers }
+            }
         }
-    }
 
     /**
      * Sets the url used for the API request
@@ -87,19 +95,23 @@ class ApiStep : SyntheticsStep() {
      * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
      * @return ApiStep object with the method set
      */
-    fun url(url: String) = apply {
-        withParamType<RequestParams> {
-            apply {
-                val target = if (url.isDatadogVariable()) { url } else {
-                    runCatching { URL(url) }
-                        .recover { URL(request.config.request.url + url) }
-                        .getOrThrow()
-                        .toString()
+    fun url(url: String) =
+        apply {
+            withParamType<RequestParams> {
+                apply {
+                    val target =
+                        if (url.isDatadogVariable()) {
+                            url
+                        } else {
+                            runCatching { URL(url) }
+                                .recover { URL(request.config.request.url + url) }
+                                .getOrThrow()
+                                .toString()
+                        }
+                    request.config.request.url = target
                 }
-                request.config.request.url = target
             }
         }
-    }
 
     /**
      * Extracts the header value from the API response
@@ -108,7 +120,11 @@ class ApiStep : SyntheticsStep() {
      * @param regex Regular expression to extract the value in the header field (Optional parameter)
      * @return ApiStep object with the extract variable step added
      */
-    fun extractHeaderValue(name: String, field: String, regex: String? = null) = apply {
+    fun extractHeaderValue(
+        name: String,
+        field: String,
+        regex: String? = null,
+    ) = apply {
         val extractValue = ExtractValue(name)
         val parserType =
             if (regex == null) SyntheticsGlobalVariableParserType.RAW else SyntheticsGlobalVariableParserType.REGEX
@@ -118,12 +134,13 @@ class ApiStep : SyntheticsStep() {
             .parser(
                 SyntheticsVariableParser()
                     .type(parserType)
-                    .value(regex)
+                    .value(regex),
             )
             .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
-        params = withParamType<RequestParams> {
-            setExtractValue(extractValue)
-        }
+        params =
+            withParamType<RequestParams> {
+                setExtractValue(extractValue)
+            }
     }
 
     /**
@@ -140,19 +157,21 @@ class ApiStep : SyntheticsStep() {
     fun extractBodyValue(
         name: String,
         parserType: SyntheticsGlobalVariableParserType,
-        parserValue: String? = null
+        parserValue: String? = null,
     ) = apply {
-        val parser = SyntheticsVariableParser()
-            .type(parserType)
-            .value(parserValue)
+        val parser =
+            SyntheticsVariableParser()
+                .type(parserType)
+                .value(parserValue)
 
         val newExtractValue = ExtractValue(name)
         newExtractValue
             .parser(parser)
             .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
-        params = withParamType<RequestParams> {
-            setExtractValue(newExtractValue)
-        }
+        params =
+            withParamType<RequestParams> {
+                setExtractValue(newExtractValue)
+            }
     }
 
     /**

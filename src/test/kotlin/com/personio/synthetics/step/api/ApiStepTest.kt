@@ -81,9 +81,10 @@ internal class ApiStepTest {
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        val expected = SyntheticsAssertion(
-            SyntheticsAssertionTarget().type(assertionType).property(property).operator(operator).target(expectedTarget)
-        )
+        val expected =
+            SyntheticsAssertion(
+                SyntheticsAssertionTarget().type(assertionType).property(property).operator(operator).target(expectedTarget),
+            )
         assertEquals(expected, params.request.config.assertions[0])
     }
 
@@ -192,7 +193,7 @@ internal class ApiStepTest {
         browserTest.apiStep("Step", "POST") {
             extractBodyValue(
                 name = "name",
-                parserType = SyntheticsGlobalVariableParserType.RAW
+                parserType = SyntheticsGlobalVariableParserType.RAW,
             )
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
@@ -220,7 +221,7 @@ internal class ApiStepTest {
         browserTest.apiStep("Step", "POST") {
             extractBodyValue(
                 name = "name",
-                parserType = SyntheticsGlobalVariableParserType.RAW
+                parserType = SyntheticsGlobalVariableParserType.RAW,
             )
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams

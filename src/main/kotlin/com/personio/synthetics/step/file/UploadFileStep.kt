@@ -22,13 +22,21 @@ fun BrowserTest.uploadFileStep(
     stepName: String,
     uploadFile: File,
     element: TargetElement,
-    f: (SyntheticsStep.() -> Unit)? = null
+    f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.UPLOAD_FILES
-    params = FileParams(
-        files = listOf(UploadFile(name = uploadFile.name, content = convertToBase64(uploadFile), size = uploadFile.length())),
-        element = element.getElementObject()
-    )
+    params =
+        FileParams(
+            files =
+                listOf(
+                    UploadFile(
+                        name = uploadFile.name,
+                        content = convertToBase64(uploadFile),
+                        size = uploadFile.length(),
+                    ),
+                ),
+            element = element.getElementObject(),
+        )
     if (f != null) f()
 }
 
