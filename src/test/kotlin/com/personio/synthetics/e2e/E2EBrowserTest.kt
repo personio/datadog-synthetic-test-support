@@ -13,6 +13,7 @@ import java.net.URL
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.ZoneId
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -35,7 +36,6 @@ class E2EBrowserTest {
             browsersAndDevices(SyntheticsDeviceID.CHROME_MOBILE_SMALL, SyntheticsDeviceID.FIREFOX_LAPTOP_LARGE)
             publicLocations(Location.IRELAND_AWS, Location.N_CALIFORNIA_AWS, Location.MUMBAI_AWS)
             testFrequency(6.minutes)
-
             advancedScheduling(
                 Timeframe(
                     from = LocalTime.of(0, 1),
@@ -52,7 +52,24 @@ class E2EBrowserTest {
             monitorName("Test Monitor Name")
             renotifyInterval(RenotifyInterval.HOURS_2)
             monitorPriority(MonitorPriority.P3_MEDIUM)
-
+            useGlobalVariable("TEST_PASSWORD")
+            textVariable("TEXT_VARIABLE", "test")
+            numericPatternVariable(
+                name = "NUMERIC_PATTERN",
+                characterLength = 4,
+                prefix = "test"
+            )
+            alphabeticPatternVariable("ALPHABETIC_PATTERN", 5)
+            alphanumericPatternVariable("ALPHANUMERIC_PATTERN", 6)
+            datePatternVariable(
+                name = "DATE_PATTERN",
+                duration = (-1).days,
+                format = "MM-DD-YYYY"
+            )
+            timestampPatternVariable(
+                name = "TIMESTAMP_PATTERN",
+                duration = 10.seconds
+            )
             steps {
                 typeText("Type text", "new_text", TargetElement("#my-element"))
                 click("Click", TargetElement("#my-element"))
