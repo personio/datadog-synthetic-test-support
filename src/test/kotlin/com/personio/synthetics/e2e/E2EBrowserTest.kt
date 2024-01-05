@@ -82,6 +82,9 @@ class E2EBrowserTest {
                     vertical(20)
                 }
                 assertCurrentUrlIsEmpty("Check: current URL is empty")
+                assertCurrentUrlIsNotEmpty("Check: current URL is not empty")
+                assertCurrentUrlContains("Check: current URL contains example.com", "example.com")
+                assertCurrentUrlEquals("Check: current URL is equal to example.com", "https://example.com")
             }
         }
     }

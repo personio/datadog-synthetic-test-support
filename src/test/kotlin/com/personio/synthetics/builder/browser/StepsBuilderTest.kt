@@ -161,6 +161,57 @@ class StepsBuilderTest {
         )
     }
 
+    @Test
+    fun `assertCurrentUrlIsNotEmpty adds assertion step with ASSERT_CURRENT_URL type and NOT_IS_EMPTY check`() {
+        val sut = StepsBuilder()
+        sut.assertCurrentUrlIsNotEmpty("any_name")
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.ASSERT_CURRENT_URL)
+                .params(AssertionParams(check = SyntheticsCheckType.NOT_IS_EMPTY)),
+            result.first()
+        )
+    }
+
+    @Test
+    fun `assertCurrentUrlContains adds assertion step with ASSERT_CURRENT_URL type and CONTAINS check`() {
+        val sut = StepsBuilder()
+        sut.assertCurrentUrlContains("any_name", "any_substring")
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.ASSERT_CURRENT_URL)
+                .params(AssertionParams(check = SyntheticsCheckType.CONTAINS, value = "any_substring")),
+            result.first()
+        )
+    }
+
+    @Test
+    fun `assertCurrentUrlEquals adds assertion step with ASSERT_CURRENT_URL type and EQUALS check`() {
+        val sut = StepsBuilder()
+        sut.assertCurrentUrlEquals("any_name", "any_url")
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.ASSERT_CURRENT_URL)
+                .params(AssertionParams(check = SyntheticsCheckType.EQUALS, value = "any_url")),
+            result.first()
+        )
+    }
+
     private fun makeScrollBuilderMock(coordinates: Pair<Int, Int>): ScrollBuilder {
         val mock = Mockito.mock(ScrollBuilder::class.java)
         whenever(mock.build()).thenReturn(coordinates)

@@ -10,7 +10,6 @@ import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.ui.model.TargetElement
-import software.amazon.awssdk.services.secretsmanager.endpoints.internal.Value.Str
 import kotlin.time.Duration
 
 private const val DEFAULT_TEXT_DELAY_MILLIS: Long = 25
@@ -97,6 +96,38 @@ class StepsBuilder {
             type = SyntheticsStepType.ASSERT_CURRENT_URL,
             params = AssertionParams(
                 check = SyntheticsCheckType.IS_EMPTY
+            )
+        )
+    }
+
+    fun assertCurrentUrlIsNotEmpty(name: String) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.ASSERT_CURRENT_URL,
+            params = AssertionParams(
+                check = SyntheticsCheckType.NOT_IS_EMPTY
+            )
+        )
+    }
+
+    fun assertCurrentUrlContains(name: String, content: String) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.ASSERT_CURRENT_URL,
+            params = AssertionParams(
+                check = SyntheticsCheckType.CONTAINS,
+                value = content
+            )
+        )
+    }
+
+    fun assertCurrentUrlEquals(name: String, url: String) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.ASSERT_CURRENT_URL,
+            params = AssertionParams(
+                check = SyntheticsCheckType.EQUALS,
+                value = url
             )
         )
     }
