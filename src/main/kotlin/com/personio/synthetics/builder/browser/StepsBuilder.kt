@@ -1,5 +1,6 @@
 package com.personio.synthetics.builder.browser
 
+import com.datadog.api.client.v1.model.SyntheticsCheckType
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.builder.browser.step.ScrollBuilder
@@ -7,7 +8,9 @@ import com.personio.synthetics.model.Params
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
+import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.ui.model.TargetElement
+import software.amazon.awssdk.services.secretsmanager.endpoints.internal.Value.Str
 import kotlin.time.Duration
 
 private const val DEFAULT_TEXT_DELAY_MILLIS: Long = 25
@@ -84,6 +87,16 @@ class StepsBuilder {
             params = SpecialActionsParams(
                 x = coordinates.first,
                 y = coordinates.second
+            )
+        )
+    }
+
+    fun assertCurrentUrlIsEmpty(name: String) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.ASSERT_CURRENT_URL,
+            params = AssertionParams(
+                check = SyntheticsCheckType.IS_EMPTY
             )
         )
     }

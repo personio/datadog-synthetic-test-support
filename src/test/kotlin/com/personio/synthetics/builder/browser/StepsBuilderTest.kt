@@ -1,11 +1,13 @@
 package com.personio.synthetics.builder.browser
 
+import com.datadog.api.client.v1.model.SyntheticsCheckType
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.builder.browser.step.ScrollBuilder
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
+import com.personio.synthetics.model.assertion.AssertionParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -138,6 +140,23 @@ class StepsBuilderTest {
                 .name("any_name")
                 .type(SyntheticsStepType.SCROLL)
                 .params(SpecialActionsParams(x = 10, y = 15)),
+            result.first()
+        )
+    }
+
+    @Test
+    fun `assertCurrentUrlIsEmpty adds assertion step with ASSERT_CURRENT_URL type and IS_EMPTY check`() {
+        val sut = StepsBuilder()
+        sut.assertCurrentUrlIsEmpty("any_name")
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.ASSERT_CURRENT_URL)
+                .params(AssertionParams(check = SyntheticsCheckType.IS_EMPTY)),
             result.first()
         )
     }

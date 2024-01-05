@@ -77,11 +77,11 @@ class E2EBrowserTest {
                 wait("Wait", 3.seconds)
                 refresh("Refresh")
                 goto("Go to URL", "https://synthetic-test.personio.de/test")
-
                 scroll("Scroll using coordinates") {
                     horizontal(10)
                     vertical(20)
                 }
+                assertCurrentUrlIsEmpty("Check: current URL is empty")
             }
         }
     }
