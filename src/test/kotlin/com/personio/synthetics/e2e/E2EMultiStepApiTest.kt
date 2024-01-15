@@ -58,6 +58,10 @@ class E2EMultiStepApiTest {
             )
             steps {
                 step("Do http request") {
+                    retry {
+                        count = 4
+                        intervalMs = 3000.0
+                    }
                     request {
                         url("https://synthetic-test.personio.de/")
                         method(RequestMethod.POST)

@@ -1,9 +1,6 @@
 package com.personio.synthetics.builder.api
 
-import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
-import com.datadog.api.client.v1.model.SyntheticsAssertion
-import com.datadog.api.client.v1.model.SyntheticsParsingOptions
-import com.datadog.api.client.v1.model.SyntheticsTestRequest
+import com.datadog.api.client.v1.model.*
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
 import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
@@ -144,6 +141,28 @@ class StepBuilderTest {
         val result = stepBuilder.build()
 
         assertEquals(isCritical, result.isCritical)
+    }
+
+    @Test
+    fun `build sets step retry defaults if no options provided`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        stepBuilder.request { }
+        val result = stepBuilder.build()
+
+        assertEquals(SyntheticsTestOptionsRetry(), result.retry)
+    }
+
+    @Test
+    fun `build sets step retry values from options when provided`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        stepBuilder.request { }
+        stepBuilder.retry {
+            count = 3
+            intervalMs = 3000.0
+        }
+        val result = stepBuilder.build()
+
+        assertEquals(SyntheticsTestOptionsRetry().count(3).interval(3000.0), result.retry)
     }
 
     private fun makeRequestBuilderHappyPathMock(): RequestBuilder {

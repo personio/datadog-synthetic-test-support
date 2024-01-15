@@ -1,10 +1,6 @@
 package com.personio.synthetics.builder.api
 
-import com.datadog.api.client.v1.model.SyntheticsAPIStep
-import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
-import com.datadog.api.client.v1.model.SyntheticsAssertion
-import com.datadog.api.client.v1.model.SyntheticsParsingOptions
-import com.datadog.api.client.v1.model.SyntheticsTestRequest
+import com.datadog.api.client.v1.model.*
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
 import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
@@ -15,15 +11,18 @@ import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
  * @param requestBuilder Instance of a request builder to use to provide a request
  * @param assertionBuilder Instance of an assertions builder to use to provide assertions
  * @param parsingOptionsBuilder Instance of a parsing options builder to use to provide parsing options
+ * @param retryOptionsBuilder Instance of a retry options builder to use to provide retry options
  */
 class StepBuilder(
     val name: String,
     private val requestBuilder: RequestBuilder = RequestBuilder(),
     private val assertionBuilder: AssertionsBuilder = AssertionsBuilder(),
     private val parsingOptionsBuilder: ParsingOptionsBuilder = ParsingOptionsBuilder(),
+    private val retryOptionsBuilder: RetryOptionsBuilder = RetryOptionsBuilder(),
 ) {
     var allowFailure = false
     var isCritical = false
+    private var retryOptions = SyntheticsTestOptionsRetry()
 
     private val step = SyntheticsAPIStep()
     private var request: SyntheticsTestRequest? = null
@@ -46,6 +45,7 @@ class StepBuilder(
         return step
             .request(request)
             .allowFailure(allowFailure)
+            .retry(retryOptions)
             .name(name)
             .assertions(assertions)
             .subtype(SyntheticsAPIStepSubtype.HTTP)
@@ -86,5 +86,12 @@ class StepBuilder(
         if (options != null) {
             parsingOptions.add(options)
         }
+    }
+
+    /**
+     * Process the retry configuration by configuring and applying a SyntheticsTestOptionsRetry object
+     */
+    fun retry(init: RetryOptionsBuilder.() -> Unit) {
+        retryOptions = retryOptionsBuilder.apply(init).build()
     }
 }
