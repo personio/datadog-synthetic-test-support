@@ -1,4 +1,4 @@
-package com.personio.synthetics.builder.api
+package com.personio.synthetics.builder
 
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 
