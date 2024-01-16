@@ -1,6 +1,10 @@
 package com.personio.synthetics.builder.api
 
-import com.datadog.api.client.v1.model.*
+import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
+import com.datadog.api.client.v1.model.SyntheticsAssertion
+import com.datadog.api.client.v1.model.SyntheticsParsingOptions
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
+import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
 import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
