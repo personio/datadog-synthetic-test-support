@@ -8,8 +8,9 @@ import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
-import com.personio.synthetics.builder.RetryOptionsBuilder
 import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Builds a step for a multi-step API synthetic test
@@ -17,14 +18,12 @@ import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
  * @param requestBuilder Instance of a request builder to use to provide a request
  * @param assertionBuilder Instance of an assertions builder to use to provide assertions
  * @param parsingOptionsBuilder Instance of a parsing options builder to use to provide parsing options
- * @param retryOptionsBuilder Instance of a retry options builder to use to provide retry options
  */
 class StepBuilder(
     val name: String,
     private val requestBuilder: RequestBuilder = RequestBuilder(),
     private val assertionBuilder: AssertionsBuilder = AssertionsBuilder(),
     private val parsingOptionsBuilder: ParsingOptionsBuilder = ParsingOptionsBuilder(),
-    private val retryOptionsBuilder: RetryOptionsBuilder = RetryOptionsBuilder(),
 ) {
     var allowFailure = false
     var isCritical = false
@@ -95,9 +94,22 @@ class StepBuilder(
     }
 
     /**
-     * Process the retry configuration by configuring and applying a SyntheticsTestOptionsRetry object
+     * Sets the retry count and interval for the step
+     * @param retryCount The retry count for the step
+     * Allowed retry count is between 0 and 5
+     * @param retryInterval The retry interval for the step
+     * Allowed retry interval is between 0 and 5 seconds
      */
-    fun retry(init: RetryOptionsBuilder.() -> Unit) {
-        retryOptions = retryOptionsBuilder.apply(init).build()
+    fun retry(
+        retryCount: Long,
+        retryInterval: Duration,
+    ) {
+        require(retryCount in 0..5) {
+            "Step retry count should be between 0 and 5."
+        }
+        require(retryInterval in 0.seconds..5.seconds) {
+            "Step retry interval should be between 0 and 5000 milliseconds."
+        }
+        retryOptions = SyntheticsTestOptionsRetry().count(retryCount).interval(retryInterval.inWholeMilliseconds.toDouble())
     }
 }

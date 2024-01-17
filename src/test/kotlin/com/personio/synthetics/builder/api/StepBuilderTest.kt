@@ -15,11 +15,14 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 class StepBuilderTest {
     @Test
@@ -148,7 +151,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build sets step retry defaults if no options provided`() {
+    fun `build sets step retry defaults if retry method was not called`() {
         val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
         stepBuilder.request { }
         val result = stepBuilder.build()
@@ -157,16 +160,31 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build sets step retry values from options when provided`() {
+    fun `build sets step retry values if retry method was called`() {
         val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
         stepBuilder.request { }
-        stepBuilder.retry {
-            count = 3
-            intervalMs = 3000.0
-        }
+        stepBuilder.retry(3, 3.seconds)
         val result = stepBuilder.build()
 
         assertEquals(SyntheticsTestOptionsRetry().count(3).interval(3000.0), result.retry)
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateRetryInvalidArgs")
+    fun `retry throws error if invalid parameter is provided`(data: Pair<Long, Duration>) {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.retry(data.first, data.second)
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        fun generateRetryInvalidArgs() =
+            listOf(
+                7 to 3.seconds,
+                3 to 10.seconds,
+            )
     }
 
     private fun makeRequestBuilderHappyPathMock(): RequestBuilder {
