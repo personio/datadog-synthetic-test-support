@@ -15,13 +15,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 class StepBuilderTest {
@@ -151,7 +149,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build sets step retry defaults if retry method was not called`() {
+    fun `build uses default step retry configuration if retry method was not called`() {
         val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
         stepBuilder.request { }
         val result = stepBuilder.build()
@@ -160,7 +158,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build sets step retry values if retry method was called`() {
+    fun `build sets step retry count and interval if retry method was called`() {
         val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
         stepBuilder.request { }
         stepBuilder.retry(3, 3.seconds)
@@ -169,22 +167,20 @@ class StepBuilderTest {
         assertEquals(SyntheticsTestOptionsRetry().count(3).interval(3000.0), result.retry)
     }
 
-    @ParameterizedTest
-    @MethodSource("generateRetryInvalidArgs")
-    fun `retry throws error if invalid parameter is provided`(data: Pair<Long, Duration>) {
+    @Test
+    fun `retry throws exception for retry count value bigger than 5`() {
         val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
         assertThrows<IllegalArgumentException> {
-            stepBuilder.retry(data.first, data.second)
+            stepBuilder.retry(7, 3.seconds)
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun generateRetryInvalidArgs() =
-            listOf(
-                7 to 3.seconds,
-                3 to 10.seconds,
-            )
+    @Test
+    fun `retry throws exception for retry interval value bigger than 5 seconds`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.retry(3, 10.seconds)
+        }
     }
 
     private fun makeRequestBuilderHappyPathMock(): RequestBuilder {
