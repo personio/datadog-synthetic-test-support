@@ -3,6 +3,7 @@ package com.personio.synthetics.builder.api
 import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
@@ -19,6 +20,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import kotlin.time.Duration.Companion.seconds
 
 class StepBuilderTest {
     @Test
@@ -144,6 +146,41 @@ class StepBuilderTest {
         val result = stepBuilder.build()
 
         assertEquals(isCritical, result.isCritical)
+    }
+
+    @Test
+    fun `build uses default step retry configuration if retry method was not called`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        stepBuilder.request { }
+        val result = stepBuilder.build()
+
+        assertEquals(SyntheticsTestOptionsRetry(), result.retry)
+    }
+
+    @Test
+    fun `build sets step retry count and interval if retry method was called`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        stepBuilder.request { }
+        stepBuilder.retry(3, 3.seconds)
+        val result = stepBuilder.build()
+
+        assertEquals(SyntheticsTestOptionsRetry().count(3).interval(3000.0), result.retry)
+    }
+
+    @Test
+    fun `retry throws exception for retry count value bigger than 5`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.retry(7, 3.seconds)
+        }
+    }
+
+    @Test
+    fun `retry throws exception for retry interval value bigger than 5 seconds`() {
+        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.retry(3, 10.seconds)
+        }
     }
 
     private fun makeRequestBuilderHappyPathMock(): RequestBuilder {

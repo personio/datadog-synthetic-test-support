@@ -11,6 +11,7 @@ import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.ZoneId
 import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -58,6 +59,7 @@ class E2EMultiStepApiTest {
             )
             steps {
                 step("Do http request") {
+                    retry(4, 3000.milliseconds)
                     request {
                         url("https://synthetic-test.personio.de/")
                         method(RequestMethod.POST)

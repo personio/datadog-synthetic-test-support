@@ -4,10 +4,13 @@ import com.datadog.api.client.v1.model.SyntheticsAPIStep
 import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
+import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
 import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Builds a step for a multi-step API synthetic test
@@ -24,6 +27,7 @@ class StepBuilder(
 ) {
     var allowFailure = false
     var isCritical = false
+    private var retryOptions = SyntheticsTestOptionsRetry()
 
     private val step = SyntheticsAPIStep()
     private var request: SyntheticsTestRequest? = null
@@ -46,6 +50,7 @@ class StepBuilder(
         return step
             .request(request)
             .allowFailure(allowFailure)
+            .retry(retryOptions)
             .name(name)
             .assertions(assertions)
             .subtype(SyntheticsAPIStepSubtype.HTTP)
@@ -86,5 +91,25 @@ class StepBuilder(
         if (options != null) {
             parsingOptions.add(options)
         }
+    }
+
+    /**
+     * Sets the retry count and interval for the step
+     * @param retryCount The retry count for the step
+     * Allowed retry count is between 0 and 5
+     * @param retryInterval The retry interval for the step
+     * Allowed retry interval is between 0 and 5 seconds
+     */
+    fun retry(
+        retryCount: Long,
+        retryInterval: Duration,
+    ) {
+        require(retryCount in 0..5) {
+            "Step retry count should be between 0 and 5."
+        }
+        require(retryInterval in 0.seconds..5.seconds) {
+            "Step retry interval should be between 0 and 5000 milliseconds."
+        }
+        retryOptions.count(retryCount).interval(retryInterval.inWholeMilliseconds.toDouble())
     }
 }
