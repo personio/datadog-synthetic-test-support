@@ -110,6 +110,6 @@ class StepBuilder(
         require(retryInterval in 0.seconds..5.seconds) {
             "Step retry interval should be between 0 and 5000 milliseconds."
         }
-        retryOptions = SyntheticsTestOptionsRetry().count(retryCount).interval(retryInterval.inWholeMilliseconds.toDouble())
+        retryOptions.count(retryCount).interval(retryInterval.inWholeMilliseconds.toDouble())
     }
 }
