@@ -12,10 +12,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Add `bodyDoesNotContain()` assertion function to check if a response body doesn't contain specific values ([#181](https://github.com/personio/datadog-synthetic-test-support/pull/181))
-- Add `retry()` function to configure retry behavior of a single step in a multistep API test ([#182](https://github.com/personio/datadog-synthetic-test-support/pull/182))
 
 ### Bug fixes
+
+### Dependencies
+
+## [2.4.0] - 2024-01-19
+### New features & improvements
+- Add `bodyDoesNotContain()` assertion function to check if a response body doesn't contain specific values ([#181](https://github.com/personio/datadog-synthetic-test-support/pull/181))
+- Add `retry()` function to configure retry behavior of a single step in a multistep API test ([#182](https://github.com/personio/datadog-synthetic-test-support/pull/182))
 
 ### Dependencies
 - Update commons-text dependency from 1.10.0 to 1.11.0 ([#151](https://github.com/personio/datadog-synthetic-test-support/pull/151))
