@@ -1,16 +1,17 @@
 package com.personio.synthetics.builder
 
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
-import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
+import com.datadog.api.client.v1.model.SyntheticsStep
+import com.personio.synthetics.builder.browser.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
 import com.personio.synthetics.model.config.Location
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
+import org.mockito.kotlin.whenever
 import java.net.URL
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
@@ -110,16 +111,20 @@ class SyntheticBrowserTestBuilderTest {
     }
 
     @Test
-    fun `status sets status of a test`() {
-        testBuilder.status(SyntheticsTestPauseStatus.LIVE)
+    fun `build sets no steps by default`() {
         val result = testBuilder.build()
 
-        assertEquals(SyntheticsTestPauseStatus.LIVE, result.status)
+        assertEquals(0, result.steps.count())
     }
 
     @Test
-    fun `build specifies no status by default`() {
+    fun `steps evaluates provided lambda and sets steps`() {
+        val stepsBuilderMock = Mockito.mock(StepsBuilder::class.java)
+        whenever(stepsBuilderMock.build())
+            .thenReturn(listOf(SyntheticsStep(), SyntheticsStep()))
+        testBuilder.steps(stepsBuilderMock) {}
         val result = testBuilder.build()
-        assertNull(result.status)
+
+        assertEquals(2, result.steps.count())
     }
 }

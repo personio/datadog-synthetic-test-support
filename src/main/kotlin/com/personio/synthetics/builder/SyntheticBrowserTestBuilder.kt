@@ -6,7 +6,10 @@ import com.datadog.api.client.v1.model.SyntheticsBrowserTestType
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
+import com.datadog.api.client.v1.model.SyntheticsStep
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
+import com.personio.synthetics.builder.browser.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
 import java.net.URL
@@ -25,29 +28,24 @@ class SyntheticBrowserTestBuilder(
     apiClient: SyntheticsApiClient,
 ) : SyntheticTestBuilder(name, defaults, apiClient) {
     private val config = SyntheticsBrowserTestConfig()
+    private var steps: MutableList<SyntheticsStep> = mutableListOf()
 
     /**
      * Builds a synthetic browser test
      * @return SyntheticsBrowserTest object that contains a browser test
      */
-    fun build(): SyntheticsBrowserTest {
-        val test =
-            SyntheticsBrowserTest(
-                config,
-                parameters.locations,
-                parameters.message,
-                name,
-                options,
-                SyntheticsBrowserTestType.BROWSER,
-            )
-                .tags(parameters.tags)
-
-        status?.let {
-            test.status(it)
-        }
-
-        return test
-    }
+    fun build(): SyntheticsBrowserTest =
+        SyntheticsBrowserTest(
+            config,
+            parameters.locations,
+            parameters.message,
+            name,
+            options,
+            SyntheticsBrowserTestType.BROWSER
+        )
+            .steps(steps)
+            .tags(parameters.tags)
+            .status(SyntheticsTestPauseStatus.PAUSED)
 
     /**
      * Sets the base url for the synthetic browser test
@@ -93,10 +91,11 @@ class SyntheticBrowserTestBuilder(
         options.deviceIds = deviceIds.map { it }
     }
 
-    override fun addLocalVariable(
-        name: String,
-        pattern: String,
-    ) {
+    fun steps(stepsBuilder: StepsBuilder = StepsBuilder(), init: StepsBuilder.() -> Unit) {
+        steps = stepsBuilder.apply(init).build().toMutableList()
+    }
+
+    override fun addLocalVariable(name: String, pattern: String) {
         config.addVariablesItem(
             SyntheticsBrowserVariable()
                 .name(name.uppercase())
