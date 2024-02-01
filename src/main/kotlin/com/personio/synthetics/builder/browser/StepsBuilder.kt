@@ -6,6 +6,9 @@ import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.builder.browser.step.ScrollBuilder
 import com.personio.synthetics.model.Params
 import com.personio.synthetics.model.actions.ActionsParams
+import com.personio.synthetics.model.actions.Key
+import com.personio.synthetics.model.actions.Modifier
+import com.personio.synthetics.model.actions.PressKeyParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.model.assertion.AssertionParams
@@ -137,5 +140,16 @@ class StepsBuilder {
             .name(name)
             .type(type)
             .params(params)
+    }
+
+    fun pressKey(name: String, key: Key, vararg modifiers: Modifier) {
+        addStep(
+            name = name,
+            type = SyntheticsStepType.PRESS_KEY,
+            params = PressKeyParams(
+                value = key.value,
+                modifiers = modifiers.map { it.value }
+            )
+        )
     }
 }

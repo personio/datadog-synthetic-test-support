@@ -3,6 +3,8 @@ package com.personio.synthetics.e2e
 import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.dsl.syntheticBrowserTest
+import com.personio.synthetics.model.actions.Key
+import com.personio.synthetics.model.actions.Modifier
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
@@ -81,6 +83,7 @@ class E2EBrowserTest {
                     horizontal(10)
                     vertical(20)
                 }
+                pressKey("Press key", Key.BACKSPACE, Modifier.CONTROL, Modifier.SHIFT)
                 assertCurrentUrlIsEmpty("Check: current URL is empty")
                 assertCurrentUrlIsNotEmpty("Check: current URL is not empty")
                 assertCurrentUrlContains("Check: current URL contains example.com", "example.com")

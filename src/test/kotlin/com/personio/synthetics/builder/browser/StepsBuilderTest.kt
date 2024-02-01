@@ -5,6 +5,9 @@ import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsStepType
 import com.personio.synthetics.builder.browser.step.ScrollBuilder
 import com.personio.synthetics.model.actions.ActionsParams
+import com.personio.synthetics.model.actions.Key
+import com.personio.synthetics.model.actions.Modifier
+import com.personio.synthetics.model.actions.PressKeyParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
 import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.model.assertion.AssertionParams
@@ -208,6 +211,28 @@ class StepsBuilderTest {
                 .name("any_name")
                 .type(SyntheticsStepType.ASSERT_CURRENT_URL)
                 .params(AssertionParams(check = SyntheticsCheckType.EQUALS, value = "any_url")),
+            result.first()
+        )
+    }
+
+    @Test
+    fun `pressKey adds PressKey step`() {
+        val sut = StepsBuilder()
+        sut.pressKey("any_name", Key.ENTER, Modifier.META, Modifier.CONTROL)
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name("any_name")
+                .type(SyntheticsStepType.PRESS_KEY)
+                .params(
+                    PressKeyParams(
+                        value = Key.ENTER.value,
+                        modifiers = listOf(Modifier.META.value, Modifier.CONTROL.value)
+                    )
+                ),
             result.first()
         )
     }
