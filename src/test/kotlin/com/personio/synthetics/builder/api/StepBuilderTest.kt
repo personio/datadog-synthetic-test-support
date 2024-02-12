@@ -5,6 +5,7 @@ import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
+import com.personio.synthetics.TEST_STEP_NAME
 import com.personio.synthetics.builder.AssertionsBuilder
 import com.personio.synthetics.builder.RequestBuilder
 import com.personio.synthetics.builder.parsing.ParsingOptionsBuilder
@@ -27,7 +28,7 @@ class StepBuilderTest {
     fun `extract sets the extracted values properly`() {
         val stepBuilder =
             StepBuilder(
-                "any_name",
+                TEST_STEP_NAME,
                 makeRequestBuilderHappyPathMock(),
                 makeAssertionBuilderMock(),
                 makeParsingOptionsBuilderMock(
@@ -45,7 +46,7 @@ class StepBuilderTest {
     fun `extract sets the extracted values to null when no parsing options provided`() {
         val stepBuilder =
             StepBuilder(
-                "any_name",
+                TEST_STEP_NAME,
                 makeRequestBuilderHappyPathMock(),
                 makeAssertionBuilderMock(),
                 makeParsingOptionsBuilderMock(),
@@ -60,7 +61,7 @@ class StepBuilderTest {
     @Test
     fun `request sets the request in SyntheticsAPIStep`() {
         val requestBuilderMock = makeRequestBuilderHappyPathMock()
-        val stepBuilder = StepBuilder("any_name", requestBuilderMock)
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
         stepBuilder.request { }
 
         val result = stepBuilder.build()
@@ -74,7 +75,7 @@ class StepBuilderTest {
             makeAssertionBuilderMock(
                 listOf(SyntheticsAssertion(), SyntheticsAssertion()),
             )
-        val stepBuilder = StepBuilder("any_name", RequestBuilder(), assertionsMock)
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, RequestBuilder(), assertionsMock)
         stepBuilder.assertions { }
         stepBuilder.request { }
         val result = stepBuilder.build()
@@ -85,7 +86,7 @@ class StepBuilderTest {
 
     @Test
     fun `build sets HTTP step subtype`() {
-        val stepBuilder = StepBuilder("any_name", RequestBuilder())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, RequestBuilder())
         stepBuilder.request { }
         val result = stepBuilder.build()
 
@@ -94,17 +95,17 @@ class StepBuilderTest {
 
     @Test
     fun `build sets step name properly`() {
-        val stepBuilder = StepBuilder("any_name", RequestBuilder())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, RequestBuilder())
         stepBuilder.request { }
         val result = stepBuilder.build()
 
-        assertEquals("any_name", result.name)
+        assertEquals(TEST_STEP_NAME, result.name)
     }
 
     @Test
     fun `build sets empty assertions by default`() {
         val assertionsMock = makeAssertionBuilderMock()
-        val stepBuilder = StepBuilder("any_name", RequestBuilder(), assertionsMock)
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, RequestBuilder(), assertionsMock)
         stepBuilder.assertions { }
         stepBuilder.request { }
         val result = stepBuilder.build()
@@ -118,7 +119,7 @@ class StepBuilderTest {
         val requestBuilderMock = Mockito.mock(RequestBuilder::class.java)
         whenever(requestBuilderMock.build())
             .thenReturn(null)
-        val stepBuilder = StepBuilder("any_name", requestBuilderMock)
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
 
         assertThrows<IllegalStateException> {
             stepBuilder.build()
@@ -127,7 +128,7 @@ class StepBuilderTest {
 
     @Test
     fun `build sets isCritical to null when allowFailure is false`() {
-        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, makeRequestBuilderHappyPathMock())
         stepBuilder.allowFailure = false
         stepBuilder.isCritical = true
         stepBuilder.request { }
@@ -139,7 +140,7 @@ class StepBuilderTest {
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `build sets isCritical to the provided value when allowFailure is true`(isCritical: Boolean) {
-        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, makeRequestBuilderHappyPathMock())
         stepBuilder.allowFailure = true
         stepBuilder.isCritical = isCritical
         stepBuilder.request { }
@@ -150,7 +151,7 @@ class StepBuilderTest {
 
     @Test
     fun `build uses default step retry configuration if retry method was not called`() {
-        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, makeRequestBuilderHappyPathMock())
         stepBuilder.request { }
         val result = stepBuilder.build()
 
@@ -159,7 +160,7 @@ class StepBuilderTest {
 
     @Test
     fun `build sets step retry count and interval if retry method was called`() {
-        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, makeRequestBuilderHappyPathMock())
         stepBuilder.request { }
         stepBuilder.retry(3, 3.seconds)
         val result = stepBuilder.build()
@@ -169,7 +170,7 @@ class StepBuilderTest {
 
     @Test
     fun `retry throws exception for retry count value bigger than 5`() {
-        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, makeRequestBuilderHappyPathMock())
         assertThrows<IllegalArgumentException> {
             stepBuilder.retry(7, 3.seconds)
         }
@@ -177,7 +178,7 @@ class StepBuilderTest {
 
     @Test
     fun `retry throws exception for retry interval value bigger than 5 seconds`() {
-        val stepBuilder = StepBuilder("any_name", makeRequestBuilderHappyPathMock())
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, makeRequestBuilderHappyPathMock())
         assertThrows<IllegalArgumentException> {
             stepBuilder.retry(3, 10.seconds)
         }

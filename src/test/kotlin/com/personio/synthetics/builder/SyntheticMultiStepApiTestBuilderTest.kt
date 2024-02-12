@@ -4,6 +4,7 @@ import com.datadog.api.client.v1.model.SyntheticsAPIStep
 import com.datadog.api.client.v1.model.SyntheticsConfigVariable
 import com.datadog.api.client.v1.model.SyntheticsConfigVariableType
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
+import com.personio.synthetics.TEST_STEP_NAME
 import com.personio.synthetics.builder.api.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
@@ -21,6 +22,7 @@ import org.mockito.kotlin.whenever
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.ZoneId
+import java.util.Locale
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -33,7 +35,7 @@ class SyntheticMultiStepApiTestBuilderTest {
         val apiClientMock = Mockito.mock(SyntheticsApiClient::class.java)
         testBuilder =
             SyntheticMultiStepApiTestBuilder(
-                "any_name",
+                TEST_STEP_NAME,
                 getConfigFromFile("config-unit-test.yaml").defaults,
                 apiClientMock,
             )
@@ -41,11 +43,11 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `monitorName sets monitor name`() {
-        testBuilder.monitorName("any_name")
+        testBuilder.monitorName(TEST_STEP_NAME)
         val result = testBuilder.build()
 
         assertEquals(
-            "any_name",
+            TEST_STEP_NAME,
             result.options.monitorName,
         )
     }
@@ -169,13 +171,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `uuidVariable adds variable of UUID pattern`() {
-        testBuilder.uuidVariable("any_name")
+        testBuilder.uuidVariable(TEST_STEP_NAME)
         val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
                 SyntheticsConfigVariable()
-                    .name("ANY_NAME")
+                    .name(TEST_STEP_NAME.uppercase(Locale.getDefault()))
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example("")
                     .pattern("{{ uuid }}"),
@@ -185,13 +187,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `timestampPatternVariable adds variable of timestamp pattern`() {
-        testBuilder.timestampPatternVariable("any_name", 5.minutes, "prefix-", "-suffix")
+        testBuilder.timestampPatternVariable(TEST_STEP_NAME, 5.minutes, "prefix-", "-suffix")
         val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
                 SyntheticsConfigVariable()
-                    .name("ANY_NAME")
+                    .name(TEST_STEP_NAME.uppercase(Locale.getDefault()))
                     .pattern("prefix-{{ timestamp(300000, ms) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example(""),
@@ -201,13 +203,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `datePatternVariable adds variable of timestamp pattern`() {
-        testBuilder.datePatternVariable("any_name", 5.days, "YYYY-MM-DD", "prefix-", "-suffix")
+        testBuilder.datePatternVariable(TEST_STEP_NAME, 5.days, "YYYY-MM-DD", "prefix-", "-suffix")
         val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
                 SyntheticsConfigVariable()
-                    .name("ANY_NAME")
+                    .name(TEST_STEP_NAME.uppercase(Locale.getDefault()))
                     .pattern("prefix-{{ date(432000s, YYYY-MM-DD) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example(""),
@@ -217,13 +219,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `alphanumericPatternVariable adds variable of timestamp pattern`() {
-        testBuilder.alphanumericPatternVariable("any_name", 10, "prefix-", "-suffix")
+        testBuilder.alphanumericPatternVariable(TEST_STEP_NAME, 10, "prefix-", "-suffix")
         val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
                 SyntheticsConfigVariable()
-                    .name("ANY_NAME")
+                    .name(TEST_STEP_NAME.uppercase(Locale.getDefault()))
                     .pattern("prefix-{{ alphanumeric(10) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example(""),
@@ -233,13 +235,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `alphabeticPatternVariable adds variable of timestamp pattern`() {
-        testBuilder.alphabeticPatternVariable("any_name", 10, "prefix-", "-suffix")
+        testBuilder.alphabeticPatternVariable(TEST_STEP_NAME, 10, "prefix-", "-suffix")
         val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
                 SyntheticsConfigVariable()
-                    .name("ANY_NAME")
+                    .name(TEST_STEP_NAME.uppercase(Locale.getDefault()))
                     .pattern("prefix-{{ alphabetic(10) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example(""),
@@ -249,13 +251,13 @@ class SyntheticMultiStepApiTestBuilderTest {
 
     @Test
     fun `numericPatternVariable adds variable of timestamp pattern`() {
-        testBuilder.numericPatternVariable("any_name", 10, "prefix-", "-suffix")
+        testBuilder.numericPatternVariable(TEST_STEP_NAME, 10, "prefix-", "-suffix")
         val result = testBuilder.build()
 
         assertTrue(
             result.config.configVariables.contains(
                 SyntheticsConfigVariable()
-                    .name("ANY_NAME")
+                    .name(TEST_STEP_NAME.uppercase(Locale.getDefault()))
                     .pattern("prefix-{{ numeric(10) }}-suffix")
                     .type(SyntheticsConfigVariableType.TEXT)
                     .example(""),
