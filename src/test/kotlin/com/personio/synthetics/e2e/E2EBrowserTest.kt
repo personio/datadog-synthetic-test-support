@@ -14,6 +14,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Since the builder is still in progress, don't use it for the browser test creation
@@ -52,6 +53,7 @@ class E2EBrowserTest {
                 typeText("Type text", TargetElement("#my-element"), "new_text")
                 click("Click", TargetElement("#my-element"))
                 hover("Hover", TargetElement("#my-element"))
+                wait("Wait", 3.seconds)
             }
         }
     }

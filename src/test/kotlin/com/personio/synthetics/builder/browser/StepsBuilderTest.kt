@@ -6,9 +6,11 @@ import com.personio.synthetics.TEST_LOCATOR
 import com.personio.synthetics.TEST_STEP_NAME
 import com.personio.synthetics.model.actions.ActionsParams
 import com.personio.synthetics.model.actions.SpecialActionsParams
+import com.personio.synthetics.model.actions.WaitParams
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 class StepsBuilderTest {
     @Test
@@ -72,6 +74,23 @@ class StepsBuilderTest {
                         element = TargetElement(TEST_LOCATOR).getSpecialActionsElementObject(),
                     ),
                 ),
+            result.first(),
+        )
+    }
+
+    @Test
+    fun `wait adds wait step`() {
+        val sut = StepsBuilder()
+        sut.wait(TEST_STEP_NAME, 5.seconds)
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(
+            SyntheticsStep()
+                .name(TEST_STEP_NAME)
+                .type(SyntheticsStepType.WAIT)
+                .params(WaitParams(5)),
             result.first(),
         )
     }
