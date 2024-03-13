@@ -94,4 +94,16 @@ class StepsBuilderTest {
             result.first(),
         )
     }
+
+    @Test
+    fun `refresh adds refresh step`() {
+        val sut = StepsBuilder()
+        sut.refresh(TEST_STEP_NAME)
+
+        val result = sut.build()
+
+        assertEquals(1, result.count())
+        assertEquals(SyntheticsStepType.REFRESH, result.first().type)
+        assertEquals(TEST_STEP_NAME, result.first().name)
+    }
 }
