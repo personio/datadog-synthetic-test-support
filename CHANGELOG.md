@@ -23,7 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update kotlinx-serialization-json dependency from 1.6.2 to 1.6.3 ([#195](https://github.com/personio/datadog-synthetic-test-support/pull/195))
 - Update jackson-dataformat-yaml dependency from 2.16.1 to 2.17.1 ([#202](https://github.com/personio/datadog-synthetic-test-support/pull/202), [#211](https://github.com/personio/datadog-synthetic-test-support/pull/211))
 - Update jackson-module-kotlin dependency from 2.16.1 to 2.17.1 ([#202](https://github.com/personio/datadog-synthetic-test-support/pull/202), [#211](https://github.com/personio/datadog-synthetic-test-support/pull/211))
-- Update secretsmanager dependency from 2.22.9 to 2.25.42 ([#187](https://github.com/personio/datadog-synthetic-test-support/pull/187), [#194](https://github.com/personio/datadog-synthetic-test-support/pull/194), [#198](https://github.com/personio/datadog-synthetic-test-support/pull/198), [#206](https://github.com/personio/datadog-synthetic-test-support/pull/206))
+- Update secretsmanager dependency from 2.22.9 to 2.25.64 ([#187](https://github.com/personio/datadog-synthetic-test-support/pull/187), [#194](https://github.com/personio/datadog-synthetic-test-support/pull/194), [#198](https://github.com/personio/datadog-synthetic-test-support/pull/198), [#206](https://github.com/personio/datadog-synthetic-test-support/pull/206), [#212](https://github.com/personio/datadog-synthetic-test-support/pull/212))
 
 ## [2.4.0] - 2024-01-19
 ### New features & improvements
