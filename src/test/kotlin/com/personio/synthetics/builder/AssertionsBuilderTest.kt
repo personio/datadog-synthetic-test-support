@@ -68,7 +68,7 @@ class AssertionsBuilderTest {
     }
 
     @Test
-    fun `bodyContainsJsonPathRegex adds assertion that macthes the value stored in the given json path against the regex provided`() {
+    fun `bodyContainsJsonPathRegex adds assertion that matches the value stored in the given JSON path against the RegEx provided`() {
         assertionsBuilder.bodyContainsJsonPathRegex("any_json_path", "any_regex")
         val result = assertionsBuilder.build()
 
