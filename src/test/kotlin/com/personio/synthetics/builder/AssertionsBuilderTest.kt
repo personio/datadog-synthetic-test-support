@@ -69,7 +69,7 @@ class AssertionsBuilderTest {
 
     @Test
     fun `bodyContainsJsonPathRegex adds assertion that matches the value stored in the given JSON path against the RegEx provided`() {
-        assertionsBuilder.bodyContainsJsonPathRegex("any_json_path", "any_regex")
+        assertionsBuilder.bodyContainsJsonPathRegex("$.foo.bar", "^t.[u].\$")
         val result = assertionsBuilder.build()
 
         assertEquals(
@@ -79,9 +79,9 @@ class AssertionsBuilderTest {
                     .type(SyntheticsAssertionType.BODY)
                     .target(
                         SyntheticsAssertionJSONPathTargetTarget()
-                            .jsonPath("any_json_path")
+                            .jsonPath("$.foo.bar")
                             .operator("matches")
-                            .targetValue("any_regex"),
+                            .targetValue("^t.[u].\$"),
                     ),
             ),
             result.first(),
