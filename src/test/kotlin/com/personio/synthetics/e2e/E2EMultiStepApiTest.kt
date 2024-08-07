@@ -80,6 +80,7 @@ class E2EMultiStepApiTest {
                         assertions {
                             statusCode(200)
                             bodyContainsJsonPath("\$.success", "true")
+                            bodyContainsJsonPathRegex("\$.success", "^t.[u].\$")
                             bodyContains("some_data")
                             headerContains("set-cookie", "cookie_name")
                         }
