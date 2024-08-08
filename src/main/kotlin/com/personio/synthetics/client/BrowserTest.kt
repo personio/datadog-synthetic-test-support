@@ -6,6 +6,8 @@ import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
+import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
+import com.datadog.api.client.v1.model.SyntheticsUpdateTestPauseStatusPayload
 import com.personio.synthetics.config.Config
 import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.config.loadConfiguration
@@ -75,7 +77,21 @@ class BrowserTest(
     internal fun createBrowserTest(): SyntheticsBrowserTest {
         val testId = getTestId()
         return if (testId != null) {
+            syntheticsApiClient.updateTestPauseStatus(
+                testId,
+                SyntheticsUpdateTestPauseStatusPayload().newStatus(
+                    SyntheticsTestPauseStatus.PAUSED,
+                ),
+            )
             syntheticsApiClient.updateBrowserTest(testId, this)
+                .also {
+                syntheticsApiClient.updateTestPauseStatus(
+                    testId,
+                    SyntheticsUpdateTestPauseStatusPayload().newStatus(
+                        SyntheticsTestPauseStatus.LIVE,
+                    ),
+                )
+            }
         } else {
             syntheticsApiClient.createSyntheticsBrowserTest(this)
         }
