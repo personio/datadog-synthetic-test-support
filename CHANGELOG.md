@@ -12,10 +12,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Refactor the Browser tests to use the builder approach ([#188](https://github.com/personio/datadog-synthetic-test-support/pull/188), [#189](https://github.com/personio/datadog-synthetic-test-support/pull/189), [#190](https://github.com/personio/datadog-synthetic-test-support/pull/190), [#197](https://github.com/personio/datadog-synthetic-test-support/pull/197))
-- Add `bodyContainsJsonPathRegex()` assertion function to check if a json path element in a response body matches given regex [#228](https://github.com/personio/datadog-synthetic-test-support/pull/228)
 
 ### Bug fixes
+
+### Dependencies
+
+## [2.5.0] - 2024-08-08
+### New features & improvements
+- Refactor the Browser tests to use the builder approach ([#188](https://github.com/personio/datadog-synthetic-test-support/pull/188), [#189](https://github.com/personio/datadog-synthetic-test-support/pull/189), [#190](https://github.com/personio/datadog-synthetic-test-support/pull/190), [#197](https://github.com/personio/datadog-synthetic-test-support/pull/197))
+- Add `bodyContainsJsonPathRegex()` assertion function to check if a json path element in a response body matches given regex [#228](https://github.com/personio/datadog-synthetic-test-support/pull/228)
 
 ### Dependencies
 - Update commons-text dependency from 1.11.0 to 1.12.0 ([#207](https://github.com/personio/datadog-synthetic-test-support/pull/207))
