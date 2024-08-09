@@ -1,7 +1,8 @@
 package com.personio.synthetics.builder.api
 
 import com.datadog.api.client.v1.model.SyntheticsAPIStep
-import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
+import com.datadog.api.client.v1.model.SyntheticsAPITestStep
+import com.datadog.api.client.v1.model.SyntheticsAPITestStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -29,7 +30,7 @@ class StepBuilder(
     var isCritical = false
     private var retryOptions = SyntheticsTestOptionsRetry()
 
-    private val step = SyntheticsAPIStep()
+    private val step = SyntheticsAPIStep(SyntheticsAPITestStep())
     private var request: SyntheticsTestRequest? = null
     private var assertions = listOf<SyntheticsAssertion>()
     private val parsingOptions = mutableListOf<SyntheticsParsingOptions>()
@@ -40,20 +41,22 @@ class StepBuilder(
         }
 
         if (allowFailure) {
-            step.isCritical(isCritical)
+            step.syntheticsAPITestStep.isCritical(isCritical)
         }
 
         if (parsingOptions.isNotEmpty()) {
-            step.extractedValues(parsingOptions)
+            step.syntheticsAPITestStep.extractedValues(parsingOptions)
         }
 
-        return step
-            .request(request)
-            .allowFailure(allowFailure)
-            .retry(retryOptions)
-            .name(name)
-            .assertions(assertions)
-            .subtype(SyntheticsAPIStepSubtype.HTTP)
+        return SyntheticsAPIStep(
+            step.syntheticsAPITestStep
+                .request(request)
+                .allowFailure(allowFailure)
+                .retry(retryOptions)
+                .name(name)
+                .assertions(assertions)
+                .subtype(SyntheticsAPITestStepSubtype.HTTP),
+        )
     }
 
     /**
