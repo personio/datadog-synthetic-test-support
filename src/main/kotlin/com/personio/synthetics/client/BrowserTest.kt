@@ -77,20 +77,23 @@ class BrowserTest(
     internal fun createBrowserTest(): SyntheticsBrowserTest {
         val testId = getTestId()
         return if (testId != null) {
-            syntheticsApiClient.updateTestPauseStatus(
-                testId,
-                SyntheticsUpdateTestPauseStatusPayload().newStatus(
-                    SyntheticsTestPauseStatus.PAUSED,
-                ),
-            )
-            syntheticsApiClient.updateBrowserTest(testId, this)
-                .also {
+            if (syntheticsApiClient.getTest(testId).status.equals(SyntheticsTestPauseStatus.LIVE)) {
                 syntheticsApiClient.updateTestPauseStatus(
                     testId,
                     SyntheticsUpdateTestPauseStatusPayload().newStatus(
-                        SyntheticsTestPauseStatus.LIVE,
+                        SyntheticsTestPauseStatus.PAUSED,
                     ),
                 )
+                syntheticsApiClient.updateBrowserTest(testId, this).also {
+                    syntheticsApiClient.updateTestPauseStatus(
+                        testId,
+                        SyntheticsUpdateTestPauseStatusPayload().newStatus(
+                            SyntheticsTestPauseStatus.LIVE,
+                        ),
+                    )
+                }
+            } else {
+                syntheticsApiClient.updateBrowserTest(testId, this)
             }
         } else {
             syntheticsApiClient.createSyntheticsBrowserTest(this)
