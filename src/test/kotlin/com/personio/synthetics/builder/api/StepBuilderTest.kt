@@ -1,6 +1,6 @@
 package com.personio.synthetics.builder.api
 
-import com.datadog.api.client.v1.model.SyntheticsAPIStepSubtype
+import com.datadog.api.client.v1.model.SyntheticsAPITestStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -39,7 +39,7 @@ class StepBuilderTest {
         stepBuilder.extract("any_variable_name") {}
         val result = stepBuilder.build()
 
-        assertEquals(1, result.extractedValues.count())
+        assertEquals(1, result.syntheticsAPITestStep.extractedValues.count())
     }
 
     @Test
@@ -55,7 +55,7 @@ class StepBuilderTest {
         stepBuilder.extract("any_variable_name") {}
         val result = stepBuilder.build()
 
-        assertNull(result.extractedValues)
+        assertNull(result.syntheticsAPITestStep.extractedValues)
     }
 
     @Test
@@ -66,7 +66,7 @@ class StepBuilderTest {
 
         val result = stepBuilder.build()
         verify(requestBuilderMock, times(1)).build()
-        assertNotNull(result.request)
+        assertNotNull(result.syntheticsAPITestStep.request)
     }
 
     @Test
@@ -81,7 +81,7 @@ class StepBuilderTest {
         val result = stepBuilder.build()
 
         verify(assertionsMock, times(1)).build()
-        assertEquals(2, result.assertions.count())
+        assertEquals(2, result.syntheticsAPITestStep.assertions.count())
     }
 
     @Test
@@ -90,7 +90,7 @@ class StepBuilderTest {
         stepBuilder.request { }
         val result = stepBuilder.build()
 
-        assertEquals(SyntheticsAPIStepSubtype.HTTP, result.subtype)
+        assertEquals(SyntheticsAPITestStepSubtype.HTTP, result.syntheticsAPITestStep.subtype)
     }
 
     @Test
@@ -99,7 +99,7 @@ class StepBuilderTest {
         stepBuilder.request { }
         val result = stepBuilder.build()
 
-        assertEquals(TEST_STEP_NAME, result.name)
+        assertEquals(TEST_STEP_NAME, result.syntheticsAPITestStep.name)
     }
 
     @Test
@@ -111,7 +111,7 @@ class StepBuilderTest {
         val result = stepBuilder.build()
 
         verify(assertionsMock, times(1)).build()
-        assertTrue(result.assertions.isEmpty())
+        assertTrue(result.syntheticsAPITestStep.assertions.isEmpty())
     }
 
     @Test
@@ -134,7 +134,7 @@ class StepBuilderTest {
         stepBuilder.request { }
         val result = stepBuilder.build()
 
-        assertNull(result.isCritical)
+        assertNull(result.syntheticsAPITestStep.isCritical)
     }
 
     @ParameterizedTest
@@ -146,7 +146,7 @@ class StepBuilderTest {
         stepBuilder.request { }
         val result = stepBuilder.build()
 
-        assertEquals(isCritical, result.isCritical)
+        assertEquals(isCritical, result.syntheticsAPITestStep.isCritical)
     }
 
     @Test
@@ -155,7 +155,7 @@ class StepBuilderTest {
         stepBuilder.request { }
         val result = stepBuilder.build()
 
-        assertEquals(SyntheticsTestOptionsRetry(), result.retry)
+        assertEquals(SyntheticsTestOptionsRetry(), result.syntheticsAPITestStep.retry)
     }
 
     @Test
@@ -165,7 +165,7 @@ class StepBuilderTest {
         stepBuilder.retry(3, 3.seconds)
         val result = stepBuilder.build()
 
-        assertEquals(SyntheticsTestOptionsRetry().count(3).interval(3000.0), result.retry)
+        assertEquals(SyntheticsTestOptionsRetry().count(3).interval(3000.0), result.syntheticsAPITestStep.retry)
     }
 
     @Test

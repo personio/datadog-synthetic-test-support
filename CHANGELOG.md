@@ -12,18 +12,24 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
--  Refactor the Browser tests to use the builder approach ([#188](https://github.com/personio/datadog-synthetic-test-support/pull/188), [#189](https://github.com/personio/datadog-synthetic-test-support/pull/189), [#190](https://github.com/personio/datadog-synthetic-test-support/pull/190), [#197](https://github.com/personio/datadog-synthetic-test-support/pull/197))
 
 ### Bug fixes
 
 ### Dependencies
+
+## [2.5.0] - 2024-08-08
+### New features & improvements
+- Refactor the Browser tests to use the builder approach ([#188](https://github.com/personio/datadog-synthetic-test-support/pull/188), [#189](https://github.com/personio/datadog-synthetic-test-support/pull/189), [#190](https://github.com/personio/datadog-synthetic-test-support/pull/190), [#197](https://github.com/personio/datadog-synthetic-test-support/pull/197))
+- Add `bodyContainsJsonPathRegex()` assertion function to check if a json path element in a response body matches given regex [#228](https://github.com/personio/datadog-synthetic-test-support/pull/228)
+
+### Dependencies
 - Update commons-text dependency from 1.11.0 to 1.12.0 ([#207](https://github.com/personio/datadog-synthetic-test-support/pull/207))
-- Update datadog-api-client dependency from 2.19.0 to 2.25.0 ([#185](https://github.com/personio/datadog-synthetic-test-support/pull/185), [#191](https://github.com/personio/datadog-synthetic-test-support/pull/191), [#203](https://github.com/personio/datadog-synthetic-test-support/pull/203), [#208](https://github.com/personio/datadog-synthetic-test-support/pull/208), [#216](https://github.com/personio/datadog-synthetic-test-support/pull/216))
+- Update datadog-api-client dependency from 2.19.0 to 2.26.0 ([#185](https://github.com/personio/datadog-synthetic-test-support/pull/185), [#191](https://github.com/personio/datadog-synthetic-test-support/pull/191), [#203](https://github.com/personio/datadog-synthetic-test-support/pull/203), [#208](https://github.com/personio/datadog-synthetic-test-support/pull/208), [#216](https://github.com/personio/datadog-synthetic-test-support/pull/216), [#224](https://github.com/personio/datadog-synthetic-test-support/pull/224))
 - Update kotlin-stdlib dependency from 1.9.22 to 2.0.0 ([#201](https://github.com/personio/datadog-synthetic-test-support/pull/201), [#210](https://github.com/personio/datadog-synthetic-test-support/pull/210))
 - Update kotlinx-serialization-json dependency from 1.6.2 to 1.7.1 ([#195](https://github.com/personio/datadog-synthetic-test-support/pull/195), [#221](https://github.com/personio/datadog-synthetic-test-support/pull/221))
-- Update jackson-dataformat-yaml dependency from 2.16.1 to 2.17.1 ([#202](https://github.com/personio/datadog-synthetic-test-support/pull/202), [#211](https://github.com/personio/datadog-synthetic-test-support/pull/211))
-- Update jackson-module-kotlin dependency from 2.16.1 to 2.17.1 ([#202](https://github.com/personio/datadog-synthetic-test-support/pull/202), [#211](https://github.com/personio/datadog-synthetic-test-support/pull/211))
-- Update secretsmanager dependency from 2.22.9 to 2.26.12 ([#187](https://github.com/personio/datadog-synthetic-test-support/pull/187), [#194](https://github.com/personio/datadog-synthetic-test-support/pull/194), [#198](https://github.com/personio/datadog-synthetic-test-support/pull/198), [#206](https://github.com/personio/datadog-synthetic-test-support/pull/206), [#212](https://github.com/personio/datadog-synthetic-test-support/pull/212), [#217](https://github.com/personio/datadog-synthetic-test-support/pull/217))
+- Update jackson-dataformat-yaml dependency from 2.16.1 to 2.17.2 ([#202](https://github.com/personio/datadog-synthetic-test-support/pull/202), [#211](https://github.com/personio/datadog-synthetic-test-support/pull/211), [#226](https://github.com/personio/datadog-synthetic-test-support/pull/226))
+- Update jackson-module-kotlin dependency from 2.16.1 to 2.17.2 ([#202](https://github.com/personio/datadog-synthetic-test-support/pull/202), [#211](https://github.com/personio/datadog-synthetic-test-support/pull/211), [#226](https://github.com/personio/datadog-synthetic-test-support/pull/226))
+- Update secretsmanager dependency from 2.22.9 to 2.26.27 ([#187](https://github.com/personio/datadog-synthetic-test-support/pull/187), [#194](https://github.com/personio/datadog-synthetic-test-support/pull/194), [#198](https://github.com/personio/datadog-synthetic-test-support/pull/198), [#206](https://github.com/personio/datadog-synthetic-test-support/pull/206), [#212](https://github.com/personio/datadog-synthetic-test-support/pull/212), [#217](https://github.com/personio/datadog-synthetic-test-support/pull/217), [#227](https://github.com/personio/datadog-synthetic-test-support/pull/227))
 
 ## [2.4.0] - 2024-01-19
 ### New features & improvements

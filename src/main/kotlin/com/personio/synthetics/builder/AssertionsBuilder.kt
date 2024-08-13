@@ -72,6 +72,30 @@ class AssertionsBuilder {
     }
 
     /**
+     * Asserts that the value at the JSON path in the response body matches the given regex
+     * @param jsonPath JSON path
+     * @param regex Value to match with
+     */
+    fun bodyContainsJsonPathRegex(
+        jsonPath: String,
+        regex: String,
+    ) {
+        assertions.add(
+            SyntheticsAssertion(
+                SyntheticsAssertionJSONPathTarget()
+                    .operator(SyntheticsAssertionJSONPathOperator.VALIDATES_JSON_PATH)
+                    .type(SyntheticsAssertionType.BODY)
+                    .target(
+                        SyntheticsAssertionJSONPathTargetTarget()
+                            .jsonPath(jsonPath)
+                            .targetValue(regex)
+                            .operator("matches"),
+                    ),
+            ),
+        )
+    }
+
+    /**
      * Asserts that the response body contains the given value
      * @param value Value to look for
      */
