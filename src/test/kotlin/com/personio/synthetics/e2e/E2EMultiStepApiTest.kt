@@ -87,6 +87,9 @@ class E2EMultiStepApiTest {
                         extract("COOKIE_VARIABLE") {
                             headerRegex("set-cookie", "(?<=cookie_name\\=)[^;]+(?=;)")
                         }
+                        extract("RAW_RESPONSE_BODY") {
+                            bodyRaw()
+                        }
                     }
                 }
             }

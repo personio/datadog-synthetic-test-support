@@ -81,6 +81,25 @@ class ParsingOptionsBuilderTest {
 
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
+    fun `bodyRaw returns parsing options with RAW parser type and HTTP_BODY type`(secure: Boolean) {
+        parsingOptionsBuilder.variable(TEST_STEP_NAME)
+        parsingOptionsBuilder.bodyRaw(secure)
+
+        assertEquals(
+            SyntheticsParsingOptions()
+                .name(TEST_STEP_NAME)
+                .parser(
+                    SyntheticsVariableParser()
+                        .type(SyntheticsGlobalVariableParserType.RAW),
+                )
+                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
+                .secure(secure),
+            parsingOptionsBuilder.build(),
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
     fun `header returns parsing options with RAW parser type and HTTP_HEADER type`(secure: Boolean) {
         parsingOptionsBuilder.variable(TEST_STEP_NAME)
         parsingOptionsBuilder.header("any_header_name", secure)

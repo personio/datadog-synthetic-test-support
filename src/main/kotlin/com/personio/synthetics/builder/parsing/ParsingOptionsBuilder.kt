@@ -68,6 +68,22 @@ class ParsingOptionsBuilder {
     }
 
     /**
+     * Extracts the entire response body
+     * @param secure set to true to disallow the extracted value to be read from DataDog UI
+     * By default secure is set to false allowing the extracted value to be available for reading in Datadog UI
+     */
+    fun bodyRaw(secure: Boolean = false) {
+        parsingOptions =
+            SyntheticsParsingOptions()
+                .parser(
+                    SyntheticsVariableParser()
+                        .type(SyntheticsGlobalVariableParserType.RAW),
+                )
+                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
+                .secure(secure)
+    }
+
+    /**
      * Extracts the value from a response header
      * @param name Header name
      * @param secure Set to true to disallow the extracted value to be read from DataDog UI
