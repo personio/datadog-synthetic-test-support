@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Add `bodyRaw()` extraction function for API Tests to extract entire response body
+- Add `bodyRaw()` extraction function for API Tests to extract entire response body ([#238](https://github.com/personio/datadog-synthetic-test-support/pull/238))
 
 ### Bug fixes
 
