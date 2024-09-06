@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "2.0.0"
+    val kotlinVersion = "2.0.20"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version "1.9.20"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
@@ -34,21 +34,21 @@ val e2eTest =
     }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
-    val awsSdkVersion = "2.26.27"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
+    val awsSdkVersion = "2.27.17"
     val jacksonVersion = "2.17.2"
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.apache.commons:commons-text:1.12.0")
     api("software.amazon.awssdk:secretsmanager:$awsSdkVersion")
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.2")
     api("javax.activation:activation:1.1.1")
-    api("com.datadoghq:datadog-api-client:2.26.0")
+    api("com.datadoghq:datadog-api-client:2.27.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
     testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.0")
     testImplementation("org.mockito:mockito-inline:5.2.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.1")
