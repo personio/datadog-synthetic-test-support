@@ -12,10 +12,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Add `bodyRaw()` extraction function for API Tests to extract entire response body ([#238](https://github.com/personio/datadog-synthetic-test-support/pull/238))
-- Add a wrapper to `createBrowserTest()` to avoid unwanted parallel executions during Datadog test updates ([#223](https://github.com/personio/datadog-synthetic-test-support/pull/223))
 
 ### Bug fixes
+
+### Dependencies
+
+## [2.6.0] - 2024-09-09
+### New features & improvements
+- Add `bodyRaw()` extraction function for API Tests to extract entire response body ([#238](https://github.com/personio/datadog-synthetic-test-support/pull/238))
+- Add a wrapper to `createBrowserTest()` to avoid unwanted parallel executions during Datadog test updates ([#223](https://github.com/personio/datadog-synthetic-test-support/pull/223))
 
 ### Dependencies
 - Update datadog-api-client dependency from 2.26.0 to 2.27.0 ([#233](https://github.com/personio/datadog-synthetic-test-support/pull/233))
