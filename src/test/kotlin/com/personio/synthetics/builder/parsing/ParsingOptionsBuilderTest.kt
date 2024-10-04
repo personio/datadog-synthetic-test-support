@@ -1,7 +1,7 @@
 package com.personio.synthetics.builder.parsing
 
-import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParseTestOptionsType
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
+import com.datadog.api.client.v1.model.SyntheticsLocalVariableParsingOptionsType
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsVariableParser
 import com.personio.synthetics.TEST_STEP_NAME
@@ -53,7 +53,7 @@ class ParsingOptionsBuilderTest {
                         .type(SyntheticsGlobalVariableParserType.JSON_PATH)
                         .value("any_json_path"),
                 )
-                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
+                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -73,7 +73,7 @@ class ParsingOptionsBuilderTest {
                         .type(SyntheticsGlobalVariableParserType.REGEX)
                         .value("any_regex"),
                 )
-                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
+                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -92,7 +92,7 @@ class ParsingOptionsBuilderTest {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.RAW),
                 )
-                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_BODY)
+                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -112,7 +112,7 @@ class ParsingOptionsBuilderTest {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.RAW),
                 )
-                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
+                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -133,7 +133,7 @@ class ParsingOptionsBuilderTest {
                         .type(SyntheticsGlobalVariableParserType.REGEX)
                         .value("any_regex"),
                 )
-                .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
+                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
