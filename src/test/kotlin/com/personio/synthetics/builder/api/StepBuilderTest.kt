@@ -1,6 +1,8 @@
 package com.personio.synthetics.builder.api
 
 import com.datadog.api.client.v1.model.SyntheticsAPITestStepSubtype
+import com.datadog.api.client.v1.model.SyntheticsAPIWaitStep
+import com.datadog.api.client.v1.model.SyntheticsAPIWaitStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -70,6 +72,32 @@ class StepBuilderTest {
     }
 
     @Test
+    fun `build creates a wait step when waitDuration is provided`() {
+        val stepBuilder = StepBuilder(TEST_STEP_NAME)
+        stepBuilder.wait(30)
+
+        val result = stepBuilder.build()
+
+        assertEquals(
+            SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
+            result.syntheticsAPIWaitStep
+        )
+    }
+
+    @Test
+    fun `build fails a wait step when waitDuration is provided`() {
+        val stepBuilder = StepBuilder(TEST_STEP_NAME)
+        stepBuilder.wait(30)
+
+        val result = stepBuilder.build()
+
+        assertEquals(
+            SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
+            result.syntheticsAPIWaitStep
+        )
+    }
+
+    @Test
     fun `assertions sets assertions properly`() {
         val assertionsMock =
             makeAssertionBuilderMock(
@@ -115,7 +143,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build throws IllegalStateException when request is null`() {
+    fun `build throws IllegalStateException when both request & waitDuration are null`() {
         val requestBuilderMock = Mockito.mock(RequestBuilder::class.java)
         whenever(requestBuilderMock.build())
             .thenReturn(null)
