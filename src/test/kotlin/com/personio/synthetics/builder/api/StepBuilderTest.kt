@@ -85,19 +85,6 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build fails a wait step when waitDuration is provided`() {
-        val stepBuilder = StepBuilder(TEST_STEP_NAME)
-        stepBuilder.wait(30)
-
-        val result = stepBuilder.build()
-
-        assertEquals(
-            SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
-            result.syntheticsAPIWaitStep,
-        )
-    }
-
-    @Test
     fun `assertions sets assertions properly`() {
         val assertionsMock =
             makeAssertionBuilderMock(
@@ -149,9 +136,25 @@ class StepBuilderTest {
             .thenReturn(null)
         val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
 
-        assertThrows<IllegalStateException> {
-            stepBuilder.build()
-        }
+        val exception =
+            assertThrows<IllegalStateException> {
+                stepBuilder.build()
+            }
+        assertEquals(exception.message, "Provide either of Request or Wait duration.")
+    }
+
+    @Test
+    fun `build throws IllegalStateException when both request & waitDuration are provided`() {
+        val requestBuilderMock = makeRequestBuilderHappyPathMock()
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
+        stepBuilder.request { }
+        stepBuilder.wait(30)
+
+        val exception =
+            assertThrows<IllegalStateException> {
+                stepBuilder.build()
+            }
+        assertEquals(exception.message, "Only one of Request or Wait duration should be provided.")
     }
 
     @Test

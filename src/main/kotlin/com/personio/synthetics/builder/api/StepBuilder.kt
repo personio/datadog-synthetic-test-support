@@ -40,9 +40,11 @@ class StepBuilder(
 
     fun build(): SyntheticsAPIStep {
         if (request == null && waitDuration == null) {
-            throw IllegalStateException("Provide either of `Request or Wait instruction`.")
+            throw IllegalStateException("Provide either of Request or Wait duration.")
         }
-
+        if (request != null && waitDuration != null) {
+            throw IllegalStateException("Only one of Request or Wait duration should be provided.")
+        }
         if (allowFailure) {
             step.syntheticsAPITestStep.isCritical(isCritical)
         }
