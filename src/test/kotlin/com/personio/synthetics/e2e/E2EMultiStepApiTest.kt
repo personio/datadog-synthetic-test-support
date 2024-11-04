@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.ZoneId
-import java.time.temporal.ChronoUnit
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes

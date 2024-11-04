@@ -66,10 +66,11 @@ class StepBuilder(
     }
 
     private fun buildWaitStep(): SyntheticsAPIStep {
-        return SyntheticsAPIStep(SyntheticsAPIWaitStep()
-            .name(name)
-            .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
-            .value(waitDuration)
+        return SyntheticsAPIStep(
+            SyntheticsAPIWaitStep()
+                .name(name)
+                .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
+                .value(waitDuration),
         )
     }
 

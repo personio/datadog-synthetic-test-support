@@ -80,7 +80,7 @@ class StepBuilderTest {
 
         assertEquals(
             SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
-            result.syntheticsAPIWaitStep
+            result.syntheticsAPIWaitStep,
         )
     }
 
@@ -93,7 +93,7 @@ class StepBuilderTest {
 
         assertEquals(
             SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
-            result.syntheticsAPIWaitStep
+            result.syntheticsAPIWaitStep,
         )
     }
 
