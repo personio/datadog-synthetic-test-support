@@ -56,22 +56,24 @@ class StepBuilder(
         return if (waitDuration != null) buildWaitStep() else buildRequestStep()
     }
 
-    private fun buildWaitStep() = SyntheticsAPIStep(
-        SyntheticsAPIWaitStep()
-            .name(name)
-            .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
-            .value(waitDuration),
-    )
+    private fun buildWaitStep() =
+        SyntheticsAPIStep(
+            SyntheticsAPIWaitStep()
+                .name(name)
+                .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
+                .value(waitDuration),
+        )
 
-    private fun buildRequestStep() = SyntheticsAPIStep(
-        step.syntheticsAPITestStep
-            .request(request)
-            .allowFailure(allowFailure)
-            .retry(retryOptions)
-            .name(name)
-            .assertions(assertions)
-            .subtype(SyntheticsAPITestStepSubtype.HTTP),
-    )
+    private fun buildRequestStep() =
+        SyntheticsAPIStep(
+            step.syntheticsAPITestStep
+                .request(request)
+                .allowFailure(allowFailure)
+                .retry(retryOptions)
+                .name(name)
+                .assertions(assertions)
+                .subtype(SyntheticsAPITestStepSubtype.HTTP),
+        )
 
     /**
      * Sets the HTTP request for the synthetic test
