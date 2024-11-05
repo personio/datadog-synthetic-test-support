@@ -72,7 +72,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build creates a wait step when waitDuration is provided`() {
+    fun `build creates a wait step when wait duration is provided`() {
         val stepBuilder = StepBuilder(TEST_STEP_NAME)
         stepBuilder.wait(30)
 
@@ -82,6 +82,15 @@ class StepBuilderTest {
             SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
             result.syntheticsAPIWaitStep,
         )
+    }
+
+    @Test
+    fun `wait throws exception for invalid duration`() {
+        val stepBuilder = StepBuilder(TEST_STEP_NAME)
+
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.wait(300)
+        }
     }
 
     @Test
@@ -130,7 +139,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build throws IllegalStateException when both request & waitDuration are null`() {
+    fun `build throws IllegalStateException when both request & wait duration are null`() {
         val requestBuilderMock = Mockito.mock(RequestBuilder::class.java)
         whenever(requestBuilderMock.build())
             .thenReturn(null)
@@ -144,7 +153,7 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build throws IllegalStateException when both request & waitDuration are provided`() {
+    fun `build throws IllegalStateException when both request & wait duration are provided`() {
         val requestBuilderMock = makeRequestBuilderHappyPathMock()
         val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
         stepBuilder.request { }
