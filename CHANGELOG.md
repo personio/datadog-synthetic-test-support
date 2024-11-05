@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
+- Add a new `wait` step creation function for API Tests ([#255](https://github.com/personio/datadog-synthetic-test-support/pull/255))
 
 ### Bug fixes
 
