@@ -89,7 +89,10 @@ class StepBuilderTest {
         val stepBuilder = StepBuilder(TEST_STEP_NAME)
 
         assertThrows<IllegalArgumentException> {
-            stepBuilder.wait(300)
+            stepBuilder.wait(0)
+        }
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.wait(181)
         }
     }
 
