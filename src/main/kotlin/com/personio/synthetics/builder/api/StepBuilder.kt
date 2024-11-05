@@ -52,29 +52,26 @@ class StepBuilder(
         if (parsingOptions.isNotEmpty()) {
             step.syntheticsAPITestStep.extractedValues(parsingOptions)
         }
-        return if (waitDuration != null) {
-            buildWaitStep()
-        } else {
-            SyntheticsAPIStep(
-                step.syntheticsAPITestStep
-                    .request(request)
-                    .allowFailure(allowFailure)
-                    .retry(retryOptions)
-                    .name(name)
-                    .assertions(assertions)
-                    .subtype(SyntheticsAPITestStepSubtype.HTTP),
-            )
-        }
+
+        return if (waitDuration != null) buildWaitStep() else buildRequestStep()
     }
 
-    private fun buildWaitStep(): SyntheticsAPIStep {
-        return SyntheticsAPIStep(
-            SyntheticsAPIWaitStep()
-                .name(name)
-                .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
-                .value(waitDuration),
-        )
-    }
+    private fun buildWaitStep() = SyntheticsAPIStep(
+        SyntheticsAPIWaitStep()
+            .name(name)
+            .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
+            .value(waitDuration),
+    )
+
+    private fun buildRequestStep() = SyntheticsAPIStep(
+        step.syntheticsAPITestStep
+            .request(request)
+            .allowFailure(allowFailure)
+            .retry(retryOptions)
+            .name(name)
+            .assertions(assertions)
+            .subtype(SyntheticsAPITestStepSubtype.HTTP),
+    )
 
     /**
      * Sets the HTTP request for the synthetic test
@@ -135,7 +132,7 @@ class StepBuilder(
 
     /**
      * Creates a wait step
-     * @param durationInSeconds The duration to wait in seconds. Minimum value: 0. Maximum value: 180
+     * @param durationInSeconds The duration to wait in seconds. Minimum value: 1. Maximum value: 180
      */
     fun wait(durationInSeconds: Int) {
         require(durationInSeconds in 1..180) {
