@@ -1,6 +1,8 @@
 package com.personio.synthetics.builder.api
 
 import com.datadog.api.client.v1.model.SyntheticsAPITestStepSubtype
+import com.datadog.api.client.v1.model.SyntheticsAPIWaitStep
+import com.datadog.api.client.v1.model.SyntheticsAPIWaitStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -70,6 +72,31 @@ class StepBuilderTest {
     }
 
     @Test
+    fun `build creates a wait step when wait duration is provided`() {
+        val stepBuilder = StepBuilder(TEST_STEP_NAME)
+        stepBuilder.wait(30)
+
+        val result = stepBuilder.build()
+
+        assertEquals(
+            SyntheticsAPIWaitStep(TEST_STEP_NAME, SyntheticsAPIWaitStepSubtype.WAIT, 30),
+            result.syntheticsAPIWaitStep,
+        )
+    }
+
+    @Test
+    fun `wait throws exception for invalid duration`() {
+        val stepBuilder = StepBuilder(TEST_STEP_NAME)
+
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.wait(0)
+        }
+        assertThrows<IllegalArgumentException> {
+            stepBuilder.wait(181)
+        }
+    }
+
+    @Test
     fun `assertions sets assertions properly`() {
         val assertionsMock =
             makeAssertionBuilderMock(
@@ -115,15 +142,31 @@ class StepBuilderTest {
     }
 
     @Test
-    fun `build throws IllegalStateException when request is null`() {
+    fun `build throws IllegalStateException when both request & wait duration are null`() {
         val requestBuilderMock = Mockito.mock(RequestBuilder::class.java)
         whenever(requestBuilderMock.build())
             .thenReturn(null)
         val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
 
-        assertThrows<IllegalStateException> {
-            stepBuilder.build()
-        }
+        val exception =
+            assertThrows<IllegalStateException> {
+                stepBuilder.build()
+            }
+        assertEquals(exception.message, "Provide either of Request or Wait duration.")
+    }
+
+    @Test
+    fun `build throws IllegalStateException when both request & wait duration are provided`() {
+        val requestBuilderMock = makeRequestBuilderHappyPathMock()
+        val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
+        stepBuilder.request { }
+        stepBuilder.wait(30)
+
+        val exception =
+            assertThrows<IllegalStateException> {
+                stepBuilder.build()
+            }
+        assertEquals(exception.message, "Only one of Request or Wait duration should be provided.")
     }
 
     @Test

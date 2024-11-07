@@ -20,7 +20,7 @@ class E2EMultiStepApiTest {
      * This test creates a Synthetic Multi-Step API test in Datadog.
      */
     @Test
-    fun `create mutli-step api synthetic test`() {
+    fun `create multi-step api synthetic test`() {
         syntheticMultiStepApiTest("[Multi-Step] Synthetic-Test-As-Code") {
             alertMessage("Test failed", "@slack-test_slack_channel")
             recoveryMessage("Test recovered")
@@ -91,6 +91,9 @@ class E2EMultiStepApiTest {
                             bodyRaw()
                         }
                     }
+                }
+                step("Wait for 5 seconds") {
+                    wait(5)
                 }
             }
         }

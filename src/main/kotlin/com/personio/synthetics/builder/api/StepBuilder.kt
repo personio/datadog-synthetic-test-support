@@ -3,6 +3,8 @@ package com.personio.synthetics.builder.api
 import com.datadog.api.client.v1.model.SyntheticsAPIStep
 import com.datadog.api.client.v1.model.SyntheticsAPITestStep
 import com.datadog.api.client.v1.model.SyntheticsAPITestStepSubtype
+import com.datadog.api.client.v1.model.SyntheticsAPIWaitStep
+import com.datadog.api.client.v1.model.SyntheticsAPIWaitStepSubtype
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsParsingOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -14,7 +16,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /**
- * Builds a step for a multi-step API synthetic test
+ * Builds either a Request or Wait step for a multi-step API synthetic test
  * @param name Name of the step
  * @param requestBuilder Instance of a request builder to use to provide a request
  * @param assertionBuilder Instance of an assertions builder to use to provide assertions
@@ -32,14 +34,17 @@ class StepBuilder(
 
     private val step = SyntheticsAPIStep(SyntheticsAPITestStep())
     private var request: SyntheticsTestRequest? = null
+    private var waitDuration: Int? = null
     private var assertions = listOf<SyntheticsAssertion>()
     private val parsingOptions = mutableListOf<SyntheticsParsingOptions>()
 
     fun build(): SyntheticsAPIStep {
-        if (request == null) {
-            throw IllegalStateException("Request must be provided.")
+        if (request == null && waitDuration == null) {
+            throw IllegalStateException("Provide either of Request or Wait duration.")
         }
-
+        if (request != null && waitDuration != null) {
+            throw IllegalStateException("Only one of Request or Wait duration should be provided.")
+        }
         if (allowFailure) {
             step.syntheticsAPITestStep.isCritical(isCritical)
         }
@@ -48,7 +53,19 @@ class StepBuilder(
             step.syntheticsAPITestStep.extractedValues(parsingOptions)
         }
 
-        return SyntheticsAPIStep(
+        return if (waitDuration != null) buildWaitStep() else buildRequestStep()
+    }
+
+    private fun buildWaitStep() =
+        SyntheticsAPIStep(
+            SyntheticsAPIWaitStep()
+                .name(name)
+                .subtype(SyntheticsAPIWaitStepSubtype.WAIT)
+                .value(waitDuration),
+        )
+
+    private fun buildRequestStep() =
+        SyntheticsAPIStep(
             step.syntheticsAPITestStep
                 .request(request)
                 .allowFailure(allowFailure)
@@ -57,7 +74,6 @@ class StepBuilder(
                 .assertions(assertions)
                 .subtype(SyntheticsAPITestStepSubtype.HTTP),
         )
-    }
 
     /**
      * Sets the HTTP request for the synthetic test
@@ -114,5 +130,16 @@ class StepBuilder(
             "Step retry interval should be between 0 and 5000 milliseconds."
         }
         retryOptions.count(retryCount).interval(retryInterval.inWholeMilliseconds.toDouble())
+    }
+
+    /**
+     * Creates a wait step
+     * @param durationInSeconds The duration to wait in seconds. Minimum value: 1. Maximum value: 180
+     */
+    fun wait(durationInSeconds: Int) {
+        require(durationInSeconds in 1..180) {
+            "Duration to wait must be in range 1 to 180 seconds."
+        }
+        waitDuration = durationInSeconds
     }
 }
