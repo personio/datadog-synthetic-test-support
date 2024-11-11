@@ -22,7 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update jackson-module-kotlin dependency from 2.17.2 to 2.18.1 ([#245](https://github.com/personio/datadog-synthetic-test-support/pull/245), [#250](https://github.com/personio/datadog-synthetic-test-support/pull/250))
 - Update kotlin-stdlib dependency from 2.0.20 to 2.0.21 ([#252](https://github.com/personio/datadog-synthetic-test-support/pull/252))
 - Update kotlinx-serialization-json dependency from 1.7.2 to 1.7.3 ([#243](https://github.com/personio/datadog-synthetic-test-support/pull/243))
-- Update secretsmanager dependency from 2.27.17 to 2.28.12 ([#241](https://github.com/personio/datadog-synthetic-test-support/pull/241))
+- Update secretsmanager dependency from 2.27.17 to 2.29.9 ([#241](https://github.com/personio/datadog-synthetic-test-support/pull/241), [#256](https://github.com/personio/datadog-synthetic-test-support/pull/256))
 
 ## [2.6.0] - 2024-09-09
 ### New features & improvements
