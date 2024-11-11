@@ -46,7 +46,7 @@ dependencies {
     api("com.datadoghq:datadog-api-client:2.28.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
     testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.3")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.3")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.3")
     testImplementation("org.mockito:mockito-inline:5.2.0")
