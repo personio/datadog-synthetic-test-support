@@ -93,7 +93,7 @@ class E2EMultiStepApiTest {
                     }
                 }
                 step("Wait for 5 seconds") {
-                    wait(5)
+                    wait(15.seconds)
                 }
             }
         }
