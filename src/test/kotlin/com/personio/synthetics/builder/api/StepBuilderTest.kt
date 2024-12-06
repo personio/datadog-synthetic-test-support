@@ -74,7 +74,7 @@ class StepBuilderTest {
     @Test
     fun `build creates a wait step when wait duration is provided`() {
         val stepBuilder = StepBuilder(TEST_STEP_NAME)
-        stepBuilder.wait(30)
+        stepBuilder.wait(30.seconds)
 
         val result = stepBuilder.build()
 
@@ -89,10 +89,10 @@ class StepBuilderTest {
         val stepBuilder = StepBuilder(TEST_STEP_NAME)
 
         assertThrows<IllegalArgumentException> {
-            stepBuilder.wait(0)
+            stepBuilder.wait(0.seconds)
         }
         assertThrows<IllegalArgumentException> {
-            stepBuilder.wait(181)
+            stepBuilder.wait(181.seconds)
         }
     }
 
@@ -160,7 +160,7 @@ class StepBuilderTest {
         val requestBuilderMock = makeRequestBuilderHappyPathMock()
         val stepBuilder = StepBuilder(TEST_STEP_NAME, requestBuilderMock)
         stepBuilder.request { }
-        stepBuilder.wait(30)
+        stepBuilder.wait(30.seconds)
 
         val exception =
             assertThrows<IllegalStateException> {

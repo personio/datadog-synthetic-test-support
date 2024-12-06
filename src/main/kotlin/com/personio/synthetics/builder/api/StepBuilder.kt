@@ -134,12 +134,13 @@ class StepBuilder(
 
     /**
      * Creates a wait step
-     * @param durationInSeconds The duration to wait in seconds. Minimum value: 1. Maximum value: 180
+     * @param duration The duration of wait in seconds or minutes
+     * Allowed wait step duration is between 1 second and 3 minutes
      */
-    fun wait(durationInSeconds: Int) {
-        require(durationInSeconds in 1..180) {
-            "Duration to wait must be in range 1 to 180 seconds."
+    fun wait(duration: Duration) {
+        require(duration in 1.seconds..180.seconds) {
+            "Wait duration should be between 1 and 180 seconds."
         }
-        waitDuration = durationInSeconds
+        waitDuration = duration.inWholeSeconds.toInt()
     }
 }
