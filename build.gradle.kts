@@ -16,7 +16,7 @@ group = "com.personio"
 version = System.getenv("VERSION")
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.12"
 }
 
 repositories {
@@ -24,7 +24,7 @@ repositories {
 }
 
 val e2eTest =
-    task<Test>("e2eTest") {
+    tasks.register<Test>("e2eTest") {
         description = "Runs end to end test"
         group = "verification"
         filter {
@@ -34,9 +34,10 @@ val e2eTest =
     }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
     val awsSdkVersion = "2.29.24"
     val jacksonVersion = "2.18.2"
+    val junitVersion = "5.11.3"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.apache.commons:commons-text:1.12.0")
@@ -46,9 +47,9 @@ dependencies {
     api("com.datadoghq:datadog-api-client:2.30.0")
     testRuntimeOnly("software.amazon.awssdk:sso:$awsSdkVersion")
     testRuntimeOnly("software.amazon.awssdk:sts:$awsSdkVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testImplementation("org.mockito:mockito-inline:5.2.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.1")
@@ -63,32 +64,36 @@ tasks {
     }
     jacocoTestReport {
         reports {
-            xml.required.set(true)
-            html.required.set(false)
-            xml.outputLocation.set(buildDir.resolve("test-results/test/xml/jacocoReport.xml"))
+            xml.required.convention(true)
+            html.required.convention(false)
+            xml.outputLocation.convention(layout.buildDirectory.file("test-results/test/xml/jacocoReport.xml"))
         }
     }
     withType<KotlinCompile> {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+            jvmTarget.set(JvmTarget.fromTarget("17"))
         }
     }
 }
 
-val javadocJar by tasks.creating(Jar::class) {
-    dependsOn("dokkaJavadoc")
-    archiveClassifier.set("javadoc")
-    from(File(buildDir, "javadoc"))
+val javadocJar by tasks.register("javadocJar", Jar::class) {
+    dependsOn(tasks.named("dokkaJavadoc"))
+    archiveClassifier.convention("javadoc")
+    from(layout.buildDirectory.dir("javadoc"))
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allSource)
-}
+val sourcesJar =
+    tasks.register("sourcesJar", Jar::class) {
+        archiveClassifier.convention("sources")
+        from(sourceSets.main.get().allSource)
+    }
 
 java {
     withJavadocJar()
     withSourcesJar()
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 publishing {
