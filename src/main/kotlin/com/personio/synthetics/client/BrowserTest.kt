@@ -2,7 +2,6 @@ package com.personio.synthetics.client
 
 import com.datadog.api.client.v1.model.SyntheticsBrowserTest
 import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -11,6 +10,7 @@ import com.datadog.api.client.v1.model.SyntheticsUpdateTestPauseStatusPayload
 import com.personio.synthetics.config.Config
 import com.personio.synthetics.config.Defaults
 import com.personio.synthetics.config.loadConfiguration
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 
 /**
  * Creates a synthetic browser test with the added configurations (if any) and steps in Datadog
@@ -118,7 +118,7 @@ class BrowserTest(
 
     private fun defaultSyntheticsTestOptions(): SyntheticsTestOptions =
         SyntheticsTestOptions()
-            .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
+            .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE.value)
             .tickEvery(defaultSettings.testFrequency / 1000)
             .minFailureDuration(defaultSettings.minFailureDuration / 1000)
             .minLocationFailed(defaultSettings.minLocationFailed)

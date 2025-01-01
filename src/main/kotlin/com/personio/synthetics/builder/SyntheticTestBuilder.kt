@@ -1,6 +1,5 @@
 package com.personio.synthetics.builder
 
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsMonitorOptions
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsRetry
@@ -13,6 +12,7 @@ import com.personio.synthetics.domain.SyntheticTestParameters
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import com.personio.synthetics.model.config.Timeframe
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
@@ -46,7 +46,7 @@ abstract class SyntheticTestBuilder(
 
         options =
             SyntheticsTestOptions()
-                .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
+                .addDeviceIdsItem(SyntheticsDeviceID.CHROME_LAPTOP_LARGE.value)
                 .tickEvery(defaults.testFrequency / 1000)
                 .minFailureDuration(defaults.minFailureDuration / 1000)
                 .minLocationFailed(defaults.minLocationFailed)
