@@ -94,7 +94,7 @@ fun BrowserTest.datePatternVariable(
 ) = apply {
     val (scaledValue, unit) =
         checkNotNull(getScaledDate(duration)) {
-            "The passed duration should be less than 10_000_000 days for the date pattern variable $name."
+            "The passed duration should be less than 1_000_000 days for the date pattern variable $name."
         }
     addLocalVariable(name, "$prefix{{ date($scaledValue$unit, $format) }}$suffix")
 }
@@ -164,7 +164,7 @@ private fun BrowserTest.addLocalVariable(
 private fun getScaledDate(value: Duration): Pair<Long, String>? =
     value.getScaledValue(
         sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS, DurationUnit.MINUTES, DurationUnit.HOURS, DurationUnit.DAYS),
-        10_000_000,
+        1_000_000,
     )
 
 private fun getScaledTimestamp(value: Duration): Pair<Long, String>? =
