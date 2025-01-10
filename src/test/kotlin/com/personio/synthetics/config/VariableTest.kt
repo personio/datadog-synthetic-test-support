@@ -292,6 +292,46 @@ class VariableTest {
     }
 
     @Test
+    fun `datePatternVariable output is more than 1M seconds so it returns minutes`() {
+        val variableName = "VARIABLE1"
+        val dateValue = 45.days
+        val dateFormat = "YYYY-MM-DD"
+
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeMinutes}m, $dateFormat) }}")
+
+        browserTest.datePatternVariable(
+            name = variableName,
+            duration = dateValue,
+            format = dateFormat,
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `datePatternVariable output is more than 1M minutes so it returns hours`() {
+        val variableName = "VARIABLE1"
+        val dateValue = 700.days
+        val dateFormat = "YYYY-MM-DD"
+
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeHours}h, $dateFormat) }}")
+
+        browserTest.datePatternVariable(
+            name = variableName,
+            duration = dateValue,
+            format = dateFormat,
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
     fun `datePatternVariable allows a value to be appended before the pattern`() {
         val variableName = "VARIABLE1"
         val dateValue = 5.minutes
@@ -336,9 +376,9 @@ class VariableTest {
     }
 
     @Test
-    fun `datePatternVariable uses the next higher unit if the value is greater than or equal to 10_000_000`() {
+    fun `datePatternVariable uses the next higher unit if the value is greater than 1_000_000`() {
         val variableName = "VARIABLE1"
-        val dateValue = 10_000_000.minutes
+        val dateValue = 1_000_001.minutes
         val dateFormat = "YYYY-MM-DD"
 
         val expectedResult =
@@ -356,9 +396,29 @@ class VariableTest {
     }
 
     @Test
-    fun `datePatternVariable allows passing the duration less than 10_000_000 days`() {
+    fun `datePatternVariable does not use the next higher unit if the value is lower than 1_000_001`() {
         val variableName = "VARIABLE1"
-        val dateValue = 9_999_999.days
+        val dateValue = 1_000_000.minutes
+        val dateFormat = "YYYY-MM-DD"
+
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ date(${dateValue.inWholeMinutes}m, $dateFormat) }}")
+
+        browserTest.datePatternVariable(
+            name = variableName,
+            duration = dateValue,
+            format = dateFormat,
+        )
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `datePatternVariable allows passing the duration less than or equal to 1_000_000 days`() {
+        val variableName = "VARIABLE1"
+        val dateValue = 1_000_000.days
         val dateFormat = "YYYY-MM-DD"
 
         val expectedResult =
@@ -416,11 +476,11 @@ class VariableTest {
     }
 
     @Test
-    fun `datePatternVariable throws an exception if the duration is greater than or equal to 10_000_000 days`() {
+    fun `datePatternVariable throws an exception if the duration is greater than 1_000_000 days`() {
         assertThrows<IllegalStateException> {
             browserTest.datePatternVariable(
                 name = "VARIABLE1",
-                duration = 10_000_000.days,
+                duration = 1_000_001.days,
                 format = "YYYY-MM-DD",
             )
         }
