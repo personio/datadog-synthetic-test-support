@@ -1,10 +1,10 @@
 package com.personio.synthetics.config
 
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import com.personio.synthetics.model.config.Timeframe
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -184,13 +184,19 @@ internal class BrowserTestConfigTest {
     fun `browserAndDevice function sets the browser and device to the test config`() {
         browserTest.browserAndDevice(SyntheticsDeviceID.CHROME_LAPTOP_LARGE)
 
-        assertEquals(listOf(SyntheticsDeviceID.CHROME_LAPTOP_LARGE), browserTest.options.deviceIds)
+        assertEquals(listOf(SyntheticsDeviceID.CHROME_LAPTOP_LARGE.value), browserTest.options.deviceIds)
     }
 
     @Test
     fun `browserAndDevice function sets multiple browsers and devices in the test config`() {
         browserTest.browserAndDevice(SyntheticsDeviceID.CHROME_LAPTOP_LARGE, SyntheticsDeviceID.FIREFOX_MOBILE_SMALL)
 
-        assertEquals(listOf(SyntheticsDeviceID.CHROME_LAPTOP_LARGE, SyntheticsDeviceID.FIREFOX_MOBILE_SMALL), browserTest.options.deviceIds)
+        assertEquals(
+            listOf(
+                SyntheticsDeviceID.CHROME_LAPTOP_LARGE.value,
+                SyntheticsDeviceID.FIREFOX_MOBILE_SMALL.value,
+            ),
+            browserTest.options.deviceIds,
+        )
     }
 }

@@ -1,13 +1,13 @@
 package com.personio.synthetics.client
 
 import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariable
 import com.datadog.api.client.v1.model.SyntheticsListGlobalVariablesResponse
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.personio.synthetics.config.Config
 import com.personio.synthetics.config.Credentials
 import com.personio.synthetics.config.Defaults
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -39,7 +39,7 @@ internal class BrowserTestTest {
     @Test
     fun `initialising a BrowserTest object sets the device id to chrome laptop large`() {
         val browserTest = BrowserTest("Test", syntheticsApi, defaults())
-        assertEquals(listOf(SyntheticsDeviceID.CHROME_LAPTOP_LARGE), browserTest.options.deviceIds)
+        assertEquals(listOf(SyntheticsDeviceID.CHROME_LAPTOP_LARGE.value), browserTest.options.deviceIds)
     }
 
     @Test

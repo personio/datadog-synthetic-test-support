@@ -1,10 +1,10 @@
 package com.personio.synthetics.e2e
 
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.personio.synthetics.dsl.syntheticBrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import com.personio.synthetics.model.config.Timeframe
 import com.personio.synthetics.step.ui.model.TargetElement
 import org.junit.jupiter.api.Test

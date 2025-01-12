@@ -6,7 +6,6 @@ package com.personio.synthetics.config
  * @see com.personio.synthetics.builder.SyntheticTestBuilder
  */
 
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
@@ -14,6 +13,7 @@ import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
 import com.personio.synthetics.model.config.RenotifyInterval
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import com.personio.synthetics.model.config.Timeframe
 import java.net.URL
 import java.time.ZoneId
@@ -178,5 +178,5 @@ fun BrowserTest.publicLocation(vararg locationItems: Location) =
  */
 fun BrowserTest.browserAndDevice(vararg deviceIds: SyntheticsDeviceID) =
     apply {
-        options.deviceIds = deviceIds.map { it }
+        options.deviceIds = deviceIds.map { it.value }
     }

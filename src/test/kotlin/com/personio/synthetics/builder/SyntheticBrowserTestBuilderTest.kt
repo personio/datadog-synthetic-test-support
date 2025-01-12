@@ -1,6 +1,5 @@
 package com.personio.synthetics.builder
 
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.TEST_STEP_NAME
@@ -8,6 +7,7 @@ import com.personio.synthetics.builder.browser.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.getConfigFromFile
 import com.personio.synthetics.model.config.Location
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -96,7 +96,7 @@ class SyntheticBrowserTestBuilderTest {
         val result = testBuilder.build()
 
         assertEquals(
-            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
+            listOf(SyntheticsDeviceID.CHROME_TABLET.value, SyntheticsDeviceID.FIREFOX_TABLET.value),
             result.options.deviceIds,
         )
     }
@@ -107,7 +107,7 @@ class SyntheticBrowserTestBuilderTest {
         val result = testBuilder.build()
 
         assertEquals(
-            listOf(SyntheticsDeviceID.CHROME_TABLET, SyntheticsDeviceID.FIREFOX_TABLET),
+            listOf(SyntheticsDeviceID.CHROME_TABLET.value, SyntheticsDeviceID.FIREFOX_TABLET.value),
             result.options.deviceIds,
         )
     }

@@ -5,12 +5,12 @@ import com.datadog.api.client.v1.model.SyntheticsBrowserTestConfig
 import com.datadog.api.client.v1.model.SyntheticsBrowserTestType
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariable
 import com.datadog.api.client.v1.model.SyntheticsBrowserVariableType
-import com.datadog.api.client.v1.model.SyntheticsDeviceID
 import com.datadog.api.client.v1.model.SyntheticsStep
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
 import com.personio.synthetics.builder.browser.StepsBuilder
 import com.personio.synthetics.client.SyntheticsApiClient
 import com.personio.synthetics.config.Defaults
+import com.personio.synthetics.model.config.SyntheticsDeviceID
 import java.net.URL
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
@@ -82,7 +82,7 @@ class SyntheticBrowserTestBuilder(
      * @param deviceIds Pass comma separated browsers and devices to the test config derived from SyntheticsDeviceID class
      */
     fun browsersAndDevices(vararg deviceIds: SyntheticsDeviceID) {
-        options.deviceIds = deviceIds.map { it }
+        options.deviceIds = deviceIds.map { it.value }
     }
 
     /**
@@ -94,7 +94,7 @@ class SyntheticBrowserTestBuilder(
         replaceWith = ReplaceWith("browsersAndDevices(*deviceIds)"),
     )
     fun browserAndDevice(vararg deviceIds: SyntheticsDeviceID) {
-        options.deviceIds = deviceIds.map { it }
+        options.deviceIds = deviceIds.map { it.value }
     }
 
     fun steps(
