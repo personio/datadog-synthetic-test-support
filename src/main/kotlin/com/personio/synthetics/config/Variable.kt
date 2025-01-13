@@ -94,7 +94,7 @@ fun BrowserTest.datePatternVariable(
 ) = apply {
     val (scaledValue, unit) =
         checkNotNull(getScaledDate(duration)) {
-            "The passed duration should be less than 10_000_000 days for the date pattern variable $name."
+            "The passed duration should be between -1_000_000 and 1_000_000 days for the date pattern variable $name."
         }
     addLocalVariable(name, "$prefix{{ date($scaledValue$unit, $format) }}$suffix")
 }
@@ -116,7 +116,7 @@ fun BrowserTest.timestampPatternVariable(
 ) = apply {
     val (scaledValue, unit) =
         checkNotNull(getScaledTimestamp(duration)) {
-            "The passed duration should be less than 1_000_000_000 seconds for the timestamp pattern variable $name."
+            "The passed duration should be between -999_999_999 and 999_999_999 seconds for the timestamp pattern variable $name."
         }
     addLocalVariable(name, "$prefix{{ timestamp($scaledValue, $unit) }}$suffix")
 }
@@ -164,13 +164,13 @@ private fun BrowserTest.addLocalVariable(
 private fun getScaledDate(value: Duration): Pair<Long, String>? =
     value.getScaledValue(
         sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS, DurationUnit.MINUTES, DurationUnit.HOURS, DurationUnit.DAYS),
-        10_000_000,
+        1_000_000,
     )
 
 private fun getScaledTimestamp(value: Duration): Pair<Long, String>? =
     value.getScaledValue(
         sequenceOf(DurationUnit.MILLISECONDS, DurationUnit.SECONDS),
-        1_000_000_000,
+        999_999_999,
     )
 
 private fun Duration.getScaledValue(
@@ -179,7 +179,7 @@ private fun Duration.getScaledValue(
 ): Pair<Long, String>? =
     sequence
         .map { unit -> this.toLong(unit) to unit.toDatadogDurationUnit() }
-        .firstOrNull { (scaled, _) -> scaled.absoluteValue < limit }
+        .firstOrNull { (scaled, _) -> scaled.absoluteValue <= limit }
 
 private fun DurationUnit.toDatadogDurationUnit(): String {
     return when (this) {
