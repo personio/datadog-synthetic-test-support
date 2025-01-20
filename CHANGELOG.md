@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Bug fixes
 - Convert to the next unit when the date pattern value is bigger than 1M ([#274](https://github.com/personio/datadog-synthetic-test-support/pull/273))
+- Remove deprecation warning due to the SyntheticTestBuilder put on hold ([#276](https://github.com/personio/datadog-synthetic-test-support/pull/276))
 
 ### Dependencies
 - Update commons-text dependency from 1.12.0 to 1.13.0 ([#270](https://github.com/personio/datadog-synthetic-test-support/pull/270))
