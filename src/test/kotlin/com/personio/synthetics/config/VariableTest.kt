@@ -681,6 +681,50 @@ class VariableTest {
     }
 
     @Test
+    fun `uuidVariable adds a variable with generated UUID`() {
+        val variableName = "TEST_VARIABLE"
+
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ uuid }}")
+
+        browserTest.uuidVariable(variableName)
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `uuidVariable allows a value to be appended before the pattern`() {
+        val variableName = "TEST_VARIABLE"
+        val prefix = "prefix"
+
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("$prefix{{ uuid }}")
+
+        browserTest.uuidVariable(name = variableName, prefix = prefix)
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
+    fun `uuidVariable allows a value to be appended after the pattern`() {
+        val variableName = "TEST_VARIABLE"
+        val suffix = "suffix"
+
+        val expectedResult =
+            syntheticBrowserVariable()
+                .name(variableName)
+                .pattern("{{ uuid }}$suffix")
+
+        browserTest.uuidVariable(name = variableName, suffix = suffix)
+
+        assertEquals(expectedResult, browserTest.config?.variables?.get(0))
+    }
+
+    @Test
     fun `fromVariable function returns the variable formatted according to datadog standards`() {
         val variableName = "TEST_VAR"
         val expectedVariableFormat = "{{ $variableName }}"

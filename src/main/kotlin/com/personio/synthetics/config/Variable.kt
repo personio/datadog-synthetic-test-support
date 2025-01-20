@@ -122,6 +122,22 @@ fun BrowserTest.timestampPatternVariable(
 }
 
 /**
+ * Create a local variable with an uuid
+ * The value generated will be a version 4 universally unique identifier.
+ * @param name Name of the variable. The name would be converted to upper case letters
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
+ * @return SyntheticsBrowserTest object with this created variable
+ */
+fun BrowserTest.uuidVariable(
+    name: String,
+    prefix: String = "",
+    suffix: String = "",
+) = apply {
+    addLocalVariable(name, "$prefix{{ uuid }}$suffix")
+}
+
+/**
  * Uses the global variable in the test
  * @param name Name of the existing global variable. The name would be converted to upper case letters
  * @return BrowserTest object with this added global variable
