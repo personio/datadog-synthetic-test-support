@@ -15,13 +15,9 @@ import com.personio.synthetics.model.config.SyntheticsDeviceID
 /**
  * Creates a synthetic browser test with the added configurations (if any) and steps in Datadog
  * The default configurations for the tests are loaded from the configuration file in resources.
- *
- * Deprecation notice: In future releases this method will be replaced by one that
- * uses SyntheticTestBuilder or similar.
  * @param name Name of the test
  * @param steps Calls the added steps and configuration functions of the test
  */
-@Deprecated(message = "This function will have its package and signature changed in 3.x.x")
 inline fun syntheticBrowserTest(
     name: String,
     steps: BrowserTest.() -> Unit,
@@ -49,11 +45,7 @@ fun getCredentialsProvider(): CredentialsProvider {
 
 /**
  * Synthetic browser test client for the API calls with the Datadog.
- *
- * Deprecation notice: In future releases this class will be replaced by
- * SyntheticTestBuilder (or similar).
  */
-@Deprecated(message = "Planned for removal in 3.x.x")
 class BrowserTest(
     testName: String,
     private val syntheticsApiClient: SyntheticsApiClient,
@@ -73,7 +65,6 @@ class BrowserTest(
      * @return SyntheticsBrowserTest object
      */
     @PublishedApi
-    @Deprecated(message = "Planned for removal in 3.x.x")
     internal fun createBrowserTest(): SyntheticsBrowserTest {
         val testId = getTestId()
         return if (testId != null) {

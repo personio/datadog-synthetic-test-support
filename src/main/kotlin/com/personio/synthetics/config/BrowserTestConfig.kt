@@ -1,11 +1,5 @@
 package com.personio.synthetics.config
 
-/**
- * This code will be deprecated in the future releases as it is a duplicate of SyntheticTestBuilder.
- * Most functions are already available in SyntheticTestBuilder.
- * @see com.personio.synthetics.builder.SyntheticTestBuilder
- */
-
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
