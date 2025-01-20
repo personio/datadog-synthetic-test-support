@@ -14,6 +14,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### New features & improvements
 
 ### Bug fixes
+
+### Dependencies
+
+## [3.0.0] - 2025-01-20
+### Breaking changes
+- Add SyntheticsDeviceID enum list of strings due to the [SyntheticsDeviceID replacement with strings](https://github.com/DataDog/datadog-api-client-java/pull/2576) on the datadog-api-client side ([#271](https://github.com/personio/datadog-synthetic-test-support/pull/271))
+
+### Bug fixes
 - Convert to the next unit when the date pattern value is bigger than 1M ([#274](https://github.com/personio/datadog-synthetic-test-support/pull/273))
 - Remove deprecation warning due to the SyntheticTestBuilder put on hold ([#276](https://github.com/personio/datadog-synthetic-test-support/pull/276))
 
