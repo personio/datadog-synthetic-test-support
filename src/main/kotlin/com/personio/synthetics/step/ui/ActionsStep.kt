@@ -59,7 +59,7 @@ fun BrowserTest.clickStep(
  * Adds a new navigation step for following a link to the synthetic browser test
  * @param stepName Name of the step
  * @param url The navigation url. You can pass url like the following
- * - only the location (eg: /test/page) for appending to the base url of the test
+ * - only the location (eg: /test/page) for staying on the same domain
  * - pass full url including http(s)://
  * - global or local variable. For using those, use the function "fromVariable(variableName)" in the parameter
  *   for example /test/page/${fromVariable("TEST")}
@@ -72,15 +72,6 @@ fun BrowserTest.navigateStep(
     f: (SyntheticsStep.() -> Unit)? = null,
 ) = addStep(stepName) {
     type = SyntheticsStepType.GO_TO_URL
-    val target =
-        if (url.isDatadogVariable()) {
-            url
-        } else {
-            runCatching { URL(url) }
-                .recover { URL(config.request.url + url) }
-                .getOrThrow()
-                .toString()
-        }
-    params = ActionsParams(value = target)
+    params = ActionsParams(value = url)
     if (f != null) f()
 }
