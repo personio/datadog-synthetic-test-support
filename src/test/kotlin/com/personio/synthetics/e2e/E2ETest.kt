@@ -25,6 +25,7 @@ import com.personio.synthetics.config.testFrequency
 import com.personio.synthetics.config.textVariable
 import com.personio.synthetics.config.timestampPatternVariable
 import com.personio.synthetics.config.useGlobalVariable
+import com.personio.synthetics.config.uuidPatternVariable
 import com.personio.synthetics.model.actions.Key
 import com.personio.synthetics.model.actions.Modifier
 import com.personio.synthetics.model.assertion.FileNameCheckType
@@ -113,6 +114,9 @@ class E2ETest {
             timestampPatternVariable(
                 name = "TIMESTAMP_PATTERN",
                 duration = 10.seconds,
+            )
+            uuidPatternVariable(
+                name = "UUID_PATTERN",
             )
             inputTextStep(
                 stepName = "Enter username",

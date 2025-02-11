@@ -101,7 +101,7 @@ fun BrowserTest.datePatternVariable(
 
 /**
  * Creates a local variable with the timestamp pattern
- * The value of the variable will be a generated timestamp in one of the accepted formats with a value corresponding to the timestamp the test is initiated at +/- n unit.
+ * The value of the variable will be a generated timestamp in one of the accepted formats with a value corresponding to the timestamp the test is initiated at +/- n unit
  * @param name Name of the variable. The name would be converted to upper case letters
  * @param duration The duration (+ or -) to be added to or subtracted from the time by which the test is run to generate the date
  * @param prefix String to be appended before the pattern
@@ -119,6 +119,22 @@ fun BrowserTest.timestampPatternVariable(
             "The passed duration should be between -999_999_999 and 999_999_999 seconds for the timestamp pattern variable $name."
         }
     addLocalVariable(name, "$prefix{{ timestamp($scaledValue, $unit) }}$suffix")
+}
+
+/**
+ * Create a local variable with the UUID pattern
+ * The value generated will be a universally unique identifier version 4
+ * @param name Name of the variable. The name would be converted to upper case letters
+ * @param prefix String to be appended before the pattern
+ * @param suffix String to be appended after the pattern
+ * @return SyntheticsBrowserTest object with this created variable
+ */
+fun BrowserTest.uuidPatternVariable(
+    name: String,
+    prefix: String = "",
+    suffix: String = "",
+) = apply {
+    addLocalVariable(name, "$prefix{{ uuid }}$suffix")
 }
 
 /**
