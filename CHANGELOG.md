@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### New features & improvements
 - Add UUID pattern variable ([#284](https://github.com/personio/datadog-synthetic-test-support/pull/284))
+- Remove url checks in navigate step to not prepend domain when path is used instead of url ([#285](https://github.com/personio/datadog-synthetic-test-support/pull/285))
 
 ### Bug fixes
 

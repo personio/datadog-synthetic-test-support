@@ -177,7 +177,7 @@ class E2ETest {
             )
             navigateStep(
                 stepName = "Navigate to test page by URL",
-                url = "https://synthetic-test.personio.de/test",
+                url = "/test",
             )
             customJavascriptAssertion(
                 stepName = "Check custom JS",

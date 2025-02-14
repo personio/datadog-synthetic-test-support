@@ -140,7 +140,6 @@ internal class ActionsStepTest {
     fun `navigateStep appends the passed navigationUrl location to the base url of the test`() {
         val baseUrl = "https://synthetic-test.personio.de"
         val url = "/test"
-        val expectedUrl = baseUrl + url
 
         browserTest
             .baseUrl(URL(baseUrl))
@@ -149,7 +148,7 @@ internal class ActionsStepTest {
                 url = url,
             )
 
-        assertEquals(expectedUrl, (browserTest.steps?.get(0)?.params as ActionsParams).value)
+        assertEquals(url, (browserTest.steps?.get(0)?.params as ActionsParams).value)
     }
 
     @Test
