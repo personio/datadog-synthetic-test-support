@@ -12,9 +12,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Add UUID pattern variable ([#284](https://github.com/personio/datadog-synthetic-test-support/pull/284))
 
 ### Bug fixes
+
+### Dependencies
+
+## [3.1.0] - 2025-03-05
+### New features & improvements
+- Add UUID pattern variable ([#284](https://github.com/personio/datadog-synthetic-test-support/pull/284))
 
 ### Dependencies
 - Update datadog-api-client dependency from 2.31.0 to 2.32.0 ([#289](https://github.com/personio/datadog-synthetic-test-support/pull/289))
