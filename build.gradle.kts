@@ -37,7 +37,7 @@ dependencies {
     val awsSdkVersion = "2.31.12"
     val jacksonVersion = "2.18.3"
     val junitVersion = "5.12.1"
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.20")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.apache.commons:commons-text:1.13.0")
