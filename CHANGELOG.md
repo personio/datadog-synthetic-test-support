@@ -16,7 +16,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Bug fixes
 
 ### Dependencies
-- Update secretsmanager dependency from 2.30.31 to 2.31.12 ([#293](https://github.com/personio/datadog-synthetic-test-support/pull/293)
+- Update kotlin-stdlib dependency from 2.1.10 to 2.1.20 ([#295](https://github.com/personio/datadog-synthetic-test-support/pull/295))
+- Update secretsmanager dependency from 2.30.31 to 2.31.12 ([#293](https://github.com/personio/datadog-synthetic-test-support/pull/293))
 
 ## [3.1.0] - 2025-03-05
 ### New features & improvements
