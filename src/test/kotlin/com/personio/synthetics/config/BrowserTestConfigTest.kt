@@ -1,5 +1,6 @@
 package com.personio.synthetics.config
 
+import com.datadog.api.client.v1.model.SyntheticsTestExecutionRule
 import com.personio.synthetics.client.BrowserTest
 import com.personio.synthetics.model.config.Location
 import com.personio.synthetics.model.config.MonitorPriority
@@ -198,5 +199,12 @@ internal class BrowserTestConfigTest {
             ),
             browserTest.options.deviceIds,
         )
+    }
+
+    @Test
+    fun `cicdExecution function sets the CICD execution in the test config`() {
+        browserTest.cicdExecution(SyntheticsTestExecutionRule.NON_BLOCKING)
+
+        assertEquals(SyntheticsTestExecutionRule.NON_BLOCKING, browserTest.options.ci.executionRule)
     }
 }
