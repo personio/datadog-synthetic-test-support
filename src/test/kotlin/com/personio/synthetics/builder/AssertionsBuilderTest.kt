@@ -6,6 +6,7 @@ import com.datadog.api.client.v1.model.SyntheticsAssertionJSONPathTarget
 import com.datadog.api.client.v1.model.SyntheticsAssertionJSONPathTargetTarget
 import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
 import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
+import com.datadog.api.client.v1.model.SyntheticsAssertionTargetValue
 import com.datadog.api.client.v1.model.SyntheticsAssertionType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -22,7 +23,7 @@ class AssertionsBuilderTest {
             SyntheticsAssertion(
                 SyntheticsAssertionTarget()
                     .operator(SyntheticsAssertionOperator.IS)
-                    .target(200)
+                    .target(SyntheticsAssertionTargetValue(200.0))
                     .type(SyntheticsAssertionType.STATUS_CODE),
             ),
             result.first(),
@@ -39,7 +40,7 @@ class AssertionsBuilderTest {
                 SyntheticsAssertionTarget()
                     .property("any_header")
                     .operator(SyntheticsAssertionOperator.CONTAINS)
-                    .target("any_value")
+                    .target(SyntheticsAssertionTargetValue("any_value"))
                     .type(SyntheticsAssertionType.HEADER),
             ),
             result.first(),
@@ -60,7 +61,7 @@ class AssertionsBuilderTest {
                         SyntheticsAssertionJSONPathTargetTarget()
                             .jsonPath("any_json_path")
                             .operator("contains")
-                            .targetValue("any_value"),
+                            .targetValue(SyntheticsAssertionTargetValue("any_value")),
                     ),
             ),
             result.first(),
@@ -81,7 +82,7 @@ class AssertionsBuilderTest {
                         SyntheticsAssertionJSONPathTargetTarget()
                             .jsonPath("$.foo.bar")
                             .operator("matches")
-                            .targetValue("^t.[u].\$"),
+                            .targetValue(SyntheticsAssertionTargetValue("^t.[u].\$")),
                     ),
             ),
             result.first(),
@@ -97,7 +98,7 @@ class AssertionsBuilderTest {
             SyntheticsAssertion(
                 SyntheticsAssertionTarget()
                     .operator(SyntheticsAssertionOperator.CONTAINS)
-                    .target("any_value")
+                    .target(SyntheticsAssertionTargetValue("any_value"))
                     .type(SyntheticsAssertionType.BODY),
             ),
             result.first(),
@@ -113,7 +114,7 @@ class AssertionsBuilderTest {
             SyntheticsAssertion(
                 SyntheticsAssertionTarget()
                     .operator(SyntheticsAssertionOperator.DOES_NOT_CONTAIN)
-                    .target("any_value")
+                    .target(SyntheticsAssertionTargetValue("any_value"))
                     .type(SyntheticsAssertionType.BODY),
             ),
             result.first(),
