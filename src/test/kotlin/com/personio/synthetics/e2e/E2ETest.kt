@@ -3,6 +3,7 @@ package com.personio.synthetics.e2e
 import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
 import com.datadog.api.client.v1.model.SyntheticsAssertionType
 import com.datadog.api.client.v1.model.SyntheticsCheckType
+import com.datadog.api.client.v1.model.SyntheticsTestExecutionRule
 import com.datadog.api.client.v1.model.SyntheticsTestPauseStatus
 import com.personio.synthetics.client.syntheticBrowserTest
 import com.personio.synthetics.config.advancedScheduling
@@ -11,6 +12,7 @@ import com.personio.synthetics.config.alphabeticPatternVariable
 import com.personio.synthetics.config.alphanumericPatternVariable
 import com.personio.synthetics.config.baseUrl
 import com.personio.synthetics.config.browserAndDevice
+import com.personio.synthetics.config.cicdExecution
 import com.personio.synthetics.config.datePatternVariable
 import com.personio.synthetics.config.minFailureDuration
 import com.personio.synthetics.config.minLocationFailed
@@ -74,6 +76,7 @@ class E2ETest {
     fun `create synthetic test`() {
         syntheticBrowserTest("[Test] Synthetic-Test-As-Code") {
             status(SyntheticsTestPauseStatus.PAUSED)
+            cicdExecution(SyntheticsTestExecutionRule.SKIPPED)
             alertMessage("Test Failed", "@slack-test_slack_channel")
             recoveryMessage("Test recovered")
             tags(listOf("env:qa", "synthetics-api"))
