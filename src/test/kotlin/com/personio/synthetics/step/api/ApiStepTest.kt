@@ -3,6 +3,7 @@ package com.personio.synthetics.step.api
 import com.datadog.api.client.v1.model.SyntheticsAssertion
 import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
 import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
+import com.datadog.api.client.v1.model.SyntheticsAssertionTargetValue
 import com.datadog.api.client.v1.model.SyntheticsAssertionType
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
 import com.datadog.api.client.v1.model.SyntheticsStepType
@@ -83,7 +84,11 @@ internal class ApiStepTest {
 
         val expected =
             SyntheticsAssertion(
-                SyntheticsAssertionTarget().type(assertionType).property(property).operator(operator).target(expectedTarget),
+                SyntheticsAssertionTarget()
+                    .type(assertionType)
+                    .property(property)
+                    .operator(operator)
+                    .target(SyntheticsAssertionTargetValue(expectedTarget)),
             )
         assertEquals(expected, params.request.config.assertions[0])
     }
