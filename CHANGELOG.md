@@ -12,9 +12,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Breaking changes
 
 ### New features & improvements
-- Add CI/CD Execution config option
 
 ### Bug fixes
+
+### Dependencies
+
+## [3.2.0] - 2025-06-30
+### New features & improvements
+- Add CI/CD Execution config option
 
 ### Dependencies
 - Update jackson-dataformat-yaml dependency from 2.19.0 to 2.19.1 ([#310](https://github.com/personio/datadog-synthetic-test-support/pull/310))
