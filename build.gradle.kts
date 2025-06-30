@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "2.1.21"
+    val kotlinVersion = "2.2.0"
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
     id("org.jetbrains.dokka") version "2.0.0"
     id("org.jlleitschuh.gradle.ktlint") version "12.3.0"
@@ -34,10 +34,10 @@ val e2eTest =
     }
 
 dependencies {
-    val awsSdkVersion = "2.31.54"
-    val jacksonVersion = "2.19.0"
-    val junitVersion = "5.13.0"
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.21")
+    val awsSdkVersion = "2.31.73"
+    val jacksonVersion = "2.19.1"
+    val junitVersion = "5.13.2"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.apache.commons:commons-text:1.13.1")
