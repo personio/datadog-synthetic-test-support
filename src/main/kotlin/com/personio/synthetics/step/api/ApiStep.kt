@@ -1,7 +1,6 @@
 package com.personio.synthetics.step.api
 
 import com.datadog.api.client.v1.model.SyntheticsAssertion
-import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParseTestOptionsType
 import com.datadog.api.client.v1.model.SyntheticsGlobalVariableParserType
 import com.datadog.api.client.v1.model.SyntheticsStep
@@ -44,18 +43,19 @@ fun BrowserTest.apiStep(
 class ApiStep : SyntheticsStep() {
     /**
      * Adds a new assertion to the API step
-     * @param f Add the assertion required for the API call
+     * @param block Add the assertion required for the API call
      * type: Add the type of assertion
      * property: Header property where assertion is to be performed (Optional)
      * property parameter is not required for body or status code assertions
      * operator: Operator type
-     * expected: Expected value for assertion
+     * target: Expected value for assertion
+     * target excepts String or Int values only
      * @return ApiStep object with this assertion added
      */
-    fun assertion(f: SyntheticsAssertionTarget.() -> Unit) =
+    fun assertion(block: AssertionTargetBuilder.() -> Unit) =
         apply {
-            val assertionTarget = SyntheticsAssertionTarget()
-            assertionTarget.f()
+            val builder = AssertionTargetBuilder().apply(block)
+            val assertionTarget = builder.assertionBuilder()
             withParamType<RequestParams> {
                 apply { request.config.assertions?.add(SyntheticsAssertion(assertionTarget)) }
             }
