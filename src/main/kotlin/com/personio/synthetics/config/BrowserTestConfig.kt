@@ -1,5 +1,7 @@
 package com.personio.synthetics.config
 
+import com.datadog.api.client.v1.model.SyntheticsTestCiOptions
+import com.datadog.api.client.v1.model.SyntheticsTestExecutionRule
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsScheduling
 import com.datadog.api.client.v1.model.SyntheticsTestOptionsSchedulingTimeframe
 import com.datadog.api.client.v1.model.SyntheticsTestRequest
@@ -173,4 +175,16 @@ fun BrowserTest.publicLocation(vararg locationItems: Location) =
 fun BrowserTest.browserAndDevice(vararg deviceIds: SyntheticsDeviceID) =
     apply {
         options.deviceIds = deviceIds.map { it.value }
+    }
+
+/**
+ * Sets the CI/CD execution for the synthetic browser test
+ * @param executionRule The execution rule for CI/CD execution
+ * Allowed execution rule is one of SyntheticsTestExecutionRule.[BLOCKING/NON_BLOCKING/SKIPPED]
+ * If not set, the default value is SyntheticsTestExecutionRule.BLOCKING
+ * @return BrowserTest object with CI/CD execution set
+ */
+fun BrowserTest.cicdExecution(executionRule: SyntheticsTestExecutionRule) =
+    apply {
+        options.ci = SyntheticsTestCiOptions(executionRule)
     }
