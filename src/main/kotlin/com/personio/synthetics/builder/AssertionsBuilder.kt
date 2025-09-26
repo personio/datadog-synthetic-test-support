@@ -6,6 +6,7 @@ import com.datadog.api.client.v1.model.SyntheticsAssertionJSONPathTarget
 import com.datadog.api.client.v1.model.SyntheticsAssertionJSONPathTargetTarget
 import com.datadog.api.client.v1.model.SyntheticsAssertionOperator
 import com.datadog.api.client.v1.model.SyntheticsAssertionTarget
+import com.datadog.api.client.v1.model.SyntheticsAssertionTargetValue
 import com.datadog.api.client.v1.model.SyntheticsAssertionType
 
 class AssertionsBuilder {
@@ -23,7 +24,7 @@ class AssertionsBuilder {
         target(
             SyntheticsAssertionType.STATUS_CODE,
             SyntheticsAssertionOperator.IS,
-            code,
+            SyntheticsAssertionTargetValue(code.toDouble()),
         )
     }
 
@@ -42,7 +43,7 @@ class AssertionsBuilder {
                     .property(name)
                     .operator(SyntheticsAssertionOperator.CONTAINS)
                     .type(SyntheticsAssertionType.HEADER)
-                    .target(value),
+                    .target(SyntheticsAssertionTargetValue(value)),
             ),
         )
     }
@@ -54,7 +55,7 @@ class AssertionsBuilder {
      */
     fun bodyContainsJsonPath(
         jsonPath: String,
-        targetValue: Any,
+        targetValue: String,
     ) {
         assertions.add(
             SyntheticsAssertion(
@@ -65,7 +66,7 @@ class AssertionsBuilder {
                         SyntheticsAssertionJSONPathTargetTarget()
                             .jsonPath(jsonPath)
                             .operator("contains")
-                            .targetValue(targetValue),
+                            .targetValue(SyntheticsAssertionTargetValue(targetValue)),
                     ),
             ),
         )
@@ -88,7 +89,7 @@ class AssertionsBuilder {
                     .target(
                         SyntheticsAssertionJSONPathTargetTarget()
                             .jsonPath(jsonPath)
-                            .targetValue(regex)
+                            .targetValue(SyntheticsAssertionTargetValue(regex))
                             .operator("matches"),
                     ),
             ),
@@ -99,11 +100,11 @@ class AssertionsBuilder {
      * Asserts that the response body contains the given value
      * @param value Value to look for
      */
-    fun bodyContains(value: Any) {
+    fun bodyContains(value: String) {
         target(
             SyntheticsAssertionType.BODY,
             SyntheticsAssertionOperator.CONTAINS,
-            value,
+            SyntheticsAssertionTargetValue(value),
         )
     }
 
@@ -111,11 +112,11 @@ class AssertionsBuilder {
      * Asserts that the response body does not contain the given value
      * @param value Value to look for
      */
-    fun bodyDoesNotContain(value: Any) {
+    fun bodyDoesNotContain(value: String) {
         target(
             SyntheticsAssertionType.BODY,
             SyntheticsAssertionOperator.DOES_NOT_CONTAIN,
-            value,
+            SyntheticsAssertionTargetValue(value),
         )
     }
 
@@ -128,7 +129,7 @@ class AssertionsBuilder {
     private fun target(
         type: SyntheticsAssertionType,
         operator: SyntheticsAssertionOperator,
-        target: Any,
+        target: SyntheticsAssertionTargetValue,
     ) {
         assertions.add(
             SyntheticsAssertion(
