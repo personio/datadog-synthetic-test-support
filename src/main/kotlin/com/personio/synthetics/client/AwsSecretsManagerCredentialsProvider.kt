@@ -10,13 +10,16 @@ import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueReques
 class AwsSecretsManagerCredentialsProvider(
     val credentials: Credentials,
     val client: SecretsManagerClient =
-        SecretsManagerClient.builder().region(
-            Region.of(credentials.awsRegion),
-        ).build(),
+        SecretsManagerClient
+            .builder()
+            .region(
+                Region.of(credentials.awsRegion),
+            ).build(),
 ) : CredentialsProvider {
     override fun getCredentials(): ApiCredentials {
         val getSecretValueRequest =
-            GetSecretValueRequest.builder()
+            GetSecretValueRequest
+                .builder()
                 .secretId(credentials.datadogCredentialsAwsArn)
                 .build()
 
@@ -26,8 +29,7 @@ class AwsSecretsManagerCredentialsProvider(
                     throw CredentialsProviderException(
                         "Failed to get Datadog credentials from AWS Secrets Manager.",
                     ).initCause(it)
-                }
-                .secretString() ?: throw CredentialsProviderException(
+                }.secretString() ?: throw CredentialsProviderException(
                 "Secret obtained from AWS Secrets Manager does not contain secret string.",
             )
 
