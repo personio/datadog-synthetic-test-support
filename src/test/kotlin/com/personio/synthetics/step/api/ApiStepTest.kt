@@ -173,7 +173,7 @@ internal class ApiStepTest {
             1,
             params.request.options.extract_values!!
                 .size,
-        
+        )
     }
 
     @Test
