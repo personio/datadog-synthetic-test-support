@@ -7,7 +7,10 @@ import com.personio.synthetics.config.Config
 /**
  * API Client for the Datadog Synthetic test
  */
-class SyntheticsApiClient(credentialsProvider: CredentialsProvider, apiHost: String = Config.testConfig.datadogApiHost) : SyntheticsApi() {
+class SyntheticsApiClient(
+    credentialsProvider: CredentialsProvider,
+    apiHost: String = Config.testConfig.datadogApiHost,
+) : SyntheticsApi() {
     init {
         val credentials = credentialsProvider.getCredentials()
         apiClient =
