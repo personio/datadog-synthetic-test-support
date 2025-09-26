@@ -1,6 +1,8 @@
 package com.personio.synthetics.model.config
 
-enum class SyntheticsDeviceID(val value: String) {
+enum class SyntheticsDeviceID(
+    val value: String,
+) {
     LAPTOP_LARGE("laptop_large"),
     TABLET("tablet"),
     MOBILE_SMALL("mobile_small"),
