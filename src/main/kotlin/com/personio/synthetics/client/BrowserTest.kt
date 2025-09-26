@@ -31,8 +31,8 @@ inline fun syntheticBrowserTest(
     browserTest.createBrowserTest()
 }
 
-fun getCredentialsProvider(): CredentialsProvider {
-    return Config.testConfig.credentials.let {
+fun getCredentialsProvider(): CredentialsProvider =
+    Config.testConfig.credentials.let {
         when {
             !it.datadogCredentialsAwsArn.isNullOrEmpty() -> AwsSecretsManagerCredentialsProvider(it)
             !it.ddApiKey.isNullOrEmpty() && !it.ddAppKey.isNullOrEmpty() -> ConfigCredentialsProvider(it)
@@ -41,7 +41,6 @@ fun getCredentialsProvider(): CredentialsProvider {
             )
         }
     }
-}
 
 /**
  * Synthetic browser test client for the API calls with the Datadog.
@@ -92,7 +91,8 @@ class BrowserTest(
     }
 
     internal fun getGlobalVariableId(variableName: String) =
-        syntheticsApiClient.listGlobalVariables()
+        syntheticsApiClient
+            .listGlobalVariables()
             .variables
             .orEmpty()
             .filterNotNull()
@@ -100,7 +100,8 @@ class BrowserTest(
             ?.id
 
     private fun getTestId() =
-        syntheticsApiClient.listTests()
+        syntheticsApiClient
+            .listTests()
             .tests
             .orEmpty()
             .filterNotNull()
