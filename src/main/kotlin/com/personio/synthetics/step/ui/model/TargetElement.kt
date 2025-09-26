@@ -13,12 +13,8 @@ data class TargetElement(
     private fun userLocator(): UserLocator = UserLocator(values = listOf(Value(locatorType.value, locator)))
 
     @PublishedApi
-    internal fun getElementObject(): Element {
-        return Element(userLocator = userLocator())
-    }
+    internal fun getElementObject(): Element = Element(userLocator = userLocator())
 
     @PublishedApi
-    internal fun getSpecialActionsElementObject(): ElementForSpecialActions {
-        return ElementForSpecialActions(userLocator = userLocator())
-    }
+    internal fun getSpecialActionsElementObject(): ElementForSpecialActions = ElementForSpecialActions(userLocator = userLocator())
 }
