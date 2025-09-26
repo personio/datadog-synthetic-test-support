@@ -40,6 +40,4 @@ fun BrowserTest.uploadFileStep(
     if (f != null) f()
 }
 
-private fun convertToBase64(file: File): String {
-    return Base64.getEncoder().encodeToString(file.readBytes())
-}
+private fun convertToBase64(file: File): String = Base64.getEncoder().encodeToString(file.readBytes())
