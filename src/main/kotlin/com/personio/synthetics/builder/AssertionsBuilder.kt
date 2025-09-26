@@ -12,9 +12,7 @@ import com.datadog.api.client.v1.model.SyntheticsAssertionType
 class AssertionsBuilder {
     private val assertions = mutableListOf<SyntheticsAssertion>()
 
-    fun build(): List<SyntheticsAssertion> {
-        return assertions
-    }
+    fun build(): List<SyntheticsAssertion> = assertions
 
     /**
      * Asserts the response status code

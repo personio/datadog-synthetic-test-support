@@ -1,6 +1,8 @@
 package com.personio.synthetics.model.config
 
-enum class RenotifyInterval(val valueInMinutes: Long) {
+enum class RenotifyInterval(
+    val valueInMinutes: Long,
+) {
     MINUTES_0(0),
     MINUTES_10(10),
     MINUTES_20(20),

@@ -52,8 +52,7 @@ class ParsingOptionsBuilderTest {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.JSON_PATH)
                         .value("any_json_path"),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -72,8 +71,7 @@ class ParsingOptionsBuilderTest {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
                         .value("any_regex"),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -91,8 +89,7 @@ class ParsingOptionsBuilderTest {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.RAW),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -111,8 +108,7 @@ class ParsingOptionsBuilderTest {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.RAW),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )
@@ -132,8 +128,7 @@ class ParsingOptionsBuilderTest {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
                         .value("any_regex"),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
                 .secure(secure),
             parsingOptionsBuilder.build(),
         )

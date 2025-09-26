@@ -62,7 +62,10 @@ internal class ApiStepTest {
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals(1, params.request.config.assertions.size)
-        assertNull(params.request.config.assertions[0].syntheticsAssertionTarget.property)
+        assertNull(
+            params.request.config.assertions[0]
+                .syntheticsAssertionTarget.property,
+        )
     }
 
     @Test
@@ -110,7 +113,10 @@ internal class ApiStepTest {
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        assertTrue(params.request.config.request.headers!!.containsKey("content-type"))
+        assertTrue(
+            params.request.config.request.headers!!
+                .containsKey("content-type"),
+        )
         assertEquals("application/json", params.request.config.request.headers!!["content-type"])
     }
 
@@ -163,7 +169,11 @@ internal class ApiStepTest {
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        assertEquals(1, params.request.options.extract_values!!.size)
+        assertEquals(
+            1,
+            params.request.options.extract_values!!
+                .size,
+        )
     }
 
     @Test
@@ -176,7 +186,11 @@ internal class ApiStepTest {
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         val expectedResult = SyntheticsVariableParser().type(parserType)
-        assertEquals(expectedResult, params.request.options.extract_values!![0].parser)
+        assertEquals(
+            expectedResult,
+            params.request.options.extract_values!![0]
+                .parser,
+        )
     }
 
     @Test
@@ -190,7 +204,11 @@ internal class ApiStepTest {
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         val expectedResult = SyntheticsVariableParser().type(parserType).value(regex)
-        assertEquals(expectedResult, params.request.options.extract_values!![0].parser)
+        assertEquals(
+            expectedResult,
+            params.request.options.extract_values!![0]
+                .parser,
+        )
     }
 
     @Test
@@ -203,7 +221,11 @@ internal class ApiStepTest {
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        assertEquals(1, params.request.options.extract_values!!.size)
+        assertEquals(
+            1,
+            params.request.options.extract_values!!
+                .size,
+        )
     }
 
     @Test
@@ -218,7 +240,11 @@ internal class ApiStepTest {
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         val expectedResult = SyntheticsVariableParser().type(parserType).value(parserValue)
-        assertEquals(expectedResult, params.request.options.extract_values!![0].parser)
+        assertEquals(
+            expectedResult,
+            params.request.options.extract_values!![0]
+                .parser,
+        )
     }
 
     @Test
@@ -231,6 +257,9 @@ internal class ApiStepTest {
         }
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
-        assertNull(params.request.options.extract_values!![0].parser.value)
+        assertNull(
+            params.request.options.extract_values!![0]
+                .parser.value,
+        )
     }
 }

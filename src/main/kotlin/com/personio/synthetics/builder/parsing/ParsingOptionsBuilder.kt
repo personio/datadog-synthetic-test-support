@@ -41,8 +41,7 @@ class ParsingOptionsBuilder {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.JSON_PATH)
                         .value(jsonPath),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure)
     }
 
@@ -62,8 +61,7 @@ class ParsingOptionsBuilder {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
                         .value(regex),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure)
     }
 
@@ -78,8 +76,7 @@ class ParsingOptionsBuilder {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.RAW),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_BODY)
                 .secure(secure)
     }
 
@@ -99,8 +96,7 @@ class ParsingOptionsBuilder {
                 .parser(
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.RAW),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
                 .secure(secure)
     }
 
@@ -123,8 +119,7 @@ class ParsingOptionsBuilder {
                     SyntheticsVariableParser()
                         .type(SyntheticsGlobalVariableParserType.REGEX)
                         .value(regex),
-                )
-                .type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
+                ).type(SyntheticsLocalVariableParsingOptionsType.HTTP_HEADER)
                 .secure(secure)
     }
 }

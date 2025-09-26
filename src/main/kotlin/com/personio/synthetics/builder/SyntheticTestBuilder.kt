@@ -54,8 +54,7 @@ abstract class SyntheticTestBuilder(
                     SyntheticsTestOptionsRetry()
                         .count(defaults.retryCount)
                         .interval(defaults.retryInterval),
-                )
-                .monitorOptions(
+                ).monitorOptions(
                     SyntheticsTestOptionsMonitorOptions(),
                 )
     }
@@ -392,8 +391,8 @@ abstract class SyntheticTestBuilder(
             .map { unit -> this.toLong(unit) to unit.toDatadogDurationUnit() }
             .firstOrNull { (scaled, _) -> scaled.absoluteValue <= limit }
 
-    private fun DurationUnit.toDatadogDurationUnit(): String {
-        return when (this) {
+    private fun DurationUnit.toDatadogDurationUnit(): String =
+        when (this) {
             DurationUnit.MILLISECONDS -> "ms"
             DurationUnit.SECONDS -> "s"
             DurationUnit.MINUTES -> "m"
@@ -401,10 +400,10 @@ abstract class SyntheticTestBuilder(
             DurationUnit.DAYS -> "d"
             else -> throw IllegalArgumentException("The given duration unit is not supported.")
         }
-    }
 
     protected fun getGlobalVariableId(variableName: String) =
-        apiClient.listGlobalVariables()
+        apiClient
+            .listGlobalVariables()
             .variables
             .orEmpty()
             .filterNotNull()

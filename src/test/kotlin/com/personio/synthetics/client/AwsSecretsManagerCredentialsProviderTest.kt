@@ -19,7 +19,8 @@ internal class AwsSecretsManagerCredentialsProviderTest {
         val secretsManagerClient: SecretsManagerClient = mock()
         val credentialsProvider = AwsSecretsManagerCredentialsProvider(credentials, secretsManagerClient)
         val getSecretValueResponse =
-            GetSecretValueResponse.builder()
+            GetSecretValueResponse
+                .builder()
                 .secretString("{\"apiKey\": \"apikey\",\"appKey\": \"appkey\"}")
                 .build()
         whenever(secretsManagerClient.getSecretValue(any<GetSecretValueRequest>())).thenReturn(getSecretValueResponse)
@@ -32,7 +33,8 @@ internal class AwsSecretsManagerCredentialsProviderTest {
         val secretsManagerClient: SecretsManagerClient = mock()
         val credentialsProvider = AwsSecretsManagerCredentialsProvider(credentials, secretsManagerClient)
         val getSecretValueResponse =
-            GetSecretValueResponse.builder()
+            GetSecretValueResponse
+                .builder()
                 .secretString("{\"foo\": \"bar\"}")
                 .build()
         whenever(secretsManagerClient.getSecretValue(any<GetSecretValueRequest>())).thenReturn(getSecretValueResponse)

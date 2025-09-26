@@ -5,9 +5,7 @@ import com.datadog.api.client.v1.model.SyntheticsAPIStep
 class StepsBuilder {
     private val steps = mutableListOf<SyntheticsAPIStep>()
 
-    fun build(): List<SyntheticsAPIStep> {
-        return steps
-    }
+    fun build(): List<SyntheticsAPIStep> = steps
 
     /**
      * Appends a SyntheticsAPIStep

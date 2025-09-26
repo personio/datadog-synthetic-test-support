@@ -145,12 +145,36 @@ class SyntheticMultiStepApiTestBuilderTest {
         )
         val result = testBuilder.build()
 
-        assertEquals(1, result.options.scheduling.timeframes[0].day)
-        assertEquals("00:01", result.options.scheduling.timeframes[0].from)
-        assertEquals("23:59", result.options.scheduling.timeframes[0].to)
-        assertEquals(7, result.options.scheduling.timeframes[1].day)
-        assertEquals("00:01", result.options.scheduling.timeframes[1].from)
-        assertEquals("23:59", result.options.scheduling.timeframes[1].to)
+        assertEquals(
+            1,
+            result.options.scheduling.timeframes[0]
+                .day,
+        )
+        assertEquals(
+            "00:01",
+            result.options.scheduling.timeframes[0]
+                .from,
+        )
+        assertEquals(
+            "23:59",
+            result.options.scheduling.timeframes[0]
+                .to,
+        )
+        assertEquals(
+            7,
+            result.options.scheduling.timeframes[1]
+                .day,
+        )
+        assertEquals(
+            "00:01",
+            result.options.scheduling.timeframes[1]
+                .from,
+        )
+        assertEquals(
+            "23:59",
+            result.options.scheduling.timeframes[1]
+                .to,
+        )
         assertEquals("Europe/Dublin", result.options.scheduling.timezone)
     }
 
@@ -166,7 +190,10 @@ class SyntheticMultiStepApiTestBuilderTest {
         val result = testBuilder.build()
 
         assertNotNull(result.options.scheduling.timezone)
-        assertTrue(result.options.scheduling.timezone.isNotEmpty())
+        assertTrue(
+            result.options.scheduling.timezone
+                .isNotEmpty(),
+        )
     }
 
     @Test

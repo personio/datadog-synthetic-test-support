@@ -42,8 +42,7 @@ class SyntheticBrowserTestBuilder(
                 name,
                 options,
                 SyntheticsBrowserTestType.BROWSER,
-            )
-                .steps(steps)
+            ).steps(steps)
                 .tags(parameters.tags)
 
         status?.let {

@@ -12,8 +12,8 @@ class RequestBuilder {
     private var headers: Map<String, String> = mapOf()
     private var ignoreServerCertificateError = false
 
-    fun build(): SyntheticsTestRequest {
-        return SyntheticsTestRequest()
+    fun build(): SyntheticsTestRequest =
+        SyntheticsTestRequest()
             .url(url)
             .method(method.name)
             .bodyType(bodyType)
@@ -21,7 +21,6 @@ class RequestBuilder {
             .followRedirects(followRedirects)
             .allowInsecure(ignoreServerCertificateError)
             .headers(headers)
-    }
 
     /**
      * Appends the cookie header

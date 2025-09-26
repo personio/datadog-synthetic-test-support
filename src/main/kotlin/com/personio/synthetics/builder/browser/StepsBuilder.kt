@@ -14,9 +14,7 @@ private const val DEFAULT_TEXT_DELAY_MILLIS: Long = 25
 class StepsBuilder {
     private val steps = mutableListOf<SyntheticsStep>()
 
-    fun build(): List<SyntheticsStep> {
-        return steps
-    }
+    fun build(): List<SyntheticsStep> = steps
 
     /**
      * Adds a new "type text" step to the synthetic browser test

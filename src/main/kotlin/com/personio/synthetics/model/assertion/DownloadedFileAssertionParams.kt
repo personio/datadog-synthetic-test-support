@@ -23,7 +23,9 @@ internal data class SizeCheck(
     val value: Int,
 ) : Params()
 
-enum class FileNameCheckType(val value: SyntheticsCheckType) {
+enum class FileNameCheckType(
+    val value: SyntheticsCheckType,
+) {
     NOT_CONTAINS(SyntheticsCheckType.NOT_CONTAINS),
     IS_EMPTY(SyntheticsCheckType.IS_EMPTY),
     STARTS_WITH(SyntheticsCheckType.STARTS_WITH),
@@ -35,7 +37,9 @@ enum class FileNameCheckType(val value: SyntheticsCheckType) {
     NOT_STARTS_WITH(SyntheticsCheckType.NOT_STARTS_WITH),
 }
 
-enum class FileSizeCheckType(val value: SyntheticsCheckType) {
+enum class FileSizeCheckType(
+    val value: SyntheticsCheckType,
+) {
     LOWER(SyntheticsCheckType.LOWER),
     GREATER(SyntheticsCheckType.GREATER),
     NOT_EQUALS(SyntheticsCheckType.NOT_EQUALS),

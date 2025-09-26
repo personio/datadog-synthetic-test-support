@@ -64,12 +64,36 @@ internal class BrowserTestConfigTest {
             timezone = ZoneId.of("Europe/Dublin"),
         )
 
-        assertEquals(1, browserTest.options.scheduling.timeframes[0].day)
-        assertEquals("00:01", browserTest.options.scheduling.timeframes[0].from)
-        assertEquals("23:59", browserTest.options.scheduling.timeframes[0].to)
-        assertEquals(7, browserTest.options.scheduling.timeframes[1].day)
-        assertEquals("00:01", browserTest.options.scheduling.timeframes[1].from)
-        assertEquals("23:59", browserTest.options.scheduling.timeframes[1].to)
+        assertEquals(
+            1,
+            browserTest.options.scheduling.timeframes[0]
+                .day,
+        )
+        assertEquals(
+            "00:01",
+            browserTest.options.scheduling.timeframes[0]
+                .from,
+        )
+        assertEquals(
+            "23:59",
+            browserTest.options.scheduling.timeframes[0]
+                .to,
+        )
+        assertEquals(
+            7,
+            browserTest.options.scheduling.timeframes[1]
+                .day,
+        )
+        assertEquals(
+            "00:01",
+            browserTest.options.scheduling.timeframes[1]
+                .from,
+        )
+        assertEquals(
+            "23:59",
+            browserTest.options.scheduling.timeframes[1]
+                .to,
+        )
         assertEquals("Europe/Dublin", browserTest.options.scheduling.timezone)
     }
 
@@ -84,7 +108,10 @@ internal class BrowserTestConfigTest {
         )
 
         assertNotNull(browserTest.options.scheduling.timezone)
-        assertTrue(browserTest.options.scheduling.timezone.isNotEmpty())
+        assertTrue(
+            browserTest.options.scheduling.timezone
+                .isNotEmpty(),
+        )
     }
 
     @Test
