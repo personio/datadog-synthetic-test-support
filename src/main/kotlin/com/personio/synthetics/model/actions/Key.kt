@@ -1,6 +1,8 @@
 package com.personio.synthetics.model.actions
 
-enum class Key(val value: String) {
+enum class Key(
+    val value: String,
+) {
     ENTER("Enter"),
     ARROW_UP("up"),
     ARROW_DOWN("down"),
