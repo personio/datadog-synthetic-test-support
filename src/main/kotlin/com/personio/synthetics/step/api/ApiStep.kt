@@ -135,8 +135,7 @@ class ApiStep : SyntheticsStep() {
                 SyntheticsVariableParser()
                     .type(parserType)
                     .value(regex),
-            )
-            .type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
+            ).type(SyntheticsGlobalVariableParseTestOptionsType.HTTP_HEADER)
         params =
             withParamType<RequestParams> {
                 setExtractValue(extractValue)
