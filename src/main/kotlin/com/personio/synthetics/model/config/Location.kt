@@ -1,6 +1,8 @@
 package com.personio.synthetics.model.config
 
-enum class Location(val value: String) {
+enum class Location(
+    val value: String,
+) {
     CANADA_CENTRAL_AWS("aws:ca-central-1"),
     N_CALIFORNIA_AWS("aws:us-west-1"),
     N_VIRGINIA_AWS("aws:us-east-1"),
