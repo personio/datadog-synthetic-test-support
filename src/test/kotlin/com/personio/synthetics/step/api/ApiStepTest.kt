@@ -62,7 +62,10 @@ internal class ApiStepTest {
         val params = browserTest.steps?.get(0)?.params as RequestParams
 
         assertEquals(1, params.request.config.assertions.size)
-        assertNull(params.request.config.assertions[0].syntheticsAssertionTarget.property)
+        assertNull(
+            params.request.config.assertions[0]
+                .syntheticsAssertionTarget.property,
+        )
     }
 
     @Test
