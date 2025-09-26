@@ -121,7 +121,14 @@ internal class SpecialActionsStepTest {
             }
         val params = browserTest.steps?.get(0)?.params as SpecialActionsParams
 
-        assertEquals("#locatorId", params.element?.userLocator?.values?.get(0)?.value)
+        assertEquals(
+            "#locatorId",
+            params.element
+                ?.userLocator
+                ?.values
+                ?.get(0)
+                ?.value,
+        )
     }
 
     @Test
@@ -215,7 +222,14 @@ internal class SpecialActionsStepTest {
 
         val params = browserTest.steps?.get(0)?.params as SpecialActionsParams
 
-        assertEquals(locator, params.element?.userLocator?.values?.get(0)?.value)
+        assertEquals(
+            locator,
+            params.element
+                ?.userLocator
+                ?.values
+                ?.get(0)
+                ?.value,
+        )
     }
 
     @Test
