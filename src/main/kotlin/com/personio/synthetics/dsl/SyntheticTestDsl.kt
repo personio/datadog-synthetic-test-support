@@ -72,15 +72,16 @@ fun syntheticBrowserTest(
 private fun getTestId(
     syntheticsApiClient: SyntheticsApiClient,
     name: String,
-) = syntheticsApiClient.listTests()
+) = syntheticsApiClient
+    .listTests()
     .tests
     .orEmpty()
     .filterNotNull()
     .find { it.name.equals(name) }
     ?.publicId
 
-private fun getCredentialsProvider(credentials: Credentials): CredentialsProvider {
-    return credentials.let {
+private fun getCredentialsProvider(credentials: Credentials): CredentialsProvider =
+    credentials.let {
         when {
             !it.datadogCredentialsAwsArn.isNullOrEmpty() -> AwsSecretsManagerCredentialsProvider(it)
             !it.ddApiKey.isNullOrEmpty() && !it.ddAppKey.isNullOrEmpty() -> ConfigCredentialsProvider(it)
@@ -89,4 +90,3 @@ private fun getCredentialsProvider(credentials: Credentials): CredentialsProvide
             )
         }
     }
-}
