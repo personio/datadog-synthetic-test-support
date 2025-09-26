@@ -34,8 +34,7 @@ class SyntheticMultiStepApiTestBuilder(
                 name,
                 options,
                 SyntheticsAPITestType.API,
-            )
-                .tags(parameters.tags)
+            ).tags(parameters.tags)
                 .subtype(SyntheticsTestDetailsSubType.MULTI)
 
         status?.let {
